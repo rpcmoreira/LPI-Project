@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjetoController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes(['verify'=>true]);
+Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
+Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
+Route::get('/create', [HomeController::class, 'create'])->name('create');
