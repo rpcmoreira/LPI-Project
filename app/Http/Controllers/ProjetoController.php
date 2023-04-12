@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\projeto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 
 class ProjetoController extends Controller
 {
@@ -62,4 +64,23 @@ class ProjetoController extends Controller
     {
         //
     }
+
+    public function storeForm(Request $request)
+    {
+        //$user = Auth::user()->id;
+        $projeto = Projeto::where('id', $request->projeto);
+        $file = new File; 
+        $request->validate([
+            'file' => 'required|mimes:pdf',]);
+
+        $request->file('file')->store('public/files');
+
+        //$user = Auth::user();
+        $file->file = $request->file('file')->hashName();
+        $file->projeto_id = $projeto;
+        $file->save();
+
+        return redirect()->route('home')->with('status', 'File Has been uploaded!');
+    }
+
 }
