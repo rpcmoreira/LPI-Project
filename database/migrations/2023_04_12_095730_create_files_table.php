@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('files', function (Blueprint $table) {
             $table->id();
-            $table->string('file')->nullable();
-            $table->unsignedBigInteger('projeto_id');
+            $table->string('file');
+            $table->unsignedBigInteger('projeto_id')->nullable();
             $table->foreign('projeto_id')->references('id')->on('projetos');
         });
     }
