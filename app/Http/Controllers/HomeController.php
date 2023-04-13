@@ -2,27 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\projeto;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
+use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Response;
+use vendor\autoload\php;
+use App\Model\Project;
 
-class ProjetoController extends Controller
+class ProjectController extends Controller
 {
     use RegistersUsers;
     protected $redirectTo = RouteServiceProvider::HOME;
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+   
+    public function __construct()
     {
-        //
+        $this->middleware(['auth', 'verified']);
     }
 
     /**
@@ -52,7 +51,7 @@ class ProjetoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(projeto $projeto)
+    public function show(Project $projeto)
     {
         
     }
@@ -60,7 +59,7 @@ class ProjetoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(projeto $projeto)
+    public function edit(Project $projeto)
     {
         //
     }
@@ -68,7 +67,7 @@ class ProjetoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, projeto $projeto)
+    public function update(Request $request, Project $projeto)
     {
         //
     }
@@ -76,7 +75,7 @@ class ProjetoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(projeto $projeto)
+    public function destroy(Project $projeto)
     {
         //
     }
@@ -101,9 +100,9 @@ class ProjetoController extends Controller
             return redirect()->route('first')->with('global', 'Your account has been deleted!');
         }
     }
-    public function projetoHome()
+    public function projectHome()
     {
-        return view('projeto');
+        return view('Project');
     }
 
 
