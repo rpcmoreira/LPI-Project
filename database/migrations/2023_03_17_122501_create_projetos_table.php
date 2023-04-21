@@ -23,7 +23,6 @@ return new class extends Migration
             $table->unsignedBigInteger('area_id');
             $table->unsignedBigInteger('curso_id');
             $table->unsignedBigInteger('estudo_id');
-            $table->unsignedBigInteger('resultados_id');
             $table->timestamps();
 
             $table->foreign('proponente_id')->references('id')->on('users');
@@ -32,8 +31,7 @@ return new class extends Migration
             $table->foreign('instituicao_id')->references('id')->on('instituicao');
             $table->foreign('area_id')->references('id')->on('area');
             $table->foreign('curso_id')->references('id')->on('curso');
-            $table->foreign('estudo_id')->references('id')->on('estudo');
-            $table->foreign('resultados_id')->references('id')->on('resultados');
+            $table->foreign('estudo_id')->references('id')->on('estudos');
         });
     }
 
