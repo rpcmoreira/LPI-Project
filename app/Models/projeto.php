@@ -13,6 +13,7 @@ class projeto extends Model
         'id',
         'nome',
         'data_id',
+        'data_final_id',
         'instituicao_id',
         'area_id',
         'curso_id',
