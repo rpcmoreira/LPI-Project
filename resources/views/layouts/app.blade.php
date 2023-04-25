@@ -16,6 +16,7 @@
 
 <body>
     @include('includes.header')
+    @include('layouts.menu')
         @yield('content', '')
     @include('includes.footer')
 

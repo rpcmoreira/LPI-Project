@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\projeto;
+use ConsoleTVs\Charts\Classes\Highcharts\Chart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\DB;
+use ConsoleTVs\Charts\Facades\Charts;
 
 class ProjetoController extends Controller
 {
@@ -70,9 +73,10 @@ class ProjetoController extends Controller
     {
         //$user = Auth::user()->id;
         $projeto = Projeto::where('id', $request->projeto);
-        $file = new File; 
+        $file = new File;
         $request->validate([
-            'file' => 'required|mimes:pdf,doc,docx']);
+            'file' => 'required|mimes:pdf,doc,docx'
+        ]);
 
         $request->file('file')->store('public/files');
 
@@ -84,8 +88,34 @@ class ProjetoController extends Controller
         return redirect()->route('home')->with('status', 'File Has been uploaded!');
     }
 
-    public function get250(){
-        $file=public_path()."/forms/Q250-Formulário Elaboração Pareceres CES-HE-FFP.doc";
+    public function get250()
+    {
+        $file = public_path() . "/forms/Q250-Formulário Elaboração Pareceres CES-HE-FFP.doc";
         return Response::download($file);
-}
+    }
+
+    public function dashboard()
+    {
+        $projetosPorEstado = DB::table('estado')
+            ->leftJoin('projetos', 'projetos.estado_id', '=', 'estado.id')
+            ->select('estado.estado', DB::raw('COUNT(projetos.id) as project_count'))
+            ->where('estado.estado', '!=', 'finalizado')
+            ->groupBy('estado.id')
+            ->pluck('project_count', 'estado');
+
+        // Generate the chart using Laravel Charts
+        $chart = new Chart;
+        $chart->title('Projetos por Estado');
+        $chart->labels($projetosPorEstado->keys());
+        $chart->dataset('Projetos', 'bar', $projetosPorEstado->values());
+        $chart->options([
+            'yAxis' => [
+                'type' => 'linear',
+                'tickInterval' => 1,
+            ],
+        ]);
+
+
+        return view('dashboard', ['chart' => $chart]);
+    }
 }

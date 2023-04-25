@@ -14,9 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', [ProjetoController::class, 'dashboard']);
+
+Route::get('/dashboard', [ProjetoController::class, 'dashboard'])->name('dashboard');
+
+Route::get('/projectlist', function () {
+    return view('projectlist');
+})->name('projectlist');
 
 Route::get('/download250',[ProjetoController::class, 'get250']);
 
