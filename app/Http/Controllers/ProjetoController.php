@@ -6,6 +6,7 @@ use App\Models\File;
 use App\Models\projeto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Response;
 
 class ProjetoController extends Controller
 {
@@ -71,7 +72,7 @@ class ProjetoController extends Controller
         $projeto = Projeto::where('id', $request->projeto);
         $file = new File; 
         $request->validate([
-            'file' => 'required|mimes:pdf',]);
+            'file' => 'required|mimes:pdf,doc,docx']);
 
         $request->file('file')->store('public/files');
 
@@ -83,4 +84,8 @@ class ProjetoController extends Controller
         return redirect()->route('home')->with('status', 'File Has been uploaded!');
     }
 
+    public function get250(){
+        $file=public_path()."/forms/Q250-Formulário Elaboração Pareceres CES-HE-FFP.doc";
+        return Response::download($file);
+}
 }
