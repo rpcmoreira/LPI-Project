@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\pessoa;
+use App\Models\Tipo;
 use Illuminate\Http\Request;
 
 class PessoaController extends Controller
@@ -34,7 +34,7 @@ class PessoaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(pessoa $pessoa)
+    public function show(Tipo $tipo)
     {
         //
     }
@@ -42,7 +42,7 @@ class PessoaController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(pessoa $pessoa)
+    public function edit(Tipo $tipo)
     {
         //
     }
@@ -50,7 +50,7 @@ class PessoaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, pessoa $pessoa)
+    public function update(Request $request, Tipo $tipo)
     {
         //
     }
@@ -58,7 +58,7 @@ class PessoaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(pessoa $pessoa)
+    public function destroy(Tipo $tipo)
     {
         //
     }
