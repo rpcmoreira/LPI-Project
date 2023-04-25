@@ -31,7 +31,7 @@
           <th>Estado</th>
         </tr>
       </thead>
-      @php $projetos = DB::table('projetos')->get(); @endphp
+      @php $projetos = DB::table('projetos')->limit(5)->get(); @endphp
       @foreach($projetos as $projeto)
       <tbody>
         <tr>
@@ -47,6 +47,7 @@
           @else
           <td style="color:orange"><span style="font-weight: bold;">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</span></td>
           @endif
+
         </tr>
       </tbody>
       @endforeach
