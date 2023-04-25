@@ -16,7 +16,7 @@
     crossorigin="anonymous">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <title>@yield('Name', 'Best Page for buying stuff')</title>
+    <title>@yield('Name', 'Universidade Fernando Pessoa')</title>
 </head>
 
 <body>
