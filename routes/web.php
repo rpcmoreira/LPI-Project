@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\projetoController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [ProjectController::class, 'home'])->name('first');
+Route::get('/', [projetoController::class, 'home'])->name('first');
 Auth::routes(['verify'=>true]);
 Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
 Route::get('/create', [HomeController::class, 'create'])->name('create');

@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Response;
 use vendor\autoload\php;
-use App\Model\Project;
+use \App\Models\projeto;
+use App\Models\Tipo;
 
 class ProjectController extends Controller
 {
@@ -35,8 +36,8 @@ class ProjectController extends Controller
 
     public function account()
     {
-        $u = Auth::user();
-        $data = Project::where('id', $u->id)->get();
+        $user = Auth::user();
+        $data = Tipo::where('id', $user->id)->get();
         return view('adminHome', ['data' => $data]);
     }
 
@@ -51,7 +52,7 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Project $projeto)
+    public function show(projeto $projeto)
     {
         
     }
@@ -59,7 +60,7 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $projeto)
+    public function edit(projeto $projeto)
     {
         //
     }
@@ -67,7 +68,7 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $projeto)
+    public function update(Request $request, projeto $projeto)
     {
         //
     }
@@ -75,9 +76,10 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $projeto)
+    public function remove_projeto(Request $request)
     {
-        //
+        $projeto = projeto::where('id', $request->id)->first();
+        return view('remove', ['projeto' => $projeto]);
     }
 
     public function delete()
@@ -100,9 +102,9 @@ class ProjectController extends Controller
             return redirect()->route('first')->with('global', 'Your account has been deleted!');
         }
     }
-    public function projectHome()
+    public function projetoHome()
     {
-        return view('Project');
+        return view('projeto');
     }
 
 
