@@ -16,10 +16,11 @@ class LivewireDatables extends Component
     public $direction = 'asc';
 
     public $perPage = 16;
+    public $search = '';
 
     public function render()
     {
-        $projects = DB::table('projetos')->orderBy($this->sort, $this->direction)->paginate($this->perPage);
+        $projects = projeto::query()->orderBy($this->sort, $this->direction)->paginate($this->perPage);
 
         return view('livewire.livewire-datables', [
             'projetos' => $projects
