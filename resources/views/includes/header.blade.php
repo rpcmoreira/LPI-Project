@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
   <a class="navbar-brand" href="{{ url('/') }}">Sell.Me</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse"
   data-target="#navbarSupportedContent"><span class="navbar-toggler-icon"></span></button>

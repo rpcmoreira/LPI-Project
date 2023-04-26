@@ -31,7 +31,7 @@
           <th>Estado</th>
         </tr>
       </thead>
-      @php $projetos = DB::table('projetos')->limit(5)->get(); @endphp
+      @php $projetos = DB::table('projetos')->limit(7)->get(); @endphp
       @foreach($projetos as $projeto)
       <tbody>
         <tr>
