@@ -19,3 +19,7 @@ Route::get('/', [projetoController::class, 'home'])->name('first');
 Auth::routes(['verify'=>true]);
 Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
 Route::get('/create', [HomeController::class, 'create'])->name('create');
+
+Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
+Route::get('/auth/google/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
+require __DIR__.'/web.php';
