@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
+use GuzzleHttp\Handler\Proxy;
 
 class ProjetoController extends Controller
 {
@@ -117,5 +118,9 @@ class ProjetoController extends Controller
 
 
         return view('dashboard', ['chart' => $chart]);
+    }
+
+    public function projectList(){
+        return view('projectlist');
     }
 }

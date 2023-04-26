@@ -18,9 +18,7 @@ Route::get('/', [ProjetoController::class, 'dashboard']);
 
 Route::get('/dashboard', [ProjetoController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/projectlist', function () {
-    return view('projectlist');
-})->name('projectlist');
+Route::get('/projectlist', [ProjetoController::class, 'projectList'])->name('projectlist');
 
 Route::get('/download250',[ProjetoController::class, 'get250']);
 

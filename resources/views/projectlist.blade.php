@@ -2,6 +2,19 @@
 
 @section('content')
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+    <form method="get" action="{{ route('projectlist') }}" class="mb-3">
+        <div class="form-group">
+            <label for="estado">Estado</label>
+            <select id="estado" name="estado" class="form-control">
+                <option value="">Todos</option>
+                @foreach(DB::table('estado')->get() as $estado)
+                    <option value="{{ $estado->id }}" {{ request()->input('estado') == $estado->id ? 'selected' : '' }}>{{ $estado->estado }}</option>
+                @endforeach
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+    
     <div class="table-responsive">
         <table class="table table-striped table-sm">
             <thead>
@@ -12,7 +25,13 @@
                     <th>Estado</th>
                 </tr>
             </thead>
-            @php $projetos = DB::table('projetos')->get(); @endphp
+            @php
+                $query = DB::table('projetos');
+                if ($estado = request()->input('estado')) {
+                    $query->where('estado_id', $estado);
+                }
+                $projetos = $query->get();
+            @endphp
             @foreach($projetos as $projeto)
             <tbody>
                 <tr>
