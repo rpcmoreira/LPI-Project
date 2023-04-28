@@ -1,12 +1,16 @@
-namespace App\Http\Controller\API;
+<?php
 
-use App\Http\Controller\Controller;
-use illuminate\Http\Request;
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialAuthController extends Controller
 {
-    /**
+   /**
     * Redirect user to the Google authentication page
     *
     * @return \Illuminate\Http\Response
@@ -26,13 +30,10 @@ class SocialAuthController extends Controller
         } catch(\Exception $e){
             return redirect('/login');
         }
-    }
-    dd($user);
-
-    // check if there is an existing user
+         // check if there is an existing user
     // $existingUser = User::where('email', $user->email)->first();
+    dd($user);
     $existingUser = User::where('google_id', $user->id)->first();
-
     if($existingUser){
         Auth::login($existingUser, true);
     } else{
@@ -45,4 +46,8 @@ class SocialAuthController extends Controller
         Auth::login($newUser, true);
     }
     return redirect()->to('/dashboard');
+
+    }
+
+   
 }

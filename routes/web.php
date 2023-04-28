@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\projetoController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
+use app\Http\Controllers\API\SocialAuthController;
+use app\Http\Controllers\GoogleController;
+
+//require_once __DIR__.'/web.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -22,4 +26,9 @@ Route::get('/create', [HomeController::class, 'create'])->name('create');
 
 Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
 Route::get('/auth/google/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
-require __DIR__.'/web.php';
+/*
+Route::get('auth/google', [GoogleController::class, 'loginWithGoogle'])->name('login');
+Route::any('auth/google/callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
+Route::get('home', function() {
+    return view('homeGoogle');
+})->name('home');*/
