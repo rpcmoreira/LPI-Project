@@ -20,5 +20,11 @@ Route::get('/dashboard', [ProjetoController::class, 'dashboard'])->name('dashboa
 
 Route::get('/projectlist', [ProjetoController::class, 'projectList'])->name('projectlist');
 
+
+
+//rotas teste - apagar no final
 Route::get('/download250',[ProjetoController::class, 'get250']);
+
+Route::get('/q251', [ProjetoController::class, 'q251']);
+Route::post('/q251_form', [ProjetoController::class, 'q251_form'])->name('q251_form');
 

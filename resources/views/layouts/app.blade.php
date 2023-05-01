@@ -16,7 +16,7 @@
 
 <body>
     @include('includes.header')
-    <div class="flex-wrapper">
+    <div class="wrapper">
         @include('layouts.menu')
         @yield('content', '')
     </div>

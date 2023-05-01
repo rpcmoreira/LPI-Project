@@ -123,4 +123,12 @@ class ProjetoController extends Controller
     public function projectList(){
         return view('projectlist');
     }
+
+    public function q251(){
+        return view('q251');
+    }
+
+    public function q251_form(Request $request){
+        dd($request);
+    }
 }
