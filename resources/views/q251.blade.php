@@ -10,7 +10,7 @@
                     <div class="card-body">
                         <form method="POST" action="{{ route('q251_form') }}">
                             @csrf
-                            <div class="row md-3">
+                            <div class="row md-3 mb-1">
                                 <label for="nome" class="col-md-3 col-form-label text-center">{{ __('Título do Estudo/Projeto') }}</label>
                                 <div class="col-lg">
                                     <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome" autofocus>
@@ -22,7 +22,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row md-3">
+                            <div class="row md-3 mb-1">
                                 <label for="proponente" class="col-md-3 col-form-label text-center">{{ __('Proponente') }}</label>
                                 <div class="col-lg">
                                     <input id="proponente" type="text" class="form-control @error('proponente') is-invalid @enderror" name="proponente" value="{{ old('proponente') }}" required autocomplete="proponente" autofocus>
@@ -34,7 +34,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row md-3">
+                            <div class="row md-3 mb-1">
                                 <label for="estudos" class="col-md-3 col-form-label text-center">{{ __('Tipo de Estudo') }}</label>
                                 <div class="col-lg">
                                     <select id="estudos" name="estudos" class="form-select form-control @error('estudos') is-invalid @enderror" value="{{ old('estudos') }}" autofocus>
@@ -51,7 +51,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="row md-3">
+                            <div class="row md-3 mb-1">
                                 <label for="coordenador" class="col-md-3 col-form-label text-center">{{ __('Coordenador') }}</label>
                                 <div class="col-lg">
                                     <select id="coordenador" name="coordenador" class="form-select form-control @error('coordenador') is-invalid @enderror" value="{{ old('coordenador') }}" autofocus>
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
 
-                            <div class="row md-3">
+                            <div class="row md-3 mb-1 mt-1">
                                 <label for="cv" class="col-md-3 col-form-label text-center font-italic">{{ __('Curriculum Vitae') }}</label>
                                 <div class="col-lg">
                                     <div class="form-group">
@@ -80,7 +80,148 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row md-3">
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="justificacao" class="col-md-3 col-form-label text-center">{{ __('Justificação') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="justificacao" class="form-control @error('justificacao') is-invalid @enderror" cols="80" rows="3" name="justificacao" style="resize:none"></textarea>
+                                        @error('justificacao')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="objetivo" class="col-md-3 col-form-label text-center">{{ __('Objetivos do Estudo/Projeto:') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="objetivo" class="form-control @error('objetivo') is-invalid @enderror" cols="80" rows="3" name="objetivo" style="resize:none"></textarea>
+                                        @error('objetivo')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1">
+                                <label for="data_inicio" class="col-md-3 col-form-label text-center">{{ __('Data Início/Fim') }}</label>
+                                <div class="col-lg">
+                                    <input type="date" name="data_inicio" id="data_inicio">
+                                    <input type="date" name="data_fim" id="data_fim">
+                                </div>
+                            </div>
+
+                            <div class="row md-3 mb-1">
+                                <label for="data_inicio_dados" class="col-md-3 col-form-label text-center">{{ __('Início/Fim Recolha de Dados') }}</label>
+                                <div class="col-lg">
+                                    <input type="date" name="data_inicio_dados" id="data_inicio_dados">
+                                    <input type="date" name="data_fim_dados" id="data_fim_dados">
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="amostra" class="col-md-3 col-form-label text-center">{{ __('População e Amostra/Informantes:') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="amostra" class="form-control @error('amostra') is-invalid @enderror" cols="80" rows="3" name="amostra" style="resize:none"></textarea>
+                                        @error('amostra')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="inclusao" class="col-md-3 col-form-label text-center">{{ __('Critérios de Inclusão/Exclusão:') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="inclusao" class="form-control @error('inclusao') is-invalid @enderror" cols="80" rows="3" name="inclusao" style="resize:none"></textarea>
+                                        @error('inclusao')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="locais" class="col-md-3 col-form-label text-center">{{ __('Locais onde Decorre a Investigação:') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="locais" class="form-control @error('locais') is-invalid @enderror" cols="80" rows="3" name="locais" style="resize:none"></textarea>
+
+                                        @error('locais')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="consentimento" class="col-md-3 col-form-label text-center">{{ __('Os participantes são capazes de dar o seu consentimento informado, livre e esclarecido?') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <div>
+                                            <input type="radio" id="sim" name="drone" value="sim">
+                                            <label for="consentimento">Sim</label>
+                                        </div>
+
+                                        <div>
+                                            <input type="radio" id="nao" name="drone" value="nao">
+                                            <label for="consentimento">Não</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="danos" class="col-md-3 col-form-label text-center">{{ __('Há previsão de danos para os sujeitos da investigação? ') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="danos" class="form-control @error('danos') is-invalid @enderror" cols="80" rows="3" name="danos" style="resize:none"></textarea>
+
+                                        @error('danos')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="beneficio" class="col-md-3 col-form-label text-center">{{ __('Há previsão de benefícios para os sujeitos da investigação? ') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="beneficio" class="form-control @error('beneficio') is-invalid @enderror" cols="80" rows="3" name="beneficio" style="resize:none"></textarea>
+
+                                        @error('beneficio')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="custo" class="col-md-3 col-form-label text-center">{{ __('Custos de participação para os sujeitos da investigação e possível compensação:') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="custo" class="form-control @error('custo') is-invalid @enderror" cols="80" rows="3" name="custo" style="resize:none"></textarea>
+                                        @error('custo')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">
+                                    {{ __('Submeter') }}
+                                </button>
                             </div>
                         </form>
                     </div>
