@@ -19,7 +19,6 @@ use app\Http\Controllers\GoogleController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [projetoController::class, 'home'])->name('first');
 Auth::routes(['verify'=>true]);
 Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
 Route::get('/create', [HomeController::class, 'create'])->name('create');
@@ -32,7 +31,7 @@ Route::any('auth/google/callback', [GoogleController::class, 'callbackFromGoogle
 Route::get('home', function() {
     return view('homeGoogle');
 })->name('home');*/
-Route::get('/', [ProjetoController::class, 'dashboard']);
+Route::get('/', [ProjetoController::class, 'login']);
 
 Route::get('/dashboard', [ProjetoController::class, 'dashboard'])->name('dashboard');
 

@@ -120,4 +120,8 @@ class ProjetoController extends Controller {
     public function q251_form(Request $request) {
         dd($request);
     }
+
+    public function login(Request $request) {
+        return view('login');
+    }
 }
