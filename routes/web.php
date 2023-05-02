@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\projetoController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
-use app\Http\Controllers\API\SocialAuthController;
+use App\Http\Controllers\API\SocialAuthController;
 use app\Http\Controllers\GoogleController;
 
 //require_once __DIR__.'/web.php';

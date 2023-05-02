@@ -15,7 +15,7 @@ class SocialAuthController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function redirectToProvider(){
+    public function redirectProvider(){
         return Socialite::driver('google')->redirect();
     }
 
