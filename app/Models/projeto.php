@@ -9,14 +9,15 @@ class projeto extends Model
 {
     use HasFactory;
 
-    protected $fillable=[
-        'id',
+    protected $fillable = [
         'nome',
+        'proponente_id',
+        'objetivo',
+        'metodos',
         'data_id',
-        'instituicao_id',
+        'data_final_id',
         'area_id',
         'curso_id',
-        'tipo_id',
+        'estudo_id',
     ];
-
 }

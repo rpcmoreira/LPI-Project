@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\projetoController;
+use App\Http\Controllers\ProjetoController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\SocialAuthController;
@@ -32,3 +32,16 @@ Route::any('auth/google/callback', [GoogleController::class, 'callbackFromGoogle
 Route::get('home', function() {
     return view('homeGoogle');
 })->name('home');*/
+Route::get('/', [ProjetoController::class, 'dashboard']);
+
+Route::get('/dashboard', [ProjetoController::class, 'dashboard'])->name('dashboard');
+
+Route::get('/projectlist', [ProjetoController::class, 'projectList'])->name('projectlist');
+
+
+
+//rotas teste - apagar no final
+Route::get('/download250',[ProjetoController::class, 'get250']);
+
+Route::get('/q251', [ProjetoController::class, 'q251']);
+Route::post('/q251_form', [ProjetoController::class, 'q251_form'])->name('q251_form');
