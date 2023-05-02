@@ -165,18 +165,36 @@
                                 <label for="consentimento" class="col-md-3 col-form-label text-center">{{ __('Os participantes são capazes de dar o seu consentimento informado, livre e esclarecido?') }}</label>
                                 <div class="col-lg">
                                     <div class="form-group">
+                                        <br>
                                         <div>
-                                            <input type="radio" id="sim" name="drone" value="sim">
-                                            <label for="consentimento">Sim</label>
-                                        </div>
+                                            <label for="sim">Sim
+                                                <input type="radio" name="consentimento" id="sim" value="sim">&nbsp;&nbsp;&nbsp;</label>
 
-                                        <div>
-                                            <input type="radio" id="nao" name="drone" value="nao">
-                                            <label for="consentimento">Não</label>
+                                            <label for="nao">Não
+                                                <input type="radio" name="consentimento" id="nao" value="nao"></label>
+                                        </div>
+                                        <div id="motivoDiv" style="display:none;">
+                                            <label for="motivo">Se "Não", indique p.f. qual o motivo:</label>
+                                            <input type="text" name="motivo" id="motivo" disabled>
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $("input[name='consentimento']").on('change', function() {
+                                            if ($("#nao").is(':checked')) {
+                                                $("#motivoDiv").show();
+                                                $("#motivo").prop('disabled', false);
+                                            } else {
+                                                $("#motivoDiv").hide();
+                                                $("#motivo").prop('disabled', true);
+                                            }
+                                        });
+                                    });
+                                </script>
+                                <br>
                             </div>
+
                             <div class="row md-3 mb-1 mt-1">
                                 <label for="danos" class="col-md-3 col-form-label text-center">{{ __('Há previsão de danos para os sujeitos da investigação? ') }}</label>
                                 <div class="col-lg">
