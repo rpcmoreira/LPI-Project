@@ -29,16 +29,17 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
+    
     public function __construct()
     {
-        $this->middleware('aluno');
+        $this->middleware('guest');
     }
 
     /**
@@ -65,7 +66,7 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
+            'nome' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);

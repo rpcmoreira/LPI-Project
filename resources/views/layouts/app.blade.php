@@ -11,7 +11,7 @@
 
     @livewireStyles
 
-    <title>@yield('Name', 'Best Page for buying stuff')</title>
+    <title>@yield('Name', 'Secretariado da Comissão de Ética')</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
