@@ -7,7 +7,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav ms-auto">
+    <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a href="#" class="nav-link text-light active">Home</a>
       </li>
@@ -17,36 +17,36 @@
       <li class="nav-item">
         <a href="#" class="nav-link text-light">Price</a>
       </li>
-      @guest
-      <!-- Authentication Links -->
-      @if (Route::has('login'))
-      <li class="nav-item">
-        <a class="nav-link text-light" href="{{ route('login') }}">{{ __('Login') }}</a>
-      </li>
-      @endif
-
-      @if (Route::has('register'))
-      <li class="nav-item dropdown">
-        <a class="nav-link text-light" href="{{ route('register') }}">{{ __('Register') }}</a>
-      </li>
-      @endif
-
-      @else
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          {{ Auth::user()->nome }}
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-            {{ __('Logout') }}
-          </a>
-
-          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-            @csrf
-          </form>
-        </div>
     </ul>
-    @endguest
+
+    <ul class="navbar-nav ml-auto">
+      @guest
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+          <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+            @if (Route::has('login'))
+            <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+            @endif
+
+            @if (Route::has('register'))
+            <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+            @endif
+            @else
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light ml-auto" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{ Auth::user()->nome }}
+          </a>
+          <div class="dropdown-menu" style="right: 0; left: auto;"  aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+              {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+            </form>
+          </div>
+      </ul>
+      @endguest
   </div>
 </nav>
