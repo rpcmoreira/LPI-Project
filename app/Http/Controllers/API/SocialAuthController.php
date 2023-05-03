@@ -39,13 +39,16 @@ class SocialAuthController extends Controller
     } else{
         // create a new user
         $newUser = User::create([
-           'name' => $user->name,
+           'nome' => $user->name,
            'email' => $user->email,
+           'tipo_id' => 6,
+           'password' => 'password',
            'client_id' => $user->id,
+           'email_verified_at' => now(),
            ]);
         Auth::login($newUser, true);
     }
-    return redirect()->to('/dashboard');
+    return redirect()->to('/logged');
 
     }
 

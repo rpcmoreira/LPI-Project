@@ -26,6 +26,7 @@ Route::get('/create', [HomeController::class, 'create'])->name('create');
 
 Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
 Route::get('/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
+Route::get('/logged', [ProjetoController::class, 'logged']);
 /*
 Route::get('auth/google', [GoogleController::class, 'loginWithGoogle'])->name('login');
 Route::any('auth/google/callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
