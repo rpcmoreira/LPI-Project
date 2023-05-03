@@ -33,7 +33,7 @@ class SocialAuthController extends Controller
          // check if there is an existing user
     // $existingUser = User::where('email', $user->email)->first();
     $existingUser = User::where('client_id', $user->id)->first();
-    dd($user);
+    //dd($user);
     if($existingUser){
         Auth::login($existingUser, true);
     } else{

@@ -19,7 +19,7 @@ require_once __DIR__.'/web.php';
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', [projetoController::class, 'home'])->name('first');
+//Route::get('/', [projetoController::class, 'home'])->name('first');
 Auth::routes(['verify'=>true]);
 Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
 Route::get('/create', [HomeController::class, 'create'])->name('create');
