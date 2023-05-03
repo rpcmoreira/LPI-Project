@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\SocialAuthController;
 use app\Http\Controllers\GoogleController;
 
-//require_once __DIR__.'/web.php';
+require_once __DIR__.'/web.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ Route::get('/home', [HomeController::class, 'account'])->name('home')->middlewar
 Route::get('/create', [HomeController::class, 'create'])->name('create');
 
 Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
-Route::get('/auth/google/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
+Route::get('/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
 /*
 Route::get('auth/google', [GoogleController::class, 'loginWithGoogle'])->name('login');
 Route::any('auth/google/callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
