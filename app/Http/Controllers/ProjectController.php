@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use GuzzleHttp\Handler\Proxy;
 
-class ProjetoController extends Controller {
+class ProjectController extends Controller {
     /**
      * Display a listing of the resource.
      */
@@ -121,6 +121,6 @@ class ProjetoController extends Controller {
         dd($request);
     }
     public function logged() {
-        return view('logged');
+        return view('loginTest');
     }
 }
