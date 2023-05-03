@@ -21,9 +21,9 @@ require_once __DIR__.'/web.php';
 */
 //Route::get('/', [projetoController::class, 'home'])->name('first');
 Auth::routes(['verify'=>true]);
-/*
-Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
-Route::get('/create', [HomeController::class, 'create'])->name('create');*/
+
+//Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
+//Route::get('/create', [HomeController::class, 'create'])->name('create');
 
 Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
 Route::get('/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
@@ -35,7 +35,7 @@ Route::get('home', function() {
     return view('homeGoogle');
 })->name('home');*/
 Route::get('/', [ProjectController::class, 'dashboard']);
-Route::get('/home', [ProjectController::class, 'dashboard']);
+Route::get('/home', [ProjectController::class, 'dashboard'])->name('home')->middleware('auth');
 
 Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard');
 
