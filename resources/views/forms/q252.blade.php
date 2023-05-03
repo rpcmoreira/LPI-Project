@@ -12,7 +12,7 @@
                             <label for="razoes_parecer" class="col-md-12 col-form-label text-center">Este MODELO destina-se a ser adaptado a cada caso concreto e os itens e sugestões nele contidos não esgotam os termos e possibilidades que cada investigador queira utilizar para o tornar mais claro. A linguagem a utilizar deverá ser tão simples quanto possível, livre de termos técnicos (exceto quando os participantes forem profissionais de saúde) e globalmente adequada à literacia dos participantes a recrutar. Não esquecer apagar, quando fizer o seu MODELO, todos os dizeres aqui vistos entre parêntesis retos.</label>
                             <label for="razoes_parecer" class="col-md-12 col-form-label text-center">Por favor, leia com atenção a seguinte informação. Se achar que algo está incorreto ou não está claro, não hesite em solicitar mais informações. Se concorda com a proposta que lhe foi feita, queira assinar este documento.</label>
                         </div>
-</BR>
+                        </BR>
                         <form method="POST" action="{{ route('q251_form') }}">
                             @csrf
                             <div class="row md-3 mb-1">
@@ -66,7 +66,7 @@
                             <div class="row md-3 mb-1">
                                 <label for="confidencialidade" class="col-md-3 col-form-label text-center">{{ __('Confidencialidade e anonimato:') }}</label>
                                 <div class="col-lg">
-                                    <textarea id="confidencialidade" class="form-control @error('confidencialidade') is-invalid @enderror" cols="80" rows="6" name="confidencialidade" style="resize:none" placeholder="referir se há ou que não há pagamento de deslocações ou contrapartidas aos participantes; informar quem financia o estudo (o/a investigador/a ou outrem); mencionar o caráter voluntário da participação e a ausência de prejuízos, assistenciais ou outros, caso não queira ou desista de participar; informar que o estudo mereceu Parecer favorável da Comissão de Ética … (mencionar qual)"></textarea>
+                                    <textarea id="confidencialidade" class="form-control @error('confidencialidade') is-invalid @enderror" cols="80" rows="6" name="confidencialidade" style="resize:none" placeholder="garantir confidencialidade e uso exclusivo dos dados recolhidos para o presente estudo; prometer anonimato (não registo de dados de identificação) ou, caso contrário, afirmar que foi pedida e obtida autorização da Comissão Nacional de Proteção de Dados, garantindo, em qualquer caso, que a identificação dos participantes nunca será tornada pública; assegurar que os contactos serão feitos em ambiente de privacidade"></textarea>
                                     @error('confidencialidade')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
