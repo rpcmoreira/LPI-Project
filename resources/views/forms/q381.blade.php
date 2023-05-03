@@ -7,32 +7,127 @@
                 <div class="card ">
                     <div class="card-header text-center">Formulário para envio de síntese de resultados</div>
                     <div class="card-body">
-                        <form method="POST" action="/submit">
+                        <form method="POST" action="{{ route('q381_form') }}">
                             @csrf
-                            <div>
-                                <label for="titulo">Título do estudo/projeto:</label><br>
-                                <input type="text" id="titulo" name="titulo" placeholder="Insira o título do estudo/projeto">
+                            <div class="row md-3 mb-1">
+                                <label for="titulo" class="col-md-3 col-form-label text-center">{{ __('Título do Estudo/Projeto') }}</label>
+                                <div class="col-lg">
+                                    <input id="titulo" type="text" class="form-control @error('titulo') is-invalid @enderror" name="titulo" value="{{ old('titulo') }}" required autocomplete="titulo" autofocus>
+                                    @error('titulo')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div>
-                                <label for="enquadramento">Enquadramento:</label><br>
-                                <textarea id="enquadramento" name="enquadramento" placeholder="Mencione a unidade de saúde implicada; se tiver âmbito académico, referir se é mestrado ou doutoramento, escola, outro tipo de enquadramento e orientador/a e/ou investigador/a responsável pelo estudo/projeto"></textarea>
+                            <div class="row md-3 mb-1">
+                                <label for="proponente_identificacao" class="col-md-3 col-form-label text-center">{{ __('Identificação do(s) Proponente(s)') }}</label>
+                                <div class="col-lg">
+                                    <input id="proponente_identificacao" type="text" class="form-control @error('proponente_identificacao') is-invalid @enderror" name="proponente_identificacao" value="{{ old('proponente_identificacao') }}" required autocomplete="proponente_identificacao" autofocus placeholder="Nome(s):">
+                                    @error('proponente_identificacao')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div>
-                                <label for="explicacao">Explicação do estudo/projeto:</label><br>
-                                <textarea id="explicacao" name="explicacao" placeholder="Referir se é questionário para preencher, entrevista gravada, recolha de dados de processo ou outro método; que tipo de dados serão colhidos; se a seleção do/a participante é aleatória ou há grupo de controlo; explicar sumariamente o método; mencionar local ou os locais onde o/a investigador/a se encontra com o/a participante, quantas vezes e durante quanto tempo aproximadamente; garantir destruição de gravações (áudio ou vídeo) num determinado prazo"></textarea>
+
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="objetivo" class="col-md-3 col-form-label text-center">{{ __('Objetivo') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="objetivo" class="form-control @error('objetivo') is-invalid @enderror" cols="80" rows="3" name="objetivo" style="resize:none"></textarea>
+                                        @error('objetivo')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label for="condicoes">Condições e financiamento:</label><br>
-                                <textarea id="condicoes" name="condicoes" placeholder="Referir se há ou que não há pagamento de deslocações ou contrapartidas aos participantes; informar quem financia o estudo (o/a investigador/a ou outrem); mencionar o caráter voluntário da participação e a ausência de prejuízos, assistenciais ou outros, caso não queira ou desista de participar; informar que o estudo mereceu Parecer favorável da Comissão de Ética … (mencionar qual)"></textarea>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="metodos" class="col-md-3 col-form-label text-center">{{ __('Métodos') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="metodos" class="form-control @error('metodos') is-invalid @enderror" cols="80" rows="3" name="metodos" style="resize:none"></textarea>
+                                        @error('metodos')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label for="confidencialidade">Confidencialidade e anonimato:</label><br>
-                                <textarea id="confidencialidade" name="confidencialidade" placeholder="Garantir confidencialidade e uso exclusivo dos dados recolhidos para o presente estudo; prometer anonimato (não registo de dados de identificação) ou, caso contrário, afirmar que foi pedida e obtida autorização da Comissão Nacional de Proteção de Dados, garantindo, em qualquer caso, que a identificação dos participantes nunca será tornada pública; assegurar que os contactos serão feitos em ambiente de privacidade"></textarea>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="resultados" class="col-md-3 col-form-label text-center">{{ __('Resultados') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="resultados" class="form-control @error('resultados') is-invalid @enderror" cols="80" rows="3" name="resultados" style="resize:none"></textarea>
+                                        @error('resultados')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label for="agradecimentos">Agradecimentos e identificação do/a investigador/a:</label><br>
-                                <textarea id="agradecimentos" name="agradecimentos" placeholder="Nome, profissão, local de trabalho, contacto telefónico, endereço eletrónico – e da pessoa que pede o consentimento, se for diferente] "></textarea>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="conclusoes" class="col-md-3 col-form-label text-center">{{ __('Conclusões') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="conclusoes" class="form-control @error('conclusoes') is-invalid @enderror" cols="80" rows="3" name="conclusoes" style="resize:none"></textarea>
+                                        @error('conclusoes')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="outputs" class="col-md-3 col-form-label text-center">{{ __('Outputs') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="outputs" class="form-control @error('outputs') is-invalid @enderror" cols="80" rows="3" name="outputs" style="resize:none" placeholder="Ex: Dissertação de mestrado, tese de doutoramento, publicação de artigo científico…"></textarea>
+                                        @error('outputs')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="autos_destruicao" class="col-md-3 col-form-label text-center">{{ __('Autos de destruição (se aplicável)') }}</label>
+                                <div class="col-lg">
+                                    <input id="autos_destruicao" type="text" class="form-control @error('autos_destruicao') is-invalid @enderror" name="autos_destruicao" value="{{ old('autos_destruicao') }}" autocomplete="autos_destruicao" autofocus>
+                                    @error('autos_destruicao')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="data" class="col-md-3 col-form-label text-center">{{ __('Data') }}</label>
+                                <div class="col-lg">
+                                    <input id="data" type="date" class="form-control @error('data') is-invalid @enderror" name="data" value="{{ old('data') }}" required autocomplete="data" autofocus>
+                                    @error('data')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-0 mt-3">
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Enviar') }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
