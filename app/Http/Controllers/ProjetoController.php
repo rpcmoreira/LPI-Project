@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use GuzzleHttp\Handler\Proxy;
+use Laravel\Ui\Presets\React;
 
 class ProjetoController extends Controller {
     /**
@@ -141,5 +142,11 @@ class ProjetoController extends Controller {
 
     public function q252_form(Request $request) {
         dd($request);
+    }
+
+    public function projetoInfo(Request $request){
+        //dd($request);
+        $projeto = projeto::where('id', $request->id)->first();
+        return view('projeto_info', ['projeto' => $projeto]);
     }
 }

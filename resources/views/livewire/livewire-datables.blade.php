@@ -24,7 +24,10 @@
             @foreach($projetos as $projeto)
             <tbody>
                 <tr>
-                    <td>{{ $projeto->nome }}</td>
+                    <td><form method="POST" action="{{ route('projeto_info') }}">
+                    @csrf
+                    <button type="submit" class="btn btn-link" name="id" value="{{$projeto->id}}">{{ $projeto->nome }}</button>
+                    </form></td>
                     <td>{{ DB::table('estudos')->where('id', $projeto->estudo_id)->value('nome') }}</td>
                     <td>{{ DB::table('area')->where('id', $projeto->area_id)->value('nome') }}</td>
                     @if(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Em Curso')
