@@ -26,7 +26,7 @@
                 <tr>
                     <td><form method="POST" action="{{ route('projeto_info') }}">
                     @csrf
-                    <button type="submit" class="btn btn-link" name="id" value="{{$projeto->id}}">{{ $projeto->nome }}</button>
+                    <button type="submit" class="btn btn-link" nome="id" value="{{$projeto->id}}">{{ $projeto->nome }}</button>
                     </form></td>
                     <td>{{ DB::table('estudos')->where('id', $projeto->estudo_id)->value('nome') }}</td>
                     <td>{{ DB::table('area')->where('id', $projeto->area_id)->value('nome') }}</td>
