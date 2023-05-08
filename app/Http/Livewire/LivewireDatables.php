@@ -35,8 +35,9 @@ class LivewireDatables extends Component
 
     public function projeto($field)
     {
-        dd($field);
-        $projeto = projeto::where('id', $field->id)->first();
-        return view('projeto_info', ['projeto' => $projeto]);
+        //dd($field);
+        $projeto = projeto::where('id', $field)->first();
+        //dd($projeto);
+        return redirect('/projetoInfo', ['projeto' => $projeto]);
     }
 }

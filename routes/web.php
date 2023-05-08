@@ -20,7 +20,7 @@ Route::get('/dashboard', [ProjetoController::class, 'dashboard'])->name('dashboa
 
 Route::get('/projectlist', [ProjetoController::class, 'projectList'])->name('projectlist');
 
-Route::post('/projetoInfo', [ProjetoController::class, 'projetoInfo'])->name('projeto_info');
+Route::get('/projetoInfo', [ProjetoController::class, 'projetoInfo'])->name('projeto_info');
 
 
 //rotas teste - apagar no final
