@@ -144,9 +144,9 @@ class ProjetoController extends Controller {
         dd($request);
     }
 
-    public function projetoInfo(Request $request){
+    public function projetoInfo(){
         //dd($request);
-        $projeto = projeto::where('id', $request->id)->first();
-        return view('projeto_info', ['projeto' => $projeto]);
+        $data = session('project');
+        return view('projeto_info', ['projeto' => $data]);
     }
 }
