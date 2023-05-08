@@ -5,6 +5,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\SocialAuthController;
+use App\Http\Controllers\Auth\LoginController;
 use app\Http\Controllers\GoogleController;
 
 require_once __DIR__.'/web.php';
@@ -22,18 +23,15 @@ require_once __DIR__.'/web.php';
 //Route::get('/', [projetoController::class, 'home'])->name('first');
 Auth::routes(['verify'=>true]);
 
-//Route::get('/home', [HomeController::class, 'account'])->name('home')->middleware('auth');
+Route::get('/logged', [ProjectController::class, 'logged'])->middleware('auth');
+//Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+
 //Route::get('/create', [HomeController::class, 'create'])->name('create');
 
 Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
 Route::get('/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
 Route::get('/logged', [ProjectController::class, 'logged']);
-/*
-Route::get('auth/google', [GoogleController::class, 'loginWithGoogle'])->name('login');
-Route::any('auth/google/callback', [GoogleController::class, 'callbackFromGoogle'])->name('callback');
-Route::get('home', function() {
-    return view('homeGoogle');
-})->name('home');*/
+
 Route::get('/', [ProjectController::class, 'dashboard']);
 Route::get('/home', [ProjectController::class, 'dashboard'])->name('home')->middleware('auth');
 
