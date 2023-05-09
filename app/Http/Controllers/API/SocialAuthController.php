@@ -42,10 +42,11 @@ class SocialAuthController extends Controller
            'nome' => $user->name,
            'email' => $user->email,
            'tipo_id' => 6,
-           'password' => 'password',
+           'password' => bcrypt('password'),
            'client_id' => $user->id,
            'email_verified_at' => now(),
            ]);
+           User::where('client_id', $newUser->client_id)->first();
         Auth::login($newUser, true);
     }
     return redirect()->to('/logged');

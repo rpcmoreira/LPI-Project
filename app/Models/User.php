@@ -23,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'client_id',
+        'email_verified_at',
     ];
 
     /**
@@ -40,8 +41,8 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<string, string>
      */
-    protected $casts = [
+   /* protected $casts = [
         'email_verified_at' => 'datetime',
-    ];
+    ];*/
     public $timestamps = false;
 }
