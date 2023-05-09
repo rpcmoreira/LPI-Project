@@ -31,6 +31,19 @@
       </div>
     </div>
     @endif
+    @php $id = DB::table('projetos')->where('proponente_id', 1)->value('id');@endphp
+    @if($id != null && (DB::table('files')->where('projeto_id', $id)->where('tipo', 'q250')->value('file') == null 
+    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q251')->value('file') == null
+    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q252')->value('file') == null
+    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q381')->value('file') == null))
+    <div class="card-body">
+      <div class="alert alert-danger">
+        <p> Atenção!</p>
+        <p> Faltam 1 ou mais formulários por entregar!</p>
+        <p> Sem entregar os formulários necessários o seu projeto nào será processado!</p>
+      </div>
+    </div>
+    @endif
   </div>
 
 

@@ -140,7 +140,7 @@ class ProjetoController extends Controller {
             'estudo_id' => $request->estudos,
             'area_id' => 1,
         ]);
-        return redirect('dashboard')->with('status', 'Form Submitted!');;
+        return redirect('dashboard')->with('status', 'Submissão bem Sucedida! No entanto ainda faltam os formulários');;
     }
 
     public function q250() {
