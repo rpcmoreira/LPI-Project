@@ -17,9 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('tipo_id')->default(6);
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('client_id')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->timestamps();
 
             $table->foreign('tipo_id')->references('id')->on('tipo');
         });

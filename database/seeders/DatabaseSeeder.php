@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 use App\Models;
+use App\Models\Data;
+use App\Models\projeto;
 use App\Models\Tipo;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -30,11 +32,24 @@ class DatabaseSeeder extends Seeder
         //    ['nome' => 'estudante'],
         //)->create();
 
+
+        Data::factory()->create([
+            'data' => '2023-04-25',
+        ]);
+
+        Data::factory()->create([
+            'data' => '2023-04-26',
+        ]);
+
         $this->call([
             TipoSeeder::class,
             EstudoSeeder::class,
             AreaSeeder::class,
             UserSeeder::class,
+            EstadoSeeder::class,
+            TipoResultadoSeeder::class,
         ]);
+
+        projeto::factory(100)->create();
     }
 }

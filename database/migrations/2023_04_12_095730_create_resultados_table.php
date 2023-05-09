@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('resultados', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('tipo_id');
             $table->string('descricao');
             $table->string('observacoes');
-            $table->unsignedBigInteger('projeto_id')->nullable();
-            $table->unsignedBigInteger('file_id')->nullable();
-            $table->timestamps();
+            $table->unsignedBigInteger('projeto_id');
+            $table->unsignedBigInteger('file_id');
 
+            $table->foreign('tipo_id')->references('id')->on('tipo_resultados');
             $table->foreign('projeto_id')->references('id')->on('projetos');
             $table->foreign('file_id')->references('id')->on('files');
         });
