@@ -6,14 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "consoletvs/charts": "6.*",
+        "consoletvs/charts": "*",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.6",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^2.12"
+        "laravel/ui": "^4.2",
+        "livewire/livewire": "^2.12",
+        "stripe/stripe-php": "^10.12"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.8",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

@@ -1,7 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProjetoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\API\SocialAuthController;
+use App\Http\Controllers\Auth\LoginController;
+use app\Http\Controllers\GoogleController;
+
+require_once __DIR__.'/web.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -13,17 +20,29 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+//Route::get('/', [projetoController::class, 'home'])->name('first');
+Auth::routes(['verify'=>true]);
 
-Route::get('/', [ProjetoController::class, 'dashboard']);
+Route::get('/logged', [ProjectController::class, 'logged'])->middleware('auth');
+//Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
-Route::get('/dashboard', [ProjetoController::class, 'dashboard'])->name('dashboard');
+//Route::get('/create', [HomeController::class, 'create'])->name('create');
 
-Route::get('/projectlist', [ProjetoController::class, 'projectList'])->name('projectlist');
+Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
+Route::get('/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
+Route::get('/logged', [ProjectController::class, 'logged']);
+
+Route::get('/', [ProjectController::class, 'dashboard']);
+Route::get('/home', [ProjectController::class, 'dashboard'])->name('home')->middleware('auth');
+
+Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard');
+
+Route::get('/projectlist', [ProjectController::class, 'projectList'])->name('projectlist');
 
 Route::get('/projetoInfo', [ProjetoController::class, 'projetoInfo'])->name('projeto_info');
 
 
-//rotas teste - apagar no final
+
 Route::get('/download250',[ProjetoController::class, 'get250']);
 
 Route::get('/q250', [ProjetoController::class, 'q250'])->name('q250');

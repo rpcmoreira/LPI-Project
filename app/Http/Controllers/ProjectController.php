@@ -14,8 +14,7 @@ use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Arr;
 use Laravel\Ui\Presets\React;
 
-class ProjetoController extends Controller
-{
+class ProjectController extends Controller {
     /**
      * Display a listing of the resource.
      */
@@ -202,5 +201,25 @@ class ProjetoController extends Controller
         //dd($request);
         $data = session('project');
         return view('projeto_info', ['projeto' => $data]);
+    }
+
+    public function logged() {
+        return view('loginTest');
+    }
+    public function login(Request $request)
+    {
+        $input = $request->all();
+
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))){
+                return redirect()->route('home');
+        }else{
+            return redirect()->route('login')
+                ->with('login','Email/Password are wrong, please try again');
+        }
     }
 }
