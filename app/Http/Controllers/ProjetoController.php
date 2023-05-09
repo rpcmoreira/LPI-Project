@@ -154,6 +154,13 @@ class ProjetoController extends Controller {
         return view('forms/q381');
     }
 
+    public function q272_form(Request $request) {
+        dd($request);
+    }
+    public function q272() {
+        return view('forms/q272');
+    }
+
     public function q381_form(Request $request) {
         dd($request);
     }

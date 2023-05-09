@@ -12,4 +12,6 @@ class Data extends Model
     protected $fillable = [
         'data',
     ];
+
+    public $timestamps = false;
 }

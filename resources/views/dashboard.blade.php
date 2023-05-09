@@ -32,10 +32,9 @@
     </div>
     @endif
     @php $id = DB::table('projetos')->where('proponente_id', 1)->value('id');@endphp
-    @if($id != null && (DB::table('files')->where('projeto_id', $id)->where('tipo', 'q250')->value('file') == null 
-    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q251')->value('file') == null
+    @if($id != null && (DB::table('files')->where('projeto_id', $id)->where('tipo', 'q251')->value('file') == null
     || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q252')->value('file') == null
-    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q381')->value('file') == null))
+    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q272')->value('file') == null))
     <div class="card-body">
       <div class="alert alert-danger">
         <p> Atenção!</p>

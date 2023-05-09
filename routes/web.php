@@ -35,5 +35,9 @@ Route::post('/q251_form', [ProjetoController::class, 'q251_form'])->name('q251_f
 Route::get('/q252', [ProjetoController::class, 'q252'])->name('q252');
 Route::post('/q252_form', [ProjetoController::class, 'q252_form'])->name('q252_form');
 
+
+Route::get('/q272', [ProjetoController::class, 'q272'])->name('q272');
+Route::post('/q272_form', [ProjetoController::class, 'q272_form'])->name('q272_form');
+
 Route::get('/q381', [ProjetoController::class, 'q381'])->name('q381');
 Route::post('/q381_form', [ProjetoController::class, 'q381_form'])->name('q381_form');
