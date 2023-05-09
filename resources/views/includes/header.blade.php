@@ -18,9 +18,9 @@
         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Formulários</a>
         <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="{{ route('q250') }}">{{ __('Q250') }}</a>
-          <a class="dropdown-item" href="{{ route('q251') }}">{{ __('Q251') }}</a>
-          <a class="dropdown-item" href="{{ route('q252') }}">{{ __('Q252') }}</a>
-          <a class="dropdown-item" href="{{ route('q381') }}">{{ __('Q381') }}</a>
+          <a class="dropdown-item" href="{{ route('q251') }}">{{ __('Q251 - Submissão Parecer') }}</a>
+          <a class="dropdown-item" href="{{ route('q252') }}">{{ __('Q252 - Consentimento Informado') }}</a>
+          <a class="dropdown-item" href="{{ route('q381') }}">{{ __('Q381 - Síntese de Resultados') }}</a>
         </div>
       </li>
     </ul>
