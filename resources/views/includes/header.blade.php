@@ -1,29 +1,61 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-  <a class="navbar-brand" href="{{ url('/') }}">Sell.Me</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse"
-  data-target="#navbarSupportedContent"><span class="navbar-toggler-icon"></span></button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-dark">
+  <a href='/dashboard' class="navbar-brand mb-0 h1 text-light">
+    <img src="https://www.ufp.pt/app/uploads/2018/08/logoufp_174x70.png" class="d-inline-block" width="120" height="50" alt="Secretariado da Comissão de Ética">
+    Secretariado da Comissão de Ética
+  </a>
+  <button type="button" data-toggle="collapse" data-target="#navbarNav" class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Nav">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item ">
+        <a href="#" class="nav-link text-light">Features</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link text-light">Price</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Formulários</a>
+        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ route('q250') }}">{{ __('Q250') }}</a>
+          <a class="dropdown-item" href="{{ route('q251') }}">{{ __('Q251') }}</a>
+          <a class="dropdown-item" href="{{ route('q252') }}">{{ __('Q252') }}</a>
+          <a class="dropdown-item" href="{{ route('q381') }}">{{ __('Q381') }}</a>
+        </div>
+      </li>
+    </ul>
 
     <ul class="navbar-nav ml-auto">
-
       @guest
       <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle" href="#" role="button"
-      data-toggle="dropdown" aria-expanded="false">Account</a>
-        <ul class="dropdown-menu dropdown-menu-right">
-        @if (Route::has('login'))
-        <a class="dropdown-item" href="{{ route('login') }}">{{ ('Login') }}</a>
-        @endif
-        @if (Route::has('register'))
-        <a class="dropdown-item" href="{{ route('register') }}">
-          {{ __('Register') }}
-        </a>
-        </ul>
-      </li>
-      @endif
-      @endguest
-    </ul>
-  </div>
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+          @if (Route::has('login'))
+          <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+          @endif
 
+          @if (Route::has('register'))
+          <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+          @endif
+          @else
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light ml-auto" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ Auth::user()->nome }}
+        </a>
+        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+          </a>
+
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
+        </div>
+      </li>
+    </ul>
+    @endguest
+  </div>
 </nav>

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
+
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <h1 class="h2">Dashboard</h1>
@@ -15,6 +17,22 @@
       </button>
     </div>
   </div>
+  <div class="container">
+    @if ($message = Session::get('error'))
+    <div class="alert alert-danger">
+      <p>{{ $message }}</p>
+    </div>
+    <br>
+    @endif
+    @if($message = Session::get('status'))
+    <div class="card-body">
+      <div class="alert alert-success">
+        <p>{{ $message }}</p>
+      </div>
+    </div>
+    @endif
+  </div>
+
 
   <div>{!! $chart->container() !!}</div>
   <script src="https://code.highcharts.com/highcharts.js"></script>

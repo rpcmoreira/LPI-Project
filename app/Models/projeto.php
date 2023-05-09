@@ -12,6 +12,7 @@ class projeto extends Model
     protected $fillable = [
         'nome',
         'proponente_id',
+        'coordenador_id',
         'objetivo',
         'metodos',
         'data_id',
@@ -19,5 +20,6 @@ class projeto extends Model
         'area_id',
         'curso_id',
         'estudo_id',
+        'estado_id'
     ];
 }

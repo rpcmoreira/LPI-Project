@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use GuzzleHttp\Handler\Proxy;
+use Illuminate\Support\Arr;
 use Laravel\Ui\Presets\React;
 
 class ProjetoController extends Controller {
@@ -119,7 +120,27 @@ class ProjetoController extends Controller {
     }
 
     public function q251_form(Request $request) {
-        dd($request);
+        //dd($request);
+        $data = array('data' => $request->data_inicio);
+        $data_f = array('data' => $request->data_fim);
+        DB::table('data')->insert($data);
+        DB::table('data')->insert($data_f);
+
+        $data_inicio = DB::table('data')->where('data', $request->data_inicio)->value('id');
+        $data_fim = DB::table('data')->where('data', $request->data_fim)->value('id');
+
+        projeto::create([
+            'nome' => $request->nome,
+            'proponente_id'=> 1,
+            'objetivo' => $request->objetivo,
+            'metodos' => $request->justificacao,
+            'data_id' => $data_inicio,
+            'data_final_id' => $data_fim,
+            'coordenador_id' => $request->coordenador,
+            'estudo_id' => $request->estudos,
+            'area_id' => 1,
+        ]);
+        return redirect('dashboard')->with('status', 'Form Submitted!');;
     }
 
     public function q250() {
