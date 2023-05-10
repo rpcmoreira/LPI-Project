@@ -39,24 +39,24 @@ Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboa
 
 Route::get('/projectlist', [ProjectController::class, 'projectList'])->name('projectlist');
 
-Route::get('/projetoInfo', [ProjetoController::class, 'projetoInfo'])->name('projeto_info');
+Route::get('/projetoInfo', [ProjectController::class, 'projetoInfo'])->name('projeto_info');
 
 
 
-Route::get('/download250',[ProjetoController::class, 'get250']);
+Route::get('/download250',[ProjectController::class, 'get250']);
 
-Route::get('/q250', [ProjetoController::class, 'q250'])->name('q250');
-Route::post('/q250_form', [ProjetoController::class, 'q250_form'])->name('q250_form');
+Route::get('/q250', [ProjectController::class, 'q250'])->name('q250');
+Route::post('/q250_form', [ProjectController::class, 'q250_form'])->name('q250_form');
 
-Route::get('/q251', [ProjetoController::class, 'q251'])->name('q251');
-Route::post('/q251_form', [ProjetoController::class, 'q251_form'])->name('q251_form');
+Route::get('/q251', [ProjectController::class, 'q251'])->name('q251');
+Route::post('/q251_form', [ProjectController::class, 'q251_form'])->name('q251_form');
 
-Route::get('/q252', [ProjetoController::class, 'q252'])->name('q252');
-Route::post('/q252_form', [ProjetoController::class, 'q252_form'])->name('q252_form');
+Route::get('/q252', [ProjectController::class, 'q252'])->name('q252');
+Route::post('/q252_form', [ProjectController::class, 'q252_form'])->name('q252_form');
 
 
-Route::get('/q272', [ProjetoController::class, 'q272'])->name('q272');
-Route::post('/q272_form', [ProjetoController::class, 'q272_form'])->name('q272_form');
+Route::get('/q272', [ProjectController::class, 'q272'])->name('q272');
+Route::post('/q272_form', [ProjectController::class, 'q272_form'])->name('q272_form');
 
-Route::get('/q381', [ProjetoController::class, 'q381'])->name('q381');
-Route::post('/q381_form', [ProjetoController::class, 'q381_form'])->name('q381_form');
+Route::get('/q381', [ProjectController::class, 'q381'])->name('q381');
+Route::post('/q381_form', [ProjectController::class, 'q381_form'])->name('q381_form');
