@@ -8,7 +8,7 @@
                 <div class="card ">
                     <div class="card-header text-center">Submissão de Pedidos de Parecer - Q251</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('gerar-pdf-q251') }}">
+                        <form method="POST" action="{{ route('q251_form') }}">
                             @csrf
                             <div class="row md-3 mb-1">
                                 <label for="nome" class="col-md-3 col-form-label text-center">{{ __('Título do Estudo/Projeto') }}</label>
@@ -230,6 +230,7 @@
                                     </div>
                                 </div>
                             </div>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                             <script>
                                 $(document).ready(function() {
                                     $("input[name='consentimento']").on('change', function() {

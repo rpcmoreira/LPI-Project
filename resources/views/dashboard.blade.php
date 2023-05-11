@@ -47,7 +47,7 @@
     </table>
   </div>
   @elseif(Auth::user()->tipo_id == 6 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') != null)
-  @php $projeto = DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id'); @endphp
+  @php $projeto = DB::table('projetos')->where('proponente_id', Auth::user()->id)->first(); @endphp
   <div class="container">
     @if ($message = Session::get('error'))
     <div class="alert alert-danger">
@@ -70,7 +70,7 @@
       <div class="alert alert-danger">
         <p> Atenção!</p>
         <p> Faltam 1 ou mais formulários por entregar!</p>
-        <p> Sem entregar os formulários necessários o seu projeto nào será processado!</p>
+        <p> Sem entregar os formulários necessários o seu projeto não será processado!</p>
       </div>
     </div>
     @endif
@@ -148,16 +148,6 @@
                   </div>
                 </div>
                 <div class="row md-3 mb-1">
-                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q250') }}</label>
-                  <div class="col-lg">
-                    @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('tipo')!= null)
-                    <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('tipo')}}</p>
-                    @else
-                    <p class="col-md-3 col-form-label text-center">X</p>
-                    @endif
-                  </div>
-                </div>
-                <div class="row md-3 mb-1">
                   <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q251') }}</label>
                   <div class="col-lg">
                     @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q251')->value('file')!= null)
@@ -182,16 +172,6 @@
                   <div class="col-lg">
                     @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file')!= null)
                     <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('tipo')}}</p>
-                    @else
-                    <p class="col-md-3 col-form-label text-center">X</p>
-                    @endif
-                  </div>
-                </div>
-                <div class="row md-3 mb-1">
-                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q381') }}</label>
-                  <div class="col-lg">
-                    @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')!= null)
-                    <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')}}</p>
                     @else
                     <p class="col-md-3 col-form-label text-center">X</p>
                     @endif

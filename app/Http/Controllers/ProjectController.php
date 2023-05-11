@@ -144,7 +144,6 @@ class ProjectController extends Controller {
 
     public function q251_form(Request $request)
     {
-        //dd($request);
         $data = array('data' => $request->data_inicio);
         $data_f = array('data' => $request->data_fim);
         DB::table('data')->insert($data);
@@ -153,6 +152,9 @@ class ProjectController extends Controller {
         $data_inicio = DB::table('data')->where('data', $request->data_inicio)->value('id');
         $data_fim = DB::table('data')->where('data', $request->data_fim)->value('id');
 
+        $coordenador = DB::table('users')->where('nome', $request->coordenador)->value('id');
+        $estudos = DB::table('estudos')->where('nome', $request->estudos)->value('id');
+        
         projeto::create([
             'nome' => $request->nome,
             'proponente_id' => Auth::user()->id,
@@ -160,8 +162,8 @@ class ProjectController extends Controller {
             'metodos' => $request->justificacao,
             'data_id' => $data_inicio,
             'data_final_id' => $data_fim,
-            'coordenador_id' => $request->coordenador,
-            'estudo_id' => $request->estudos,
+            'coordenador_id' => $coordenador,
+            'estudo_id' => $estudos,
             'area_id' => 1,
         ]);
         return redirect('dashboard');
