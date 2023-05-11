@@ -8,7 +8,7 @@
                 <div class="card ">
                     <div class="card-header text-center">Submissão de Pedidos de Parecer - Q251</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('q251_form') }}">
+                        <form id="myForm" method="POST" action="{{ route('gerar-pdf-q251') }}">
                             @csrf
                             <div class="row md-3 mb-1">
                                 <label for="nome" class="col-md-3 col-form-label text-center">{{ __('Título do Estudo/Projeto') }}</label>
@@ -25,8 +25,7 @@
                             <div class="row md-3 mb-1">
                                 <label for="proponente" class="col-md-3 col-form-label text-center">{{ __('Proponente') }}</label>
                                 <div class="col-lg">
-                                <input id="proponente" type="text" class="form-control @error('proponente') is-invalid @enderror" name="proponente" 
-                                    placeholder="{{ Auth::user()->nome }}" value="{{ Auth::user()->nome }}" required autocomplete="proponente" autofocus readonly>
+                                    <input id="proponente" type="text" class="form-control @error('proponente') is-invalid @enderror" name="proponente" placeholder="{{ Auth::user()->nome }}" value="{{ Auth::user()->nome }}" required autocomplete="proponente" autofocus readonly>
                                     @error('proponente')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
