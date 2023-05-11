@@ -25,8 +25,8 @@
                             <div class="row md-3 mb-1">
                                 <label for="proponente" class="col-md-3 col-form-label text-center">{{ __('Proponente') }}</label>
                                 <div class="col-lg">
-                                    <input id="proponente" type="text" class="form-control @error('proponente') is-invalid @enderror" name="proponente" value="{{ old('proponente') }}" required autocomplete="proponente" autofocus>
-
+                                <input id="proponente" type="text" class="form-control @error('proponente') is-invalid @enderror" name="proponente" 
+                                    placeholder="{{ Auth::user()->nome }}" value="{{ Auth::user()->nome }}" required autocomplete="proponente" autofocus readonly>
                                     @error('proponente')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
