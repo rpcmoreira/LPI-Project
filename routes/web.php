@@ -60,7 +60,7 @@ Route::get('/q252', [ProjectController::class, 'q252'])->name('q252');
 Route::post('/q252_form', [ProjectController::class, 'q252_form'])->name('q252_form');
 
 
-Route::get('/q381', [ProjetoController::class, 'q381']);
+Route::get('/q381', [ProjetoController::class, 'q381'])->name('q381');
 Route::post('/q381_form', [ProjetoController::class, 'q381_form'])->name('q381_form');
 
 Route::post('/gerar-pdf-q250', 'App\Http\Controllers\PdfController@generateFilled_q250_Pdf')->name('gerar-pdf-q250');
