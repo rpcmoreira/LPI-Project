@@ -125,6 +125,12 @@ class ProjectController extends Controller {
     {
         return view('projectlist');
     }
+    public function q250() {
+        return view('forms/q250');
+    }
+    public function q250_form(Request $request) {
+        dd($request);
+    }
 
     public function q251()
     {
@@ -156,15 +162,7 @@ class ProjectController extends Controller {
         return redirect('dashboard');
     }
 
-    public function q250()
-    {
-        return view('forms/q250');
-    }
-
-    public function q250_form(Request $request)
-    {
-        dd($request);
-    }
+    
 
     public function q272_form(Request $request)
     {
