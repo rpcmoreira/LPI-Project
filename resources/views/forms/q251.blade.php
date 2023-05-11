@@ -13,8 +13,7 @@
                             <div class="row md-3 mb-1">
                                 <label for="nome" class="col-md-3 col-form-label text-center">{{ __('Título do Estudo/Projeto') }}</label>
                                 <div class="col-lg">
-                                <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" 
-                                value="{{ old('nome') }}" required autocomplete="nome" autofocus>
+                                    <input id="nome" type="text" class="form-control @error('nome') is-invalid @enderror" name="nome" value="{{ old('nome') }}" required autocomplete="nome" autofocus>
 
                                     @error('nome')
                                     <span class="invalid-feedback" role="alert">
@@ -26,8 +25,7 @@
                             <div class="row md-3 mb-1">
                                 <label for="proponente" class="col-md-3 col-form-label text-center">{{ __('Proponente') }}</label>
                                 <div class="col-lg">
-                                    <input id="proponente" type="text" class="form-control @error('proponente') is-invalid @enderror" name="proponente" 
-                                    placeholder="{{ Auth::user()->nome }}" value="{{ old('proponente') }}" required autocomplete="proponente" autofocus readonly>
+                                    <input id="proponente" type="text" class="form-control @error('proponente') is-invalid @enderror" name="proponente" value="{{ old('proponente') }}" required autocomplete="proponente" autofocus>
 
                                     @error('proponente')
                                     <span class="invalid-feedback" role="alert">
@@ -42,7 +40,7 @@
                                     <select id="estudos" name="estudos" class="form-select form-control @error('estudos') is-invalid @enderror" value="{{ old('estudos') }}" autofocus>
                                         <option value="" selected disabled hidden>-------</option>
                                         @foreach(DB::table('estudos')->get() as $estudos)
-                                        <option value="{{ $estudos->id }}" {{ request()->input('estudos') == $estudos->id ? 'selected' : '' }}>{{ $estudos->nome }}</option>
+                                        <option value="{{ $estudos->nome }}" {{ request()->input('estudos') == $estudos->nome ? 'selected' : '' }}>{{ $estudos->nome }}</option>
                                         @endforeach
                                     </select>
 
@@ -60,7 +58,7 @@
                                         <option value="" selected disabled hidden>-------</option>
                                         @php $userIds = [2,3,4]; @endphp
                                         @foreach(DB::table('users')->whereIn('users.tipo_id', $userIds)->get() as $coordenador)
-                                        <option value="{{ $coordenador->id }}" {{ request()->input('coordenador') == $coordenador->id ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
+                                        <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
                                         @endforeach
                                     </select>
                                     @error('coordenador')
