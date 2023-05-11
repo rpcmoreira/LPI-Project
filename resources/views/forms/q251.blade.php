@@ -8,7 +8,7 @@
                 <div class="card ">
                     <div class="card-header text-center">Submissão de Pedidos de Parecer - Q251</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('q251_form') }}">
+                        <form method="POST" action="{{ route('gerar-pdf-q251') }}">
                             @csrf
                             <div class="row md-3 mb-1">
                                 <label for="nome" class="col-md-3 col-form-label text-center">{{ __('Título do Estudo/Projeto') }}</label>
@@ -35,7 +35,7 @@
                                 </div>
                             </div>
                             <div class="row md-3 mb-1">
-                                <label for="estudos" class="col-md-3 col-form-label text-center">{{ __('Tipo de Estudo') }}</label>
+                                <label for="estudos" class="col-md-3 col-form-label text-center">{{ __('Licenciatura/Mestrado/Doutoramento/Outro') }}</label>
                                 <div class="col-lg">
                                     <select id="estudos" name="estudos" class="form-select form-control @error('estudos') is-invalid @enderror" value="{{ old('estudos') }}" autofocus>
                                         <option value="" selected disabled hidden>-------</option>
@@ -80,6 +80,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row md-3 mb-1">
+                                <label for="filiacao" class="col-md-3 col-form-label text-center">{{ __('Filiação Institucional') }}</label>
+                                <div class="col-lg">
+                                    <input id="filiacao" type="text" class="form-control @error('filiacao') is-invalid @enderror" name="filiacao" value="{{ old('filiacao') }}" required autocomplete="filiacao" autofocus>
+
+                                    @error('filiacao')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
                             <div class="row md-3 mb-1 mt-1">
                                 <label for="justificacao" class="col-md-3 col-form-label text-center">{{ __('Justificação') }}</label>
                                 <div class="col-lg">
@@ -119,6 +131,19 @@
                                 <div class="col-lg">
                                     <input type="date" name="data_inicio_dados" id="data_inicio_dados">
                                     <input type="date" name="data_fim_dados" id="data_fim_dados">
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="tipo_estudo" class="col-md-3 col-form-label text-center">{{ __('Tipo de Estudo:') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="tipo_estudo" class="form-control @error('tipo_estudo') is-invalid @enderror" cols="80" rows="3" name="tipo_estudo" style="resize:none"></textarea>
+                                        @error('tipo_estudo')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
                             <div class="row md-3 mb-1 mt-1">
@@ -162,16 +187,41 @@
                                 </div>
                             </div>
                             <div class="row md-3 mb-1 mt-1">
+                                <label for="instrumentos" class="col-md-3 col-form-label text-center">{{ __('Instrumento(s) de Colheita de Dados (juntar exemplo, no formato, que vai ser utilizado):') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="instrumentos" class="form-control @error('instrumentos') is-invalid @enderror" cols="80" rows="3" name="instrumentos" style="resize:none"></textarea>
+
+                                        @error('instrumentos')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="confidencialidade" class="col-md-3 col-form-label text-center">{{ __('Garantia de Confidencialidade:') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <textarea id="confidencialidade" class="form-control @error('confidencialidade') is-invalid @enderror" cols="80" rows="3" name="confidencialidade" style="resize:none"></textarea>
+
+                                        @error('confidencialidade')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row md-3 mt-1">
                                 <label for="consentimento" class="col-md-3 col-form-label text-center">{{ __('Os participantes são capazes de dar o seu consentimento informado, livre e esclarecido?') }}</label>
                                 <div class="col-lg">
                                     <div class="form-group">
                                         <br>
                                         <div>
-                                            <label for="sim">Sim
-                                                <input type="radio" name="consentimento" id="sim" value="sim">&nbsp;&nbsp;&nbsp;</label>
-
-                                            <label for="nao">Não
-                                                <input type="radio" name="consentimento" id="nao" value="nao"></label>
+                                            <label for="sim">Sim <input type="radio" id="sim" name="consentimento" value="sim">&nbsp;&nbsp;&nbsp;</label>
+                                            <label for="nao">Não <input type="radio" id="nao" name="consentimento" value="nao"></label>
                                         </div>
                                         <div id="motivoDiv" style="display:none;">
                                             <label for="motivo">Se "Não", indique p.f. qual o motivo:</label>
@@ -179,20 +229,30 @@
                                         </div>
                                     </div>
                                 </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $("input[name='consentimento']").on('change', function() {
-                                            if ($("#nao").is(':checked')) {
-                                                $("#motivoDiv").show();
-                                                $("#motivo").prop('disabled', false);
-                                            } else {
-                                                $("#motivoDiv").hide();
-                                                $("#motivo").prop('disabled', true);
-                                            }
-                                        });
+                            </div>
+                            <script>
+                                $(document).ready(function() {
+                                    $("input[name='consentimento']").on('change', function() {
+                                        if ($("input[name='consentimento']:checked").val() === 'nao') {
+                                            $("#motivoDiv").show();
+                                            $("#motivo").prop('disabled', false);
+                                        } else {
+                                            $("#motivoDiv").hide();
+                                            $("#motivo").prop('disabled', true);
+                                        }
                                     });
-                                </script>
-                                <br>
+                                });
+                            </script>
+                            <div class="row md-3 mb-1 mt-1">
+                                <label for="vulneravel" class="col-md-3 col-form-label text-center">{{ __('São indivíduos ou grupos vulneráveis?') }}</label>
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        <br>
+                                        <div>
+                                            <label for="vulneravel">Sim <input type="checkbox" id="vulneravel" name="vulneravel" value="1">&nbsp;&nbsp;&nbsp;</label>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="row md-3 mb-1 mt-1">

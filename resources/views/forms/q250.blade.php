@@ -7,7 +7,7 @@
         <div class="card">
           <div class="card-header text-center">Formulário para elaboração dos pareceres pelos membros da Comissão de Ética para a Saúde do Hospital-Escola da UFP-FFP</div>
           <div class="card-body">
-            <form method="POST" action="{{ route('q250_form') }}">
+            <form method="POST" action="{{ route('gerar-pdf-q250') }}">
               @csrf
               <div class="row md-3 mb-1">
                 <label for="nome_investigador" class="col-md-3 col-form-label text-center">{{ __('Nome do investigador') }}</label>
@@ -61,7 +61,7 @@
               <div class="row md-3 mb-1">
                 <label for="nome_coorientador" class="col-md-3 col-form-label text-center">{{ __('Nome do coorientador') }}</label>
                 <div class="col-lg">
-                  <input id="nome_coorientador" type="text" class="form-control @error('nome_coorientador') is-invalid @enderror" name="nome_coorientador" value="{{ old('nome_coorientador') }}" autocomplete="nome_coorientador" autofocus>
+                  <input id="nome_coorientador" type="text" class="form-control @error('c') is-invalid @enderror" name="nome_coorientador" value="{{ old('nome_coorientador') }}" autocomplete="nome_coorientador" autofocus>
                   @error('nome_coorientador')
                   <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -87,8 +87,6 @@
                 @endforeach
               </div>
 
-
-
               <div class="card-header">&nbsp&nbsp&nbsp&nbsp6. Consentimento Informado</div>
               <div class="card-body">
                 @foreach ([
@@ -102,7 +100,23 @@
                 @endforeach
               </div>
 
-              <div class="card-header">&nbsp&nbsp&nbsp&nbsp7. Parecer do Relator</div>
+              <div class="card-header">&nbsp&nbsp&nbsp&nbsp7. Os métodos e os instrumentos usados na recolha dos dados</div>
+              <div class="card-body">
+                @foreach ([
+                'dados_sensiveis' => 'Há recolha de dados sensíveis',
+                'procedimentos_descritos' => 'Os procedimentos para obtenção dos dados estão devidamente descritos',
+                'instrumentos_descritos' => 'Os instrumentos que serão usados estão descritos, a sua autoria está devidamente identificada',
+                'instrumentos_anexados' => 'Instrumentos estão anexados ao projeto',
+                'garantia_confidencialidade' => 'Há garantia de confidencialidade e anonimato dos dados recolhidos',
+                ] as $field => $label)
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" name="{{ $field }}" id="{{ $field }}" value="1" {{ old($field) ? 'checked' : '' }}>
+                  <label class="form-check-label" for="{{ $field }}">{{ $label }}</label>
+                </div>
+                @endforeach
+              </div>
+
+              <div class="card-header">Parecer do Relator</div>
               <div class="card-body">
                 @foreach ([
                 'parecer_positivo' => 'Parecer Positivo',

@@ -112,34 +112,31 @@ class ProjetoController extends Controller {
     public function projectList() {
         return view('projectlist');
     }
+    public function q250() {
+        return view('forms/q250');
+    }
+    public function q250_form(Request $request) {
+        dd($request);
+    }
 
     public function q251() {
         return view('forms/q251');
     }
-
     public function q251_form(Request $request) {
         dd($request);
     }
 
-    public function q250() {
-        return view('forms/q250');
-    }
-
-    public function q250_form(Request $request) {
-        dd($request);
-    }
-    public function q381() {
-        return view('forms/q381');
-    }
-
-    public function q381_form(Request $request) {
-        dd($request);
-    }
     public function q252() {
         return view('forms/q252');
     }
-
     public function q252_form(Request $request) {
+        dd($request);
+    }
+    
+    public function q381() {
+        return view('forms/q381');
+    }
+    public function q381_form(Request $request) {
         dd($request);
     }
 }

@@ -13,7 +13,7 @@
                             <label for="razoes_parecer" class="col-md-12 col-form-label text-center">Por favor, leia com atenção a seguinte informação. Se achar que algo está incorreto ou não está claro, não hesite em solicitar mais informações. Se concorda com a proposta que lhe foi feita, queira assinar este documento.</label>
                         </div>
                         </BR>
-                        <form method="POST" action="{{ route('q251_form') }}">
+                        <form method="POST" action="{{ route('gerar-pdf-q252') }}">
                             @csrf
                             <div class="row md-3 mb-1">
                                 <label for="titulo" class="col-md-3 col-form-label text-center">{{ __('Título do estudo/projeto:') }}</label>
@@ -86,8 +86,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-
 
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">

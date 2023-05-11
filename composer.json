@@ -11,7 +11,10 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "livewire/livewire": "^2.12"
+        "livewire/livewire": "^2.12",
+        "mikehaertl/php-pdftk": "^0.13.0",
+        "spatie/laravel-html": "^3.2",
+        "spatie/laravel-support-bubble": "^1.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -63,6 +66,12 @@
             "php-http/discovery": true
         }
     },
-    "minimum-stability": "stable",
+	"repositories": [
+        {
+            "type": "composer",
+            "url": "https://packagist.org"
+        }
+    ],
+    "minimum-stability": "dev",
     "prefer-stable": true
 }
