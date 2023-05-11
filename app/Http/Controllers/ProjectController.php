@@ -13,6 +13,7 @@ use ConsoleTVs\Charts\Facades\Charts;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Arr;
 use Laravel\Ui\Presets\React;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller {
     /**
@@ -69,6 +70,10 @@ class ProjectController extends Controller {
     public function destroy(projeto $projeto)
     {
         //
+    }
+
+    public function start(){
+        return view('welcome');
     }
 
     public function storeForm(Request $request)
@@ -150,7 +155,7 @@ class ProjectController extends Controller {
 
         projeto::create([
             'nome' => $request->nome,
-            'proponente_id' => 1,
+            'proponente_id' => Auth::user()->id,
             'objetivo' => $request->objetivo,
             'metodos' => $request->justificacao,
             'data_id' => $data_inicio,

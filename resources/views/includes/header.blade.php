@@ -1,11 +1,12 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-dark">
-  <a href='/dashboard' class="navbar-brand mb-0 h1 text-light">
+  <a href='/' class="navbar-brand mb-0 h1 text-light">
     <img src="https://www.ufp.pt/app/uploads/2018/08/logoufp_174x70.png" class="d-inline-block" width="120" height="50" alt="Secretariado da Comissão de Ética">
     Secretariado da Comissão de Ética
   </a>
   <button type="button" data-toggle="collapse" data-target="#navbarNav" class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Nav">
     <span class="navbar-toggler-icon"></span>
   </button>
+  @if(Auth::user() != null)
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item ">
@@ -24,6 +25,7 @@
         </div>
       </li>
     </ul>
+    @endif
 
     <ul class="navbar-nav ml-auto">
       @guest

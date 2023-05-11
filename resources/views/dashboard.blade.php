@@ -4,47 +4,10 @@
 
 
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+  @if(Auth::user()->tipo_id == 5)
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
     <h1 class="h2">Dashboard</h1>
-    <div class="btn-toolbar mb-2 mb-md-0">
-      <div class="btn-group mr-2">
-        <button class="btn btn-sm btn-outline-secondary">Share</button>
-        <button class="btn btn-sm btn-outline-secondary">Export</button>
-      </div>
-      <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-        <span data-feather="calendar"></span>
-        This week
-      </button>
-    </div>
   </div>
-  <div class="container">
-    @if ($message = Session::get('error'))
-    <div class="alert alert-danger">
-      <p>{{ $message }}</p>
-    </div>
-    <br>
-    @endif
-    @if($message = Session::get('status'))
-    <div class="card-body">
-      <div class="alert alert-success">
-        <p>{{ $message }}</p>
-      </div>
-    </div>
-    @endif
-    @php $id = DB::table('projetos')->where('proponente_id', 1)->value('id');@endphp
-    @if($id != null && (DB::table('files')->where('projeto_id', $id)->where('tipo', 'q251')->value('file') == null
-    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q252')->value('file') == null
-    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q272')->value('file') == null))
-    <div class="card-body">
-      <div class="alert alert-danger">
-        <p> Atenção!</p>
-        <p> Faltam 1 ou mais formulários por entregar!</p>
-        <p> Sem entregar os formulários necessários o seu projeto nào será processado!</p>
-      </div>
-    </div>
-    @endif
-  </div>
-
 
   <div>{!! $chart->container() !!}</div>
   <script src="https://code.highcharts.com/highcharts.js"></script>
@@ -83,9 +46,179 @@
       @endforeach
     </table>
   </div>
+  @elseif(Auth::user()->tipo_id == 6 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') != null)
+  @php $projeto = DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id'); @endphp
+  <div class="container">
+    @if ($message = Session::get('error'))
+    <div class="alert alert-danger">
+      <p>{{ $message }}</p>
+    </div>
+    <br>
+    @endif
+    @if($message = Session::get('status'))
+    <div class="card-body">
+      <div class="alert alert-success">
+        <p>{{ $message }}</p>
+      </div>
+    </div>
+    @endif
+    @php $id = DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id');@endphp
+    @if($id != null && (DB::table('files')->where('projeto_id', $id)->where('tipo', 'q251')->value('file') == null
+    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q252')->value('file') == null
+    || DB::table('files')->where('projeto_id', $id)->where('tipo', 'q272')->value('file') == null))
+    <div class="card-body">
+      <div class="alert alert-danger">
+        <p> Atenção!</p>
+        <p> Faltam 1 ou mais formulários por entregar!</p>
+        <p> Sem entregar os formulários necessários o seu projeto nào será processado!</p>
+      </div>
+    </div>
+    @endif
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg">
+        <div class="card">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-lg">
+                <p class="text-left font-italic"><span class="align-bottom"> {{DB::table('data')->where('id', $projeto->data_id)->value('data')}} -
+                    {{DB::table('data')->where('id', $projeto->data_final_id)->value('data')}}</span></p>
+              </div>
+              <div class="col-lg">
+                <p class="text-center font-weight-bold"><span class="align-bottom"> {{$projeto->nome}}</span></p>
+              </div>
+              <div class="col-lg">
+                @if(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Em Curso')
+                <p class="text-right align-bottom font-weight-bold" style="color:green;">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}
+                  @elseif(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Falta Informação')
+                <p class="text-right align-bottom font-weight-bold" style="color:red;">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</p>
+                @elseif(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Finalizado' )
+                <p class="text-right font-weight-bold" style="color:grey; ">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</p>
+                @else
+                <p class="text-right font-weight-bold" style="color:orange;"><span class="align-bottom">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</span></p>
+                @endif
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-8">
+                <div class="row md-3 mb-1">
+                  <label for="Proponente" class="col-md-3 col-form-label text-center">{{ __('Proponente:') }}</label>
+                  <div class="col-lg">
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('users')->where('id', $projeto->proponente_id)->value('nome')}}</p>
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Proponente" class="col-md-3 col-form-label text-center">{{ __('Email do Proponente:') }}</label>
+                  <div class="col-lg">
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('users')->where('id', $projeto->proponente_id)->value('email')}}</p>
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Metodos" class="col-md-3 col-form-label text-center">{{ __('Métodos:') }}</label>
+                  <div class="col-lg">
+                    <p class="col-md-3 col-form-label text-center">{{$projeto->metodos}}</p>
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Objetivo" class="col-md-3 col-form-label text-center">{{ __('Objetivos:') }}</label>
+                  <div class="col-lg">
+                    <p class="col-md-3 col-form-label text-center">{{$projeto->objetivo}}</p>
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Area de Conhecimento:') }}</label>
+                  <div class="col-lg">
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('area')->where('id', $projeto->area_id)->value('nome')}}</p>
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Tipo de Projeto:') }}</label>
+                  <div class="col-lg">
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('estudos')->where('id', $projeto->area_id)->value('nome')}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-4">
+                <div class="row md-3 mb-1">
+                  <div class="col-lg">
+                    <p class="col-form-label font-weight-bold">{{__('Ficheiros do Projeto')}}</p>
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q250') }}</label>
+                  <div class="col-lg">
+                    @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('tipo')!= null)
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('tipo')}}</p>
+                    @else
+                    <p class="col-md-3 col-form-label text-center">X</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q251') }}</label>
+                  <div class="col-lg">
+                    @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q251')->value('file')!= null)
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('tipo')}}</p>
+                    @else
+                    <p class="col-md-3 col-form-label text-center">X</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q252') }}</label>
+                  <div class="col-lg">
+                    @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('file')!= null)
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('tipo')}}</p>
+                    @else
+                    <p class="col-md-3 col-form-label text-center">X</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q272') }}</label>
+                  <div class="col-lg">
+                    @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file')!= null)
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('tipo')}}</p>
+                    @else
+                    <p class="col-md-3 col-form-label text-center">X</p>
+                    @endif
+                  </div>
+                </div>
+                <div class="row md-3 mb-1">
+                  <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q381') }}</label>
+                  <div class="col-lg">
+                    @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')!= null)
+                    <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')}}</p>
+                    @else
+                    <p class="col-md-3 col-form-label text-center">X</p>
+                    @endif
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      @elseif(Auth::user()->tipo_id == 6 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') == null)
+      <div class="card-header">
+        <h2>Bem vindo {{ Auth::user()->nome }}!</h2>
+      </div>
+      <div class="card-body">
+        <h5>Não te esqueças de criar o teu pedido de projeto preenchendo o formulário Q251!</h5>
+      </div>
+      @elseif(Auth::user()->tipo_id == 2 || Auth::user()->tipo_id == 3 || Auth::user()->tipo_id == 4)
+      <div class="card-header">
+        <h2>Bem vindo {{ Auth::user()->nome }}!</h2>
+      </div>
+      <div class="card-body">
+        <h5>Dashboard</h5>
+      </div>
+      @endif
 </main>
-</div>
-</div>
 
 
 @endsection
