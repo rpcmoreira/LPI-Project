@@ -67,9 +67,11 @@ Route::post('/q381_form', [ProjectController::class, 'q381_form'])->name('q381_f
 
 Route::get('/addForms', [ProjectController::class, 'addForms'])->name('addForms')->middleware('auth');
 Route::post('/guardarFicheiros', [ProjectController::class, 'guardarFicheiros'])->name('guardarFicheiros');
+Route::get('/download/{filename}', [ProjectController::class, 'download'])->name('file.download');
 
 Route::post('/gerar-pdf-q250', 'App\Http\Controllers\PdfController@generateFilled_q250_Pdf')->name('gerar-pdf-q250')->middleware('auth');
 Route::post('/gerar-pdf-q251', 'App\Http\Controllers\PdfController@generateFilled_q251_Pdf')->name('gerar-pdf-q251')->middleware('auth');
 Route::post('/gerar-pdf-q252', 'App\Http\Controllers\PdfController@generateFilled_q252_Pdf')->name('gerar-pdf-q252')->middleware('auth');
 
 Route::get('/download-252', [DownloadController::class, 'download'])->name('download-252');
+

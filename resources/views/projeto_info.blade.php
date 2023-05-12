@@ -81,8 +81,8 @@
                                     <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q250') }}</label>
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('tipo')!= null)
-                                        <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('tipo')}}</p>
-                                        @else
+                                        @php $q250 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('file');@endphp
+                                        <a href="{{ route('file.download', ['filename' => basename($q250)]) }}" class="btn btn-link">Download Q251</a>
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
                                     </div>
@@ -91,7 +91,8 @@
                                     <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q251') }}</label>
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q251')->value('file')!= null)
-                                        <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('tipo')}}</p>
+                                        @php $q251 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q251')->value('file');@endphp
+                                        <a href="{{ route('file.download', ['filename' => basename($q251)]) }}" class="btn btn-link">Download Q251</a>
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
@@ -101,7 +102,8 @@
                                     <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q252') }}</label>
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('file')!= null)
-                                        <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('tipo')}}</p>
+                                        @php $q252 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('file');@endphp
+                                        <a href="{{ route('file.download', ['filename' => basename($q252)]) }}" class="btn btn-link">Download Q251</a>
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
@@ -111,7 +113,8 @@
                                     <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q272') }}</label>
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file')!= null)
-                                        <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('tipo')}}</p>
+                                        @php $q272 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file');@endphp
+                                        <a href="{{ route('file.download', ['filename' => basename($q272)]) }}" class="btn btn-link">Download Q251</a>                                        
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
@@ -121,7 +124,8 @@
                                     <label for="Area" class="col-md-3 col-form-label text-center">{{ __('Q381') }}</label>
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')!= null)
-                                        <p class="col-md-3 col-form-label text-center">{{DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')}}</p>
+                                        @php $q381 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file');@endphp
+                                        <a href="{{ route('file.download', ['filename' => basename($q381)]) }}" class="btn btn-link">Download Q251</a>                                        
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif

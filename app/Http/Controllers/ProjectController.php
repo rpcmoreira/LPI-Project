@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ProjectController extends Controller
 {
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -178,7 +178,7 @@ class ProjectController extends Controller
 
 
 
-    
+
     public function q272()
     {
         $file = public_path() . "/forms/Q272-Pedido-de-Autorização-Realização-de-investigação.docx";
@@ -254,15 +254,17 @@ class ProjectController extends Controller
             'Q272' => 'required',
         ]);
 
-        
+
         //$q252 = $request->file('Q252')->store('files');
         //$q272 = $request->file('Q272')->store('files');
 
         $projeto = DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id');
 
-        if(DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q251')->value('file') == null && 
-        DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q252')->value('file') == null &&
-        DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q272')->value('file') == null){
+        if (
+            DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q251')->value('file') == null &&
+            DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q252')->value('file') == null &&
+            DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q272')->value('file') == null
+        ) {
             $q251 = $request->file('Q251')->store('files');
             File::create([
                 'tipo' => 'q251',
@@ -283,10 +285,30 @@ class ProjectController extends Controller
             ]);
 
             DB::table('projetos')->where('proponente_id', Auth::user()->id)->update(['estado_id' => 1]);
-            
+
 
             return redirect()->route('dashboard')->with('status', 'Formulários Submetidos');
+        } else return redirect()->route('dashboard')->with('warning', 'Formulários ja tinham sido submetidos');
+    }
+
+    public function download($filename)
+    {
+
+        $filePath = storage_path('app/files/' . $filename);
+        $tipo = DB::table('files')->where('file', 'files/'.$filename)->value('tipo');
+        $projeto = DB::table('projetos')->where('id', DB::table('files')->where('file', 'files/'.$filename)->value('projeto_id'))->value('nome');
+        $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', DB::table('files')
+        ->where('file', 'files/'.$filename)->value('projeto_id'))->value('proponente_id'))->value('nome');
+
+        $ficheiro = "$projeto .'_'.$tipo.'_'.$nome.'.pdf'";
+        dd($filename);  
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            // Return the file download response
+            return response()->download($filePath, $ficheiro);
+        } else {
+            // File not found, handle the error
+            abort(404);
         }
-        else return redirect()->route('dashboard')->with('warning', 'Formulários ja tinham sido submetidos');
-    } 
+    }
 }
