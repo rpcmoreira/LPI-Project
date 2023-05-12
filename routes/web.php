@@ -44,8 +44,6 @@ Route::get('/projectlist', [ProjectController::class, 'projectList'])->name('pro
 Route::get('/projetoInfo', [ProjectController::class, 'projetoInfo'])->name('projeto_info')->middleware('auth');
 
 
-
-
 Route::get('/q250', [ProjectController::class, 'q250'])->name('q250')->middleware('auth');
 Route::post('/q250_form', [ProjectController::class, 'q250_form'])->name('q250_form')->middleware('auth');
 
@@ -75,3 +73,4 @@ Route::post('/gerar-pdf-q252', 'App\Http\Controllers\PdfController@generateFille
 
 Route::get('/download-252', [DownloadController::class, 'download'])->name('download-252');
 
+Route::post('/changeProjectState', [ProjectController::class, 'changeProjectState'])->name('changeProjectState');

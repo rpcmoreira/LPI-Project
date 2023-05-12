@@ -16,18 +16,45 @@
                             <div class="col-lg">
                                 <p class="text-center font-weight-bold"><span class="align-bottom"> {{$projeto->nome}}</span></p>
                             </div>
-                            
+
                             <div class="col-lg">
-                                @if(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Em Curso')
-                                <p class="text-right align-bottom font-weight-bold" style="color:green;">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}
-                                    @elseif(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Falta Informação')
-                                <p class="text-right align-bottom font-weight-bold" style="color:red;">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</p>
-                                @elseif(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Finalizado' )
-                                <p class="text-right font-weight-bold" style="color:grey; ">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</p>
+                                @php
+                                $current_state = $projectStates[$projeto->estado_id];
+                                @endphp
+                                @if($current_state == 'Em Curso')
+                                <p class="text-right align-bottom font-weight-bold" style="color:green;">{{ $current_state }}</p>
+                                @elseif($current_state == 'Falta Informação')
+                                <p class="text-right align-bottom font-weight-bold" style="color:red;">{{ $current_state }}</p>
+                                @elseif($current_state == 'Finalizado')
+                                <p class="text-right font-weight-bold" style="color:grey;">{{ $current_state }}</p>
                                 @else
-                                <p class="text-right font-weight-bold" style="color:orange;"><span class="align-bottom">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</span></p>
+                                <p class="text-right font-weight-bold" style="color:orange;"><span class="align-bottom">{{ $current_state }}</span></p>
                                 @endif
                             </div>
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            <script>
+                                $(document).ready(function() {
+                                    $('#projectState').change(function() {
+                                        var projeto_id = "{{$projeto->id}}"; // Fetch the id of the current project
+                                        var projectState = $(this).val();
+                                        $.ajax({
+                                            url: '/changeProjectState', // Make sure this URL points to your `changeProjectState` route
+                                            type: 'POST',
+                                            data: {
+                                                "_token": $('meta[name="csrf-token"]').attr('content'),
+                                                "projeto_id": projeto_id,
+                                                "projectState": projectState
+                                            },
+                                            success: function(response) {
+                                                location.reload(); // Refresh the page to show updated project state
+                                            },
+                                            error: function(jqXHR, textStatus, errorThrown) {
+                                                console.log(textStatus, errorThrown);
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
 
                         </div>
                     </div>
@@ -131,6 +158,21 @@
                                         @endif
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer">
+                                <form method="POST" action="{{ route('changeProjectState') }}">
+                                    @csrf
+                                    <input type="hidden" name="projeto_id" value="{{ $projeto->id }}">
+                                    <div class="form-group">
+                                        <label for="projectState">Change Project State:</label>
+                                        <select class="form-control" id="projectState" name="projectState">
+                                            @foreach($projectStates as $id => $state)
+                                            <option value="{{ $id }}" {{ $projeto->estado_id == $id ? 'selected' : '' }}>{{ $state }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Change State</button>
+                                </form>
                             </div>
                         </div>
                     </div>
