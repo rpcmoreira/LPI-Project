@@ -293,15 +293,15 @@ class ProjectController extends Controller
 
     public function download($filename)
     {
-
+        //dd($filename);
         $filePath = storage_path('app/files/' . $filename);
         $tipo = DB::table('files')->where('file', 'files/'.$filename)->value('tipo');
         $projeto = DB::table('projetos')->where('id', DB::table('files')->where('file', 'files/'.$filename)->value('projeto_id'))->value('nome');
         $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', DB::table('files')
         ->where('file', 'files/'.$filename)->value('projeto_id'))->value('proponente_id'))->value('nome');
 
-        $ficheiro = "$projeto .'_'.$tipo.'_'.$nome.'.pdf'";
-        dd($filename);  
+        $ficheiro = $projeto .'_'.$tipo.'_'.$nome.'.pdf';
+        //dd($filename);  
         // Check if the file exists
         if (file_exists($filePath)) {
             // Return the file download response
