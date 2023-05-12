@@ -207,7 +207,7 @@ class ProjectController extends Controller
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $new_state]);
 
         // After the update, redirect back to the previous page with a success message
-        return redirect()->back()->with('success', 'Project state changed successfully!');
+        return redirect()->route('projectInfo')->with('success', 'Project state changed successfully!');
     }
 
     public function logged() {
