@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\SocialAuthController;
 use App\Http\Controllers\Auth\LoginController;
 use app\Http\Controllers\GoogleController;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
 require_once __DIR__.'/web.php';
 
@@ -49,9 +50,9 @@ Route::get('/q250', [ProjectController::class, 'q250'])->name('q250')->middlewar
 Route::post('/q250_form', [ProjectController::class, 'q250_form'])->name('q250_form')->middleware('auth');
 
 //rotas teste - apagar no final
-Route::get('/download250',[ProjetoController::class, 'get250'])->middleware('auth');
-Route::get('/download251',[ProjetoController::class, 'get251'])->middleware('auth');
-Route::get('/download252',[ProjetoController::class, 'get252'])->middleware('auth');
+Route::get('/download250',[ProjectController::class, 'get250'])->middleware('auth');
+Route::get('/download251',[ProjectController::class, 'get251'])->middleware('auth');
+Route::get('/download252',[ProjectController::class, 'get252'])->middleware('auth');
 
 Route::get('/q251', [ProjectController::class, 'q251'])->name('q251')->middleware('auth');
 Route::post('/q251_form', [ProjectController::class, 'q251_form'])->name('q251_form')->middleware('auth');
@@ -59,8 +60,13 @@ Route::post('/q251_form', [ProjectController::class, 'q251_form'])->name('q251_f
 Route::get('/q252', [ProjectController::class, 'q252'])->name('q252')->middleware('auth');
 Route::post('/q252_form', [ProjectController::class, 'q252_form'])->name('q252_form')->middleware('auth');
 
-Route::get('/q381', [ProjetoController::class, 'q381'])->name('q381')->middleware('auth');
-Route::post('/q381_form', [ProjetoController::class, 'q381_form'])->name('q381_form')->middleware('auth');
+Route::get('/q272', [ProjectController::class, 'q272'])->name('q272')->middleware('auth');
+
+Route::get('/q381', [ProjectController::class, 'q381'])->name('q381')->middleware('auth');
+Route::post('/q381_form', [ProjectController::class, 'q381_form'])->name('q381_form')->middleware('auth');
+
+Route::get('/addForms', [ProjectController::class, 'addForms'])->name('addForms')->middleware('auth');
+Route::post('/guardarFicheiros', [ProjectController::class, 'guardarFicheiros'])->name('guardarFicheiros');
 
 Route::post('/gerar-pdf-q250', 'App\Http\Controllers\PdfController@generateFilled_q250_Pdf')->name('gerar-pdf-q250')->middleware('auth');
 Route::post('/gerar-pdf-q251', 'App\Http\Controllers\PdfController@generateFilled_q251_Pdf')->name('gerar-pdf-q251')->middleware('auth');

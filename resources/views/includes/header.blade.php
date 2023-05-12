@@ -21,6 +21,7 @@
             <a class="dropdown-item" href="{{ route('q250') }}">{{ __('Q250') }}</a>
             <a class="dropdown-item" href="{{ route('q251') }}">{{ __('Q251 - Submissão Parecer') }}</a>
             <a class="dropdown-item" href="{{ route('q252') }}">{{ __('Q252 - Consentimento Informado') }}</a>
+            <a class="dropdown-item" href="{{ route('q272') }}">{{ __('Q272 - Pedido Autorização') }}</a>
             <a class="dropdown-item" href="{{ route('q381') }}">{{ __('Q381 - Síntese de Resultados') }}</a>
           </div>
       </li>

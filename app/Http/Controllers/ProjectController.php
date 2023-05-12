@@ -14,8 +14,12 @@ use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Arr;
 use Laravel\Ui\Presets\React;
 use Illuminate\Support\Facades\Auth;
+use Termwind\Components\Dd;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
-class ProjectController extends Controller {
+class ProjectController extends Controller
+{
+    
     /**
      * Display a listing of the resource.
      */
@@ -72,7 +76,8 @@ class ProjectController extends Controller {
         //
     }
 
-    public function start(){
+    public function start()
+    {
         return view('welcome');
     }
 
@@ -130,10 +135,12 @@ class ProjectController extends Controller {
     {
         return view('projectlist');
     }
-    public function q250() {
+    public function q250()
+    {
         return view('forms/q250');
     }
-    public function q250_form(Request $request) {
+    public function q250_form(Request $request)
+    {
         dd($request);
     }
 
@@ -154,7 +161,7 @@ class ProjectController extends Controller {
 
         $coordenador = DB::table('users')->where('nome', $request->coordenador)->value('id');
         $estudos = DB::table('estudos')->where('nome', $request->estudos)->value('id');
-        
+
         projeto::create([
             'nome' => $request->nome,
             'proponente_id' => Auth::user()->id,
@@ -169,15 +176,13 @@ class ProjectController extends Controller {
         return redirect('dashboard');
     }
 
-    
 
-    public function q272_form(Request $request)
-    {
-        dd($request);
-    }
+
+    
     public function q272()
     {
-        return view('forms/q272');
+        $file = public_path() . "/forms/Q272-Pedido-de-Autorização-Realização-de-investigação.docx";
+        return Response::download($file);
     }
 
 
@@ -205,11 +210,19 @@ class ProjectController extends Controller {
     {
         //dd($request);
         $data = session('project');
-        return view('projeto_info', ['projeto' => $data]);
+        $projectStates = [
+            1 => 'Pendente',
+            2 => 'Em Curso',
+            3 => 'Finalizado',
+            4 => 'A Espera de Aprovação',
+            5 => 'Falta Informação',
+        ];
+        return view('projeto_info', ['projeto' => $data], compact('projectStates'));
     }
 
-    public function logged() {
-        return view('loginTest');
+    public function logged()
+    {
+        return view('dashboard');
     }
     public function login(Request $request)
     {
@@ -220,11 +233,60 @@ class ProjectController extends Controller {
             'password' => 'required',
         ]);
 
-        if(auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))){
-                return redirect()->route('home');
-        }else{
+        if (auth()->attempt(array('email' => $input['email'], 'password' => $input['password']))) {
+            return redirect()->route('home');
+        } else {
             return redirect()->route('login')
-                ->with('login','Email/Password are wrong, please try again');
+                ->with('login', 'Email/Password are wrong, please try again');
         }
     }
+
+    public function addForms()
+    {
+        return view('addFiles');
+    }
+
+    public function guardarFicheiros(Request $request)
+    {
+        $request->validate([
+            'Q251' => 'required',
+            'Q252' => 'required',
+            'Q272' => 'required',
+        ]);
+
+        
+        //$q252 = $request->file('Q252')->store('files');
+        //$q272 = $request->file('Q272')->store('files');
+
+        $projeto = DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id');
+
+        if(DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q251')->value('file') == null && 
+        DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q252')->value('file') == null &&
+        DB::table('files')->where('projeto_id', $projeto)->where('tipo', 'q272')->value('file') == null){
+            $q251 = $request->file('Q251')->store('files');
+            File::create([
+                'tipo' => 'q251',
+                'file' => $q251,
+                'projeto_id' => $projeto,
+            ]);
+            $q252 = $request->file('Q252')->store('files');
+            File::create([
+                'tipo' => 'q252',
+                'file' => $q252,
+                'projeto_id' => $projeto,
+            ]);
+            $q272 = $request->file('Q272')->store('files');
+            File::create([
+                'tipo' => 'q272',
+                'file' => $q272,
+                'projeto_id' => $projeto,
+            ]);
+
+            DB::table('projetos')->where('proponente_id', Auth::user()->id)->update(['estado_id' => 1]);
+            
+
+            return redirect()->route('dashboard')->with('status', 'Formulários Submetidos');
+        }
+        else return redirect()->route('dashboard')->with('warning', 'Formulários ja tinham sido submetidos');
+    } 
 }

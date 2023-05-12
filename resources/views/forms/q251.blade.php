@@ -8,7 +8,7 @@
                 <div class="card ">
                     <div class="card-header text-center">Submissão de Pedidos de Parecer - Q251</div>
                     <div class="card-body">
-                        <form id="myForm" method="POST" action="{{ route('gerar-pdf-q251') }}">
+                        <form method="POST" action="{{ route('gerar-pdf-q251') }}">
                             @csrf
                             <div class="row md-3 mb-1">
                                 <label for="nome" class="col-md-3 col-form-label text-center">{{ __('Título do Estudo/Projeto') }}</label>
@@ -73,7 +73,7 @@
                                 <div class="col-lg">
                                     <div class="form-group">
                                         <input type="file" accept=".pdf," class="form-control-file" name="cv" placeholder="Choose your CV" id="cv">
-                                        @error('img')
+                                        @error('cv')
                                         <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                                         @enderror
                                     </div>

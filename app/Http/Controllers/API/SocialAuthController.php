@@ -49,7 +49,7 @@ class SocialAuthController extends Controller
            User::where('client_id', $newUser->client_id)->first();
         Auth::login($newUser, true);
     }
-    return redirect()->to('/logged');
+    return redirect()->route('dashboard')->with('status', 'Login Bem Sucedido, Bem Vindo!');
 
     }
 

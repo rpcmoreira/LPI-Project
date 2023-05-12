@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@php $projeto = session('projeto');@endphp
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4" style="height: 100%;">
     <div class="container">
         <div class="row justify-content-center">
@@ -16,6 +16,7 @@
                             <div class="col-lg">
                                 <p class="text-center font-weight-bold"><span class="align-bottom"> {{$projeto->nome}}</span></p>
                             </div>
+                            
                             <div class="col-lg">
                                 @if(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Em Curso')
                                 <p class="text-right align-bottom font-weight-bold" style="color:green;">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}
@@ -27,6 +28,7 @@
                                 <p class="text-right font-weight-bold" style="color:orange;"><span class="align-bottom">{{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }}</span></p>
                                 @endif
                             </div>
+
                         </div>
                     </div>
                     <div class="card-body">

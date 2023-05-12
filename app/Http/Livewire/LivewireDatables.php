@@ -12,7 +12,7 @@ class LivewireDatables extends Component
 {
     use WithPagination;
     public $sort = 'nome';
-    
+
     public $direction = 'asc';
 
     public $perPage = 16;
@@ -35,9 +35,9 @@ class LivewireDatables extends Component
 
     public function projeto($field)
     {
-        //dd($field);
         $projeto = projeto::where('id', $field)->first();
-        //dd($projeto);
-        return redirect('/projetoInfo')->with('project', $projeto);
+        session(['projeto' => $projeto]);
+        session()->save();
+        return redirect('/projetoInfo');
     }
 }
