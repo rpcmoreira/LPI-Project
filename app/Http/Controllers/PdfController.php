@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use mikehaertl\pdftk\Pdf;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\projeto;
 
 class PdfController extends Controller {
     public function generateFilled_q250_Pdf(Request $request) {
@@ -47,6 +51,30 @@ class PdfController extends Controller {
     }
 
     public function generateFilled_q251_Pdf(Request $request) {
+        
+        $data = array('data' => $request->data_inicio);
+        $data_f = array('data' => $request->data_fim);
+        DB::table('data')->insert($data);
+        DB::table('data')->insert($data_f);
+
+        $data_inicio = DB::table('data')->where('data', $request->data_inicio)->value('id');
+        $data_fim = DB::table('data')->where('data', $request->data_fim)->value('id');
+
+        $coordenador = DB::table('users')->where('nome', $request->coordenador)->value('id');
+        $estudos = DB::table('estudos')->where('nome', $request->estudos)->value('id');
+        
+        projeto::create([
+            'nome' => $request->nome,
+            'proponente_id' => Auth::user()->id,
+            'objetivo' => $request->objetivo,
+            'metodos' => $request->justificacao,
+            'data_id' => $data_inicio,
+            'data_final_id' => $data_fim,
+            'coordenador_id' => $coordenador,
+            'estudo_id' => $estudos,
+            'area_id' => 1,
+        ]);
+                
         // Get form data from the request
         $formData = $request->all();
 
@@ -110,6 +138,7 @@ class PdfController extends Controller {
         $pdf->saveAs($outputPath);
 
         // Return the filled PDF file as a download
-        return response()->download($outputPath, 'q252_preenchido.pdf')->deleteFileAfterSend(true);
+        //return response()->download($outputPath, 'q252_preenchido.pdf')->deleteFileAfterSend(true);*/
+        return Redirect::route('download-252');
     }
 }

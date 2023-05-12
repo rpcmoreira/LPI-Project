@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DownloadController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\API\SocialAuthController;
 use App\Http\Controllers\Auth\LoginController;
@@ -55,10 +56,8 @@ Route::get('/download252',[ProjetoController::class, 'get252'])->middleware('aut
 Route::get('/q251', [ProjectController::class, 'q251'])->name('q251')->middleware('auth');
 Route::post('/q251_form', [ProjectController::class, 'q251_form'])->name('q251_form')->middleware('auth');
 
-
 Route::get('/q252', [ProjectController::class, 'q252'])->name('q252')->middleware('auth');
 Route::post('/q252_form', [ProjectController::class, 'q252_form'])->name('q252_form')->middleware('auth');
-
 
 Route::get('/q381', [ProjetoController::class, 'q381'])->name('q381')->middleware('auth');
 Route::post('/q381_form', [ProjetoController::class, 'q381_form'])->name('q381_form')->middleware('auth');
@@ -67,3 +66,4 @@ Route::post('/gerar-pdf-q250', 'App\Http\Controllers\PdfController@generateFille
 Route::post('/gerar-pdf-q251', 'App\Http\Controllers\PdfController@generateFilled_q251_Pdf')->name('gerar-pdf-q251')->middleware('auth');
 Route::post('/gerar-pdf-q252', 'App\Http\Controllers\PdfController@generateFilled_q252_Pdf')->name('gerar-pdf-q252')->middleware('auth');
 
+Route::get('/download-252', [DownloadController::class, 'download'])->name('download-252');

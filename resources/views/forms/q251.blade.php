@@ -297,9 +297,21 @@
                                 </div>
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" onclick="downloadAndRedirect()" class="btn btn-primary">
                                     {{ __('Submeter') }}
                                 </button>
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                <script>
+                                    function downloadAndRedirect() {
+                                        // Start the download
+                                        window.location.href = '/download-route';
+
+                                        // Redirect to dashboard after a delay
+                                        setTimeout(function() {
+                                            window.location.href = '/dashboard';
+                                        }, 1000); // adjust delay as needed
+                                    }
+                                </script>
                             </div>
                         </form>
                     </div>
