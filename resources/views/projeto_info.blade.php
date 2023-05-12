@@ -141,7 +141,7 @@
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file')!= null)
                                         @php $q272 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file');@endphp
-                                        <a href="{{ route('file.download', ['filename' => basename($q272)]) }}" class="btn btn-link">Download Q251</a>                                        
+                                        <a href="{{ route('file.download', ['filename' => basename($q272)]) }}" class="btn btn-link">Download Q251</a>
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
@@ -152,14 +152,14 @@
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')!= null)
                                         @php $q381 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file');@endphp
-                                        <a href="{{ route('file.download', ['filename' => basename($q381)]) }}" class="btn btn-link">Download Q251</a>                                        
+                                        <a href="{{ route('file.download', ['filename' => basename($q381)]) }}" class="btn btn-link">Download Q251</a>
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
+
+
                                 <form method="POST" action="{{ route('changeProjectState') }}">
                                     @csrf
                                     <input type="hidden" name="projeto_id" value="{{ $projeto->id }}">
