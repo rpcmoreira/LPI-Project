@@ -41,7 +41,7 @@ Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboa
 
 Route::get('/projectlist', [ProjectController::class, 'projectList'])->name('projectlist')->middleware('auth');
 
-Route::get('/projetoInfo', [ProjectController::class, 'projetoInfo'])->name('projeto_info')->middleware('auth');
+Route::get('/projetoInfo', [ProjectController::class, 'projetoInfo'])->name('project_info')->middleware('auth');
 
 
 Route::get('/q250', [ProjectController::class, 'q250'])->name('q250')->middleware('auth');
