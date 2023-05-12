@@ -164,14 +164,14 @@
                                     @csrf
                                     <input type="hidden" name="projeto_id" value="{{ $projeto->id }}">
                                     <div class="form-group">
-                                        <label for="projectState">Change Project State:</label>
+                                        <label for="projectState">Mudar Estado do Projeto:</label>
                                         <select class="form-control" id="projectState" name="projectState">
                                             @foreach($projectStates as $id => $state)
                                             <option value="{{ $id }}" {{ $projeto->estado_id == $id ? 'selected' : '' }}>{{ $state }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Change State</button>
+                                    <button type="submit" class="btn btn-primary">Mudar Estado</button>
                                 </form>
                             </div>
                         </div>
