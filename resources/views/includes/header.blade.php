@@ -53,13 +53,12 @@
             @if (Route::has('login'))
             <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
             @endif
-
             @if (Route::has('register'))
             <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
             @endif
-            @else
           </div>
         </li>
+        @else
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-light ml-auto" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {{ Auth::user()->nome }}

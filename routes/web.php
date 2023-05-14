@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\HomeController;
@@ -74,3 +75,7 @@ Route::post('/gerar-pdf-q252', 'App\Http\Controllers\PdfController@generateFille
 Route::get('/download-252', [DownloadController::class, 'download'])->name('download-252');
 
 Route::post('/changeProjectState', [ProjectController::class, 'changeProjectState'])->name('changeProjectState');
+
+
+//Admin Routes
+Route::get('/adminPage', [AdminController::class, 'adminPage'])->name('adminPage')->middleware('isAdmin');
