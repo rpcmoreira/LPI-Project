@@ -109,7 +109,7 @@
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('tipo')!= null)
                                         @php $q250 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q250')->value('file');@endphp
-                                        <a href="{{ route('file.download', ['filename' => basename($q250)]) }}" class="btn btn-link">Download Q251</a>
+                                        <a href="{{ route('file.download', ['filename' => basename($q250)]) }}" class="btn btn-link">Download Q250</a>
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
                                     </div>
@@ -130,7 +130,7 @@
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('file')!= null)
                                         @php $q252 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q252')->value('file');@endphp
-                                        <a href="{{ route('file.download', ['filename' => basename($q252)]) }}" class="btn btn-link">Download Q251</a>
+                                        <a href="{{ route('file.download', ['filename' => basename($q252)]) }}" class="btn btn-link">Download Q252</a>
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
@@ -141,7 +141,7 @@
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file')!= null)
                                         @php $q272 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q272')->value('file');@endphp
-                                        <a href="{{ route('file.download', ['filename' => basename($q272)]) }}" class="btn btn-link">Download Q251</a>
+                                        <a href="{{ route('file.download', ['filename' => basename($q272)]) }}" class="btn btn-link">Download Q272</a>
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
@@ -152,7 +152,7 @@
                                     <div class="col-lg">
                                         @if(DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file')!= null)
                                         @php $q381 = DB::table('files')->where('projeto_id', $projeto->id)->where('tipo', 'q381')->value('file');@endphp
-                                        <a href="{{ route('file.download', ['filename' => basename($q381)]) }}" class="btn btn-link">Download Q251</a>
+                                        <a href="{{ route('file.download', ['filename' => basename($q381)]) }}" class="btn btn-link">Download Q381</a>
                                         @else
                                         <p class="col-md-3 col-form-label text-center">X</p>
                                         @endif
@@ -164,14 +164,14 @@
                                     @csrf
                                     <input type="hidden" name="projeto_id" value="{{ $projeto->id }}">
                                     <div class="form-group">
-                                        <label for="projectState">Change Project State:</label>
+                                        <label for="projectState">Mudar Estado do Projeto:</label>
                                         <select class="form-control" id="projectState" name="projectState">
                                             @foreach($projectStates as $id => $state)
                                             <option value="{{ $id }}" {{ $projeto->estado_id == $id ? 'selected' : '' }}>{{ $state }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary">Change State</button>
+                                    <button type="submit" class="btn btn-primary">Mudar Estado</button>
                                 </form>
                             </div>
                         </div>
