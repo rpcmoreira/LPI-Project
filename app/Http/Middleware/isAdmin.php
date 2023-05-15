@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class isAdmin
 {
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next)
     {
         if (!$this->isAdmin($request)) {
             abort(Response::HTTP_UNAUTHORIZED);

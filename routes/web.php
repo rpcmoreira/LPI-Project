@@ -79,3 +79,7 @@ Route::post('/changeProjectState', [ProjectController::class, 'changeProjectStat
 
 //Admin Routes
 Route::get('/adminPage', [AdminController::class, 'adminPage'])->name('adminPage')->middleware('isAdmin');
+Route::get('/estadosAdmin', [AdminController::class, 'estadosAdmin'])->name('estadosAdmin')->middleware('isAdmin');
+Route::post('/adicionarEstado', [AdminController::class, 'adicionarEstado']);
+Route::post('/removerEstado', [AdminController::class, 'removerEstado']);
+Route::post('/editarEstado', [AdminController::class, 'editarEstado']);
