@@ -10,15 +10,15 @@
                     Editar Estado
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{url('/editEstado')}}">
+                    <form method="post" action="{{url('/editEstudo')}}">
                         @csrf
                         <div class="row md-2 mb-1">
                             <label for="nome" class="col-md-2 col-form-label text-center">{{ __('Estado') }}</label>
                             <div class="col-lg">
-                                <input type="hidden" name="id" value="{{$estado->id}}">
-                                <input id="estado" type="text" class="form-control @error('estado') is-invalid @enderror" name="estado" value="{{ old('estado') }}" 
-                                required autocomplete="estado" autofocus placeholder="{{$estado->estado}}">
-                                @error('estado')
+                                <input type="hidden" name="id" value="{{$estudo->id}}">
+                                <input id="estudo" type="text" class="form-control @error('estudo') is-invalid @enderror" name="estudo" value="{{ old('estudo') }}" 
+                                required autocomplete="estudo" autofocus placeholder="{{$estudo->nome}}">
+                                @error('estudo')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
