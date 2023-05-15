@@ -79,7 +79,23 @@ Route::post('/changeProjectState', [ProjectController::class, 'changeProjectStat
 
 //Admin Routes
 Route::get('/adminPage', [AdminController::class, 'adminPage'])->name('adminPage')->middleware('isAdmin');
+
 Route::post('/adicionarEstado', [AdminController::class, 'adicionarEstado']);
 Route::post('/removerEstado', [AdminController::class, 'removerEstado']);
 Route::post('/editarEstado', [AdminController::class, 'editarEstado']);
 Route::post('/editEstado', [AdminController::class, 'editEstado']);
+
+Route::post('/adicionarArea', [AdminController::class, 'adicionarArea']);
+Route::post('/removerArea', [AdminController::class, 'removerArea']);
+Route::post('/editarArea', [AdminController::class, 'editarArea']);
+Route::post('/editArea', [AdminController::class, 'editArea']);
+
+Route::post('/adicionarEstudo', [AdminController::class, 'adicionarEstudo']);
+Route::post('/removerEstudo', [AdminController::class, 'removerEstudo']);
+Route::post('/editarEstudo', [AdminController::class, 'editarEstudo']);
+Route::post('/editEstudo', [AdminController::class, 'editEstudo']);
+
+Route::post('/adicionarTipo', [AdminController::class, 'adicionarTipo']);
+Route::post('/removerTipo', [AdminController::class, 'removerTipo']);
+Route::post('/editarTipo', [AdminController::class, 'editarTipo']);
+Route::post('/editTipo', [AdminController::class, 'editTipo']);

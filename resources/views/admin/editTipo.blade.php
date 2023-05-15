@@ -7,17 +7,17 @@
         <div class="col-lg">
             <div class="card">
                 <div class="card-header">
-                    Editar Estado
+                    Editar Tipo
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{url('/editEstado')}}">
+                    <form method="post" action="{{url('/editTipo')}}">
                         @csrf
                         <div class="row md-2 mb-1">
-                            <label for="nome" class="col-md-2 col-form-label text-center">{{ __('Estado') }}</label>
+                            <label for="nome" class="col-md-2 col-form-label text-center">{{ __('Tipo') }}</label>
                             <div class="col-lg">
-                                <input type="hidden" name="id" value="{{$estado->id}}">
-                                <input id="estado" type="text" class="form-control @error('estado') is-invalid @enderror" name="estado" value="{{ old('estado') }}" required autocomplete="estado" autofocus placeholder="{{$estado->estado}}">
-                                @error('estado')
+                                <input type="hidden" name="id" value="{{$tipo->id}}">
+                                <input id="tipo" type="text" class="form-control @error('tipo') is-invalid @enderror" name="tipo" value="{{ old('tipo') }}" required autocomplete="area" autofocus placeholder="{{$tipo->nome}}">
+                                @error('tipo')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
@@ -34,4 +34,5 @@
         </div>
     </div>
 </div>
+
 @endsection

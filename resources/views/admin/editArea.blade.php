@@ -10,14 +10,14 @@
                     Editar Estado
                 </div>
                 <div class="card-body">
-                    <form method="post" action="{{url('/editEstado')}}">
+                    <form method="post" action="{{url('/editArea')}}">
                         @csrf
                         <div class="row md-2 mb-1">
-                            <label for="nome" class="col-md-2 col-form-label text-center">{{ __('Estado') }}</label>
+                            <label for="nome" class="col-md-2 col-form-label text-center">{{ __('Área') }}</label>
                             <div class="col-lg">
-                                <input type="hidden" name="id" value="{{$estado->id}}">
-                                <input id="estado" type="text" class="form-control @error('estado') is-invalid @enderror" name="estado" value="{{ old('estado') }}" required autocomplete="estado" autofocus placeholder="{{$estado->estado}}">
-                                @error('estado')
+                                <input type="hidden" name="id" value="{{$area->id}}">
+                                <input id="area" type="text" class="form-control @error('area') is-invalid @enderror" name="area" value="{{ old('area') }}" required autocomplete="area" autofocus placeholder="{{$area->nome}}">
+                                @error('area')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>
