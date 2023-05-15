@@ -12,4 +12,5 @@ class Tipo extends Model
     protected $fillable = [
         'nome',
     ];
+    public $timestamps = false;
 }

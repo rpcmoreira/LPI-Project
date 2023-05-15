@@ -12,13 +12,13 @@ class TipoSeeder extends Seeder
      */
     public function run(): void
     {
-        $tipos = [['nome' => 'admin'],
-        ['nome' => 'presidente'],
-        ['nome' => 'vice-presidente'],
-        ['nome' => 'membro'],
-        ['nome' => 'secretariado'],
-        ['nome' => 'user'],
-        ['nome' => 'estudante'],];
+        $tipos = [['nome' => 'Admin'],
+        ['nome' => 'Presidente'],
+        ['nome' => 'Vice-presidente'],
+        ['nome' => 'Membro'],
+        ['nome' => 'Secretariado'],
+        ['nome' => 'User'],
+        ['nome' => 'Estudante'],];
 
         foreach($tipos as $tipo){
             DB::table('tipo')->insert($tipo);
