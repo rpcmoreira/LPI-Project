@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg">
             <div class="card">
@@ -26,7 +26,7 @@
                         </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Aplicar</button>
-                            <button href="/adminDash" class="btn btn-danger">Cancelar</button>
+                            <a href="/adminPage" class="btn btn-danger">Cancelar</a>
                         </div>
                     </form>
                 </div>

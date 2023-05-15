@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg">
             @if($message = Session::get('aviso'))
@@ -194,14 +194,14 @@
                                     <td>{{$estudo->nome}}</td>
                                     <td>
                                         <div style="display: flex;">
-                                            <form action="" method="post">
+                                            <form action="{{url('/removerEstudo')}}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{$estudo->id}}">
                                                 <button type="submit" class="btn btn-danger">
                                                     {{ __('Apagar Estudo') }}
                                                 </button>
                                             </form>
-                                            <form action="" method="post" style="margin-left: 10px;">
+                                            <form action="{{url('/editarEstudo')}}" method="post" style="margin-left: 10px;">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{$estudo->id}}">
                                                 <button type="submit" class="btn btn-primary">
@@ -213,6 +213,41 @@
                                 </tr>
                             </tbody>
                             @endforeach
+                            <td colspan="3" style="text-align: center;">
+                                <div class="container">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6">
+                                            <button id="toggleButton3" class="btn btn-success">{{ __('Adicionar Estudo') }}</button>
+                                        </div>
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-6">
+                                            <form id="myForm3" style="display: none;" action="{{url('/adicionarEstudo')}}" method="post">
+                                                @csrf
+                                                <div class="form-group">
+                                                    <label for="estudo">Estudo:</label>
+                                                    <input type="text" id="estudo" name="estudo" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-primary">
+                                                        {{ __('Adicionar Estado') }}
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                <script>
+                                    $(document).ready(function() {
+                                        $("#toggleButton3").on('click', function() {
+                                            $("#myForm3").toggle();
+                                            var buttonText = $(this).text();
+                                            $(this).text(buttonText === "{{ __('Adicionar Estudo') }}" ? "{{ __('Esconder Adicionar Estudo') }}" : "{{ __('Adicionar Estudo') }}");
+                                        });
+                                    });
+                                </script>
+                            </td>
                         </table>
                     </div>
                     <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
@@ -235,14 +270,14 @@
                                     <td>{{$tipo}}</td>
                                     <td>
                                         <div style="display: flex;">
-                                            <form action="" method="post">
+                                            <form action="{{url('/removerUser')}}" method="post">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{$user->id}}">
                                                 <button type="submit" class="btn btn-danger">
                                                     {{ __('Apagar Utilizador') }}
                                                 </button>
                                             </form>
-                                            <form action="" method="post" style="margin-left: 10px;">
+                                            <form action="{{url('/editarUser')}}" method="post" style="margin-left: 10px;">
                                                 @csrf
                                                 <input type="hidden" name="id" value="{{$user->id}}">
                                                 <button type="submit" class="btn btn-primary">

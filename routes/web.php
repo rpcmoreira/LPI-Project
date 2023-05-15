@@ -99,3 +99,7 @@ Route::post('/adicionarTipo', [AdminController::class, 'adicionarTipo']);
 Route::post('/removerTipo', [AdminController::class, 'removerTipo']);
 Route::post('/editarTipo', [AdminController::class, 'editarTipo']);
 Route::post('/editTipo', [AdminController::class, 'editTipo']);
+
+Route::post('/removerUser', [AdminController::class, 'removerUser']);
+Route::post('/editarUser', [AdminController::class, 'editarUser']);
+Route::post('/editUser', [AdminController::class, 'editUser']);

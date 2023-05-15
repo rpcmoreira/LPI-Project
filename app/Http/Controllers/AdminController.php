@@ -80,4 +80,41 @@ class AdminController extends Controller
         DB::table('tipo')->where('id', $request->id)->update(['nome' => $request->area]);
         return redirect()->route('adminPage')->with('adicionado', 'Área editada com sucesso');
     }
+
+    public function adicionarEstudo(Request $request){
+        DB::table('estudos')->insert([
+            'nome' => $request->estudo,
+        ]);
+        return redirect()->route('adminPage')->with('adicionado', 'Estudo adicionado com sucesso');
+    }
+
+    public function removerEstudo(Request $request){
+        DB::table('estudos')->where('id', $request->id)->delete();
+        return redirect()->route('adminPage')->with('aviso', 'Estudo apagado com sucesso');
+    }
+
+    public function editarEstudo(Request $request){
+        $estudo = DB::table('estudos')->where('id', $request->id)->first();
+        return view('admin.editEstudo',  ['estudo' => $estudo]);
+    }
+
+    public function editEstudo(Request $request){
+        DB::table('estudos')->where('id', $request->id)->update(['nome' => $request->estudo]);
+        return redirect()->route('adminPage')->with('adicionado', 'Estudo editado com sucesso');
+    }
+
+    public function removerUser(Request $request){
+        DB::table('users')->where('id', $request->id)->delete();
+        return redirect()->route('adminPage')->with('aviso', 'User apagado com sucesso');
+    }
+
+    public function editarUser(Request $request){
+        $user = DB::table('users')->where('id', $request->id)->first();
+        return view('admin.editUser',  ['user' => $user]);
+    }
+
+    public function editUser(Request $request){
+        DB::table('users')->where('id', $request->id)->update(['tipo_id' => $request->tipo]);
+        return redirect()->route('adminPage')->with('adicionado', 'User editado com sucesso');
+    }
 }
