@@ -101,24 +101,44 @@
                         <script>
                             $(document).ready(function() {
                                 var selectedCoordenador = $("#coordenador option:selected").val();
-                                $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', true);
+                                disableCoCoordenador(selectedCoordenador);
+
                                 $("input[name='co-coordenador']").on('change', function() {
                                     if ($("#sim").is(':checked')) {
                                         var selectedCoordenador = $("#coordenador option:selected").val();
-                                        $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', true);
+                                        enableAllCoCoordenadores();
+                                        disableCoCoordenador(selectedCoordenador);
                                         $("#motivoDiv").show();
                                     } else {
-                                        var selectedCoordenador = $("#coordenador option:selected").val();
-                                        $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', false);
+                                        enableAllCoCoordenadores();
                                         $("#motivoDiv").hide();
                                         $("#motivo").prop('disabled', true);
                                     }
                                 });
-                                var selectedCoordenador = $("#coordenador option:selected").val();
-                                $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', false);
+
+                                $("#coordenador").on('change', function() {
+                                    var selectedCoordenador = $("#coordenador option:selected").val();
+                                    if ($("#sim").is(':checked')) {
+                                        enableAllCoCoordenadores();
+                                        disableCoCoordenador(selectedCoordenador);
+                                    } else {
+                                        enableAllCoCoordenadores();
+                                        disableCoCoordenador(selectedCoordenador);
+                                    }
+                                });
+
+                                function disableCoCoordenador(coordenador) {
+                                    $("#co-coordenador option").each(function() {
+                                        if ($(this).val() === coordenador) {
+                                            $(this).prop('disabled', true).css('color', 'grey');
+                                        }
+                                    });
+                                }
+                                function enableAllCoCoordenadores() {
+                                    $("#co-coordenador option").prop('disabled', false).css('color', 'black');
+                                }
                             });
                         </script>
-
 
                         <div class="row md-3 mb-1">
                             <label for="filiacao" class="col-md-3 col-form-label text-center">{{ __('Filiação Institucional') }}</label>
