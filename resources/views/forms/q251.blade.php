@@ -100,10 +100,8 @@
                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                         <script>
                             $(document).ready(function() {
-                                // Disable the initial selected "coordenador" option in "co-coordenador" select
-                                var initialCoordenador = $("#coordenador option:selected").val();
-                                $("#co-coordenador option[value='" + initialCoordenador + "']").prop('disabled', true);
-
+                                var selectedCoordenador = $("#coordenador option:selected").val();
+                                $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', true);
                                 $("input[name='co-coordenador']").on('change', function() {
                                     if ($("#sim").is(':checked')) {
                                         var selectedCoordenador = $("#coordenador option:selected").val();
@@ -116,9 +114,10 @@
                                         $("#motivo").prop('disabled', true);
                                     }
                                 });
+                                var selectedCoordenador = $("#coordenador option:selected").val();
+                                $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', false);
                             });
                         </script>
-
 
 
                         <div class="row md-3 mb-1">
