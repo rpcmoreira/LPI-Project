@@ -30,6 +30,10 @@ Route::get('/logged', [ProjectController::class, 'logged'])->middleware('auth');
 //Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
 //Route::get('/create', [HomeController::class, 'create'])->name('create');
+Route::get('/search', 'SearchController@search')->name('search');
+
+Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
+Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@dataAjax');
 
 Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
 Route::get('/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');

@@ -51,19 +51,20 @@
                         </div>
                         <div class="row md-3 mb-1">
                             <label for="coordenador" class="col-md-3 col-form-label text-center">{{ __('Coordenador') }}</label>
-                            <div class="col-lg">
-                                <select id="coordenador" name="coordenador" class="form-select form-control @error('coordenador') is-invalid @enderror" value="{{ old('coordenador') }}" autofocus>
-                                    <option value="" selected disabled hidden>-------</option>
-                                    @php $userIds = [2,3,4]; @endphp
-                                    @foreach(DB::table('users')->whereIn('users.tipo_id', $userIds)->get() as $coordenador)
-                                    <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
-                                    @endforeach
-                                </select>
-                                @error('coordenador')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                            <div class="col-md-9">
+                                <div class="search_select_box">
+                                    <select data-live-search="true" id="coordenador" name="coordenador" class="selectpicker form-control" value="{{ old('coordenador') }}" autofocus>
+                                        @php $userIds = [4]; @endphp
+                                        @foreach(DB::table('users')->where('users.tipo_id', $userIds)->get() as $coordenador)
+                                        <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('coordenador')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
 

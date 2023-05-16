@@ -15,6 +15,7 @@ class TipoSeeder extends Seeder
         $tipos = [['nome' => 'Admin'],
         ['nome' => 'Presidente'],
         ['nome' => 'Vice-presidente'],
+        ['nome' => 'Coordenador'],
         ['nome' => 'Membro'],
         ['nome' => 'Secretariado'],
         ['nome' => 'User'],
