@@ -165,8 +165,9 @@
                                 <div class="form-group">
                                     <label for="projectState">Mudar Estado do Projeto:</label>
                                     <select class="form-control" id="projectState" name="projectState">
-                                        @foreach($projectStates as $id => $state)
-                                        <option value="{{ $id }}" {{ $projeto->estado_id == $id ? 'selected' : '' }}>{{ $state }}</option>
+                                        @php $states = DB::table('estado')->get(); @endphp
+                                        @foreach($states as $state)
+                                        <option value="{{ $state->id }}" {{ $projeto->area_id == $state->id ? 'selected' : '' }}>{{ $state->estado}}</option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -59,17 +59,6 @@
                                         <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
                                         @endforeach
                                     </select>
-                                    <!DOCTYPE html>
-                                    <html lang="en">
-
-                                    <head>
-                                        <meta charset="UTF-8">
-                                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                        <title>Formulário Laravel</title>
-                                        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                                    </head>
-
-                                    </html>
                                     @error('coordenador')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -80,34 +69,23 @@
                         </div>
 
                         <div class="row md-3 mb-1">
-                            <label for="coordenador" class="col-md-3 col-form-label text-center">{{ __('Co-Coordenador') }}</label>
+                            <label for="co-coordenador" class="col-md-3 col-form-label text-center">{{ __('Co-Coordenador') }}</label>
                             <div class="col-lg">
                                 <div class="form-group">
                                     <br>
                                     <div>
-                                        <label for="sim">Sim <input type="radio" id="sim" name="coordenador" value="sim">&nbsp;&nbsp;&nbsp;</label>
-                                        <label for="nao">Não <input type="radio" id="nao" name="consentimento" value="nao"></label>
+                                        <label for="nao">Não <input type="radio" id="nao" name="co-coordenador" value="nao"></label>
+                                        <label for="sim">Sim <input type="radio" id="sim" name="co-coordenador" value="sim"></label>&nbsp;&nbsp;&nbsp;
                                     </div>
                                     <div id="motivoDiv" style="display:none;">
                                         <div class="col-md-9">
                                             <div class="search_select_box">
-                                                <select data-live-search="true" id="coordenador" name="coordenador" class="selectpicker form-control" value="{{ old('coordenador') }}" autofocus>
+                                                <select data-live-search="true" id="co-coordenador" name="co-coordenador" class="selectpicker form-control" value="{{ old('co-coordenador') }}" autofocus>
                                                     @php $userIds = [4]; @endphp
                                                     @foreach(DB::table('users')->where('users.tipo_id', $userIds)->get() as $coordenador)
-                                                    <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
+                                                    <option value="{{ $coordenador->nome }}" {{ request()->input('co-coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
                                                     @endforeach
                                                 </select>
-                                                <!DOCTYPE html>
-                                                <html lang="en">
-
-                                                <head>
-                                                    <meta charset="UTF-8">
-                                                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                                    <title>Formulário Laravel</title>
-                                                    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-                                                </head>
-
-                                                </html>
                                                 @error('coordenador')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -122,28 +100,27 @@
                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                         <script>
                             $(document).ready(function() {
-                                $("input[name='coordenador']").on('change', function() {
-                                    if ($("input[name='coordenador']:checked").val() === 'sim') {
+                                // Disable the initial selected "coordenador" option in "co-coordenador" select
+                                var initialCoordenador = $("#coordenador option:selected").val();
+                                $("#co-coordenador option[value='" + initialCoordenador + "']").prop('disabled', true);
+
+                                $("input[name='co-coordenador']").on('change', function() {
+                                    if ($("#sim").is(':checked')) {
+                                        var selectedCoordenador = $("#coordenador option:selected").val();
+                                        $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', true);
                                         $("#motivoDiv").show();
-                                        $("#motivo").prop('disabled', false);
                                     } else {
+                                        var selectedCoordenador = $("#coordenador option:selected").val();
+                                        $("#co-coordenador option[value='" + selectedCoordenador + "']").prop('disabled', false);
                                         $("#motivoDiv").hide();
                                         $("#motivo").prop('disabled', true);
                                     }
                                 });
                             });
                         </script>
-                        <div class="row md-3 mb-1 mt-1">
-                            <label for="cv" class="col-md-3 col-form-label text-center font-italic">{{ __('Curriculum Vitae') }}</label>
-                            <div class="col-lg">
-                                <div class="form-group">
-                                    <input type="file" accept=".pdf," class="form-control-file" name="cv" placeholder="Choose your CV" id="cv">
-                                    @error('cv')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
+
+
+
                         <div class="row md-3 mb-1">
                             <label for="filiacao" class="col-md-3 col-form-label text-center">{{ __('Filiação Institucional') }}</label>
                             <div class="col-lg">
