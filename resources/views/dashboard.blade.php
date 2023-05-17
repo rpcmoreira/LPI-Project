@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-lg">
       @if(Auth::user()->tipo_id == 5)
@@ -49,7 +49,7 @@
       </div>
       @elseif(Auth::user()->tipo_id == 6 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') != null)
       @php $projeto = DB::table('projetos')->where('proponente_id', Auth::user()->id)->first(); @endphp
-      <div class="container">
+      <div class="container-fluid">
         @if ($message = Session::get('warning'))
         <div class="alert alert-warning">
           <p>{{ $message }}</p>
@@ -76,7 +76,7 @@
         </div>
         @endif
       </div>
-      <div class="container">
+      <div class="container-fluid">
         <div class="row justify-content-center">
           <div class="col-lg">
             <div class="card">

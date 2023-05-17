@@ -54,6 +54,7 @@
                             <div class="col-md-9">
                                 <div class="search_select_box">
                                     <select data-live-search="true" id="coordenador" name="coordenador" class="selectpicker form-control" value="{{ old('coordenador') }}" autofocus>
+                                        <option value="" selected disabled hidden>-------</option>
                                         @php $userIds = [4]; @endphp
                                         @foreach(DB::table('users')->where('users.tipo_id', $userIds)->get() as $coordenador)
                                         <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
@@ -81,6 +82,7 @@
                                         <div class="col-md-9">
                                             <div class="search_select_box">
                                                 <select data-live-search="true" id="co-coordenador" name="co-coordenador" class="selectpicker form-control" value="{{ old('co-coordenador') }}" autofocus>
+                                                    <option value="" selected disabled hidden>-------</option>
                                                     @php $userIds = [4]; @endphp
                                                     @foreach(DB::table('users')->where('users.tipo_id', $userIds)->get() as $coordenador)
                                                     <option value="{{ $coordenador->nome }}" {{ request()->input('co-coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
@@ -134,6 +136,7 @@
                                         }
                                     });
                                 }
+
                                 function enableAllCoCoordenadores() {
                                     $("#co-coordenador option").prop('disabled', false).css('color', 'black');
                                 }
