@@ -49,6 +49,7 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="row md-3 mb-1">
                             <label for="coordenador" class="col-md-3 col-form-label text-center">{{ __('Coordenador') }}</label>
                             <div class="col-md-9">
@@ -75,11 +76,11 @@
                                 <div class="form-group">
                                     <br>
                                     <div>
-                                        <label for="nao">Não <input type="radio" id="nao" name="co-coordenador" value="nao"></label>
-                                        <label for="sim">Sim <input type="radio" id="sim" name="co-coordenador" value="sim"></label>&nbsp;&nbsp;&nbsp;
+                                        <label for="nao">Não <input type="radio" id="nao" name="co-coordenador-option" value="nao"></label>
+                                        <label for="sim">Sim <input type="radio" id="sim" name="co-coordenador-option" value="sim"></label>&nbsp;&nbsp;&nbsp;
                                     </div>
                                     <div id="motivoDiv" style="display:none;">
-                                        <div class="col-md-9">
+                                        <div class="col-lg">
                                             <div class="search_select_box">
                                                 <select data-live-search="true" id="co-coordenador" name="co-coordenador" class="selectpicker form-control" value="{{ old('co-coordenador') }}" autofocus>
                                                     <option value="" selected disabled hidden>-------</option>
@@ -88,7 +89,7 @@
                                                     <option value="{{ $coordenador->nome }}" {{ request()->input('co-coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
                                                     @endforeach
                                                 </select>
-                                                @error('coordenador')
+                                                @error('co-coordenador')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
                                                 </span>
@@ -102,44 +103,24 @@
                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                         <script>
                             $(document).ready(function() {
-                                var selectedCoordenador = $("#coordenador option:selected").val();
-                                disableCoCoordenador(selectedCoordenador);
+                                $("#motivoDiv").hide(); // Initially hide the motivoDiv
 
-                                $("input[name='co-coordenador']").on('change', function() {
-                                    if ($("#sim").is(':checked')) {
-                                        var selectedCoordenador = $("#coordenador option:selected").val();
-                                        enableAllCoCoordenadores();
-                                        disableCoCoordenador(selectedCoordenador);
+                                $('#coordenador').change(function() {
+                                    var selectedValue = $(this).val();
+                                    $('#co-coordenador option').prop('disabled', false);
+                                    if (selectedValue !== '') {
+                                        $('#co-coordenador option[value="' + selectedValue + '"]').prop('disabled', true);
+                                    }
+                                    $('#co-coordenador').selectpicker('refresh');
+                                });
+
+                                $('input[name="co-coordenador-option"]').change(function() {
+                                    if ($(this).val() === 'sim') {
                                         $("#motivoDiv").show();
                                     } else {
-                                        enableAllCoCoordenadores();
                                         $("#motivoDiv").hide();
-                                        $("#motivo").prop('disabled', true);
                                     }
                                 });
-
-                                $("#coordenador").on('change', function() {
-                                    var selectedCoordenador = $("#coordenador option:selected").val();
-                                    if ($("#sim").is(':checked')) {
-                                        enableAllCoCoordenadores();
-                                        disableCoCoordenador(selectedCoordenador);
-                                    } else {
-                                        enableAllCoCoordenadores();
-                                        disableCoCoordenador(selectedCoordenador);
-                                    }
-                                });
-
-                                function disableCoCoordenador(coordenador) {
-                                    $("#co-coordenador option").each(function() {
-                                        if ($(this).val() === coordenador) {
-                                            $(this).prop('disabled', true).css('color', 'grey');
-                                        }
-                                    });
-                                }
-
-                                function enableAllCoCoordenadores() {
-                                    $("#co-coordenador option").prop('disabled', false).css('color', 'black');
-                                }
                             });
                         </script>
 
