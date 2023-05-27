@@ -16,16 +16,16 @@
             <thead>
                 <tr>
                     <th wire:click="sortBy('nome')" style="cursor:pointer">Nome do Projeto</th>
+                    <th wire:click="sortBy('proponente_id')" style="cursor:pointer">Nome</th>
                     <th wire:click="sortBy('estudo_id')" style="cursor:pointer">Estudo</th>
-                    <th wire:click="sortBy('area_id')" style="cursor:pointer">Area</th>
                     <th wire:click="sortBy('estado_id')" style="cursor:pointer;">Estado</th>
                 </tr>
             </thead>
             @foreach($projetos as $projeto)
             <tbody>
-                <tr>
-                    <td wire:click="projeto({{$projeto->id}})" style="cursor:pointer; color:darkblue; font-weight: bold;">{{ $projeto->nome }}</td>
-                    <td>{{ DB::table('estudos')->where('id', $projeto->estudo_id)->value('nome') }}</td>
+                <tr wire:click="projeto({{$projeto->id}})" style="cursor:pointer; font-weight: bold;">
+                    <td>{{ $projeto->nome }}</td>
+                    <td>{{ DB::table('users')->where('id', $projeto->proponente_id)->value('nome') }}</td>
                     <td>{{ DB::table('area')->where('id', $projeto->area_id)->value('nome') }}</td>
                     @if(DB::table('estado')->where('id', $projeto->estado_id)->value('estado') == 'Em Curso')
                     <td style="color:green"> <span style="font-weight: bold;"> {{ DB::table('estado')->where('id', $projeto->estado_id)->value('estado') }} </span></td>

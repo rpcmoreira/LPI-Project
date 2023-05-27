@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\projeto;
+use App\Models\User;
+use App\Notifications\ProjetoState;
 use ConsoleTVs\Charts\Classes\Highcharts\Chart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -11,9 +13,11 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use GuzzleHttp\Handler\Proxy;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Arr;
 use Laravel\Ui\Presets\React;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 use Termwind\Components\Dd;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Livewire\Component;
@@ -158,14 +162,7 @@ class ProjectController extends Controller
     {
         //dd($request);
         $data = session('project');
-        $projectStates = [
-            1 => 'Pendente',
-            2 => 'Em Curso',
-            3 => 'Finalizado',
-            4 => 'A Espera de Aprovação',
-            5 => 'Falta Informação',
-        ];
-        return view('projeto_info', ['projeto' => $data], compact('projectStates'));
+        return view('projeto_info', ['projeto' => $data]);
     }
 
     public function changeProjectState(Request $request)
@@ -176,8 +173,14 @@ class ProjectController extends Controller
         // Assuming 'estado_id' is the column where the state id is stored in the 'projeto' table
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $new_state]);
 
+        $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
+        $secretariado = User::where('tipo_id', 5)->first();
+
+        $users = collect([$user, $secretariado]);
+        Notification::send($users, new ProjetoState($projeto_id, $new_state));
+
         // After the update, redirect back to the previous page with a success message
-        return redirect()->route('project_info')->with('success', 'Project state changed successfully!');
+        return redirect()->route('projectlist')->with('success', 'Project state changed successfully!');
     }
 
     public function logged()
