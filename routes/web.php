@@ -42,6 +42,7 @@ Route::get('/logged', [ProjectController::class, 'logged']);
 Route::get('/', [ProjectController::class, 'start']);
 Route::get('/home', [ProjectController::class, 'dashboard'])->name('home')->middleware('auth');
 
+
 Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
 Route::get('/projectlist', [ProjectController::class, 'projectList'])->name('projectlist')->middleware('auth');

@@ -20,7 +20,7 @@ class LivewireDatables extends Component
 
     public function render()
     {
-        $projects = projeto::query()->orderBy($this->sort, $this->direction)->paginate($this->perPage);
+        $projects = projeto::where('nome', 'like', '%'.$this->search.'%')->orderBy('nome', 'asc')->paginate($this->perPage);
 
         return view('livewire.livewire-datables', [
             'projetos' => $projects
@@ -40,4 +40,10 @@ class LivewireDatables extends Component
         session()->save();
         return redirect('/projetoInfo');
     }
+    public function configure(): void
+    {
+        // Shorthand for $this->setSearchStatus(true)
+        $this->setSearchEnabled();
+    }
+    
 }

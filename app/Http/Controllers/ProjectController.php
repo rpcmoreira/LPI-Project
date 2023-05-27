@@ -16,15 +16,21 @@ use Laravel\Ui\Presets\React;
 use Illuminate\Support\Facades\Auth;
 use Termwind\Components\Dd;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
-
+use Livewire\Component;
+use Livewire\WithPagination;
 class ProjectController extends Controller
 {
-     public function start() {
+    use WithPagination;
+    public $search = "";
+
+
+    public function start()
+    {
         return view('welcome');
     }
 
-    public function storeForm(Request $request) {
+    public function storeForm(Request $request)
+    {
         //$user = Auth::user()->id;
         $projeto = Projeto::where('id', $request->projeto);
         $file = new File;
@@ -42,12 +48,14 @@ class ProjectController extends Controller
         return redirect()->route('home')->with('status', 'File Has been uploaded!');
     }
 
-    public function get250() {
+    public function get250()
+    {
         $file = public_path() . "/forms/Q250-Formulário Elaboração Pareceres CES-HE-FFP.doc";
         return Response::download($file);
     }
 
-    public function dashboard() {
+    public function dashboard()
+    {
         $projetosPorEstado = DB::table('estado')
             ->leftJoin('projetos', 'projetos.estado_id', '=', 'estado.id')
             ->select('estado.estado', DB::raw('COUNT(projetos.id) as project_count'))
@@ -71,21 +79,28 @@ class ProjectController extends Controller
         return view('dashboard', ['chart' => $chart]);
     }
 
-    public function projectList() {
+    public function projectList()
+    {
         return view('projectlist');
     }
-    public function q250() {
+    
+
+    public function q250()
+    {
         return view('forms/q250');
     }
-    public function q250_form(Request $request) {
+    public function q250_form(Request $request)
+    {
         dd($request);
     }
 
-    public function q251() {
+    public function q251()
+    {
         return view('forms/q251');
     }
 
-    public function q251_form(Request $request) {
+    public function q251_form(Request $request)
+    {
         $data = array('data' => $request->data_inicio);
         $data_f = array('data' => $request->data_fim);
         DB::table('data')->insert($data);
@@ -119,23 +134,28 @@ class ProjectController extends Controller
     }
 
 
-    public function q381() {
+    public function q381()
+    {
         return view('forms/q381');
     }
 
 
-    public function q381_form(Request $request) {
+    public function q381_form(Request $request)
+    {
         dd($request);
     }
-    public function q252() {
+    public function q252()
+    {
         return view('forms/q252');
     }
 
-    public function q252_form(Request $request) {
+    public function q252_form(Request $request)
+    {
         dd($request);
     }
 
-    public function projetoInfo() {
+    public function projetoInfo()
+    {
         //dd($request);
         $data = session('project');
         $projectStates = [
@@ -148,7 +168,8 @@ class ProjectController extends Controller
         return view('projeto_info', ['projeto' => $data], compact('projectStates'));
     }
 
-    public function changeProjectState(Request $request) {
+    public function changeProjectState(Request $request)
+    {
         $projeto_id = $request->input('projeto_id');
         $new_state = $request->input('projectState');
 
@@ -159,10 +180,12 @@ class ProjectController extends Controller
         return redirect()->route('project_info')->with('success', 'Project state changed successfully!');
     }
 
-    public function logged() {
+    public function logged()
+    {
         return view('dashboard');
     }
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $input = $request->all();
 
         $this->validate($request, [
@@ -178,11 +201,13 @@ class ProjectController extends Controller
         }
     }
 
-    public function addForms() {
+    public function addForms()
+    {
         return view('addFiles');
     }
 
-    public function guardarFicheiros(Request $request) {
+    public function guardarFicheiros(Request $request)
+    {
         $request->validate([
             'Q251' => 'required',
             'Q252' => 'required',
@@ -230,12 +255,12 @@ class ProjectController extends Controller
     {
         //dd($filename);
         $filePath = storage_path('app/files/' . $filename);
-        $tipo = DB::table('files')->where('file', 'files/'.$filename)->value('tipo');
-        $projeto = DB::table('projetos')->where('id', DB::table('files')->where('file', 'files/'.$filename)->value('projeto_id'))->value('nome');
+        $tipo = DB::table('files')->where('file', 'files/' . $filename)->value('tipo');
+        $projeto = DB::table('projetos')->where('id', DB::table('files')->where('file', 'files/' . $filename)->value('projeto_id'))->value('nome');
         $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', DB::table('files')
-        ->where('file', 'files/'.$filename)->value('projeto_id'))->value('proponente_id'))->value('nome');
+            ->where('file', 'files/' . $filename)->value('projeto_id'))->value('proponente_id'))->value('nome');
 
-        $ficheiro = $projeto .'_'.$tipo.'_'.$nome.'.pdf';
+        $ficheiro = $projeto . '_' . $tipo . '_' . $nome . '.pdf';
         //dd($filename);  
         // Check if the file exists
         if (file_exists($filePath)) {

@@ -7,6 +7,7 @@
                 <option>24</option>
                 <option>30</option>
             </select>
+            <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Search..." style="width: 230px" />
         </div>
     </div>
 
