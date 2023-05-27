@@ -17,7 +17,11 @@ class LivewireDatables extends Component
 
     public $perPage = 16;
     public $search = '';
-
+    protected $paginationTheme = 'bootstrap';
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
     public function render()
     {
         $projects = projeto::query()->orderBy($this->sort, $this->direction);
@@ -30,14 +34,7 @@ class LivewireDatables extends Component
             'projetos' => $projects
         ]);
     }
-    public function search()
-    {
-        $projects = projeto::where('nome', 'like', '%'.$this->search.'%')->orderBy('nome', 'asc')->paginate($this->perPage);
-
-        return view('livewire.livewire-datables', [
-            'projetos' => $projects
-        ]);
-    }
+    
     public function sortBy($field)
     {
         $this->direction = ($this->direction == 'asc') ? 'desc' : 'asc';
@@ -56,8 +53,5 @@ class LivewireDatables extends Component
         // Shorthand for $this->setSearchStatus(true)
         $this->setSearchEnabled();
     }
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
+    
 }
