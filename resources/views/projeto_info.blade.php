@@ -2,7 +2,7 @@
 
 @section('content')
 @php $projeto = session('projeto');@endphp
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg">
             <div class="card">
@@ -18,7 +18,7 @@
 
                         <div class="col-lg">
                             @php
-                            $current_state = $projectStates[$projeto->estado_id];
+                            $current_state = DB::table('estado')->where('id', $projeto->estado_id)->value('estado');
                             @endphp
                             @if($current_state == 'Em Curso')
                             <p class="text-right align-bottom font-weight-bold" style="color:green;">{{ $current_state }}</p>
@@ -30,31 +30,6 @@
                             <p class="text-right font-weight-bold" style="color:orange;"><span class="align-bottom">{{ $current_state }}</span></p>
                             @endif
                         </div>
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                        <script>
-                            $(document).ready(function() {
-                                $('#projectState').change(function() {
-                                    var projeto_id = "{{$projeto->id}}"; // Fetch the id of the current project
-                                    var projectState = $(this).val();
-                                    $.ajax({
-                                        url: '/changeProjectState', // Make sure this URL points to your `changeProjectState` route
-                                        type: 'POST',
-                                        data: {
-                                            "_token": $('meta[name="csrf-token"]').attr('content'),
-                                            "projeto_id": projeto_id,
-                                            "projectState": projectState
-                                        },
-                                        success: function(response) {
-                                            location.reload(); // Refresh the page to show updated project state
-                                        },
-                                        error: function(jqXHR, textStatus, errorThrown) {
-                                            console.log(textStatus, errorThrown);
-                                        }
-                                    });
-                                });
-                            });
-                        </script>
-
                     </div>
                 </div>
                 <div class="card-body">
