@@ -80,8 +80,8 @@
                                                 {{ __('Forgot Your Password?') }}
                                             </a>
                                             @endif
-                                            <a href="{{ route('google.login')}}" class="btn btn-primary">
-                                                {{ __('Login with Google')}}
+                                            <a href="{{ route('google.login') }}">
+                                                <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png">
                                             </a>
                                         </div>
                                     </div>

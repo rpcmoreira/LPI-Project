@@ -42,7 +42,7 @@
             @endforeach
         </table>
         <div>
-            <p>{!! $projetos->links('pagination::bootstrap-4')!!}</p>
+            <p>{!! $projetos->links('pagination::bootstrap-4') !!}</p>
         </div>
     </div>
 
