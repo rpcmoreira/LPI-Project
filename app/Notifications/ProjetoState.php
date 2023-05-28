@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Console\View\Components\Line;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
@@ -42,9 +43,14 @@ class ProjetoState extends Notification
         $nome = DB::table('projetos')->where('id', $this->projeto)->value('nome');
         $state = DB::table('estado')->where('id', $this->estado)->value('estado');
         return (new MailMessage)
+                    ->subject('Estado do Projeto Alterado')
                     ->greeting('Olá!')
                     ->line('Vimos por este meio informar que o projeto '.$nome.' passou para o estado ' .$state. ".")
-                    ->line('Para mais informações contacte o nosso suporte em support@ufp.pt');
+                    
+                    ->line('Cumprimentos,')
+                    ->line('SCES')
+
+                    ->salutation('Para mais informações contacte o nosso suporte em support@ufp.pt');
     }
 
     /**
