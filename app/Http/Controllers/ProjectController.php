@@ -186,7 +186,7 @@ class ProjectController extends Controller
         event(new StateChange($nome, $projeto, $estado));
 
         // After the update, redirect back to the previous page with a success message
-        return redirect()->route('projectlist')->with('success', 'Project state changed successfully!');
+        return redirect()->route('projectlist')->with('success', 'O projeto ' . $projeto . ' de ' . $nome . ' foi alterado para o estado ' . $estado);
     }
 
     public function logged()

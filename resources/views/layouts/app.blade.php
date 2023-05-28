@@ -12,9 +12,11 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="{{ asset('css/toastr.min.css') }}">
     <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
     @livewireStyles
 
     <title>@yield('Name', 'Secretariado da Comissão de Ética')</title>
@@ -42,6 +44,10 @@
     <script>
         window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
     </script>
+
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
@@ -52,14 +58,14 @@
 
         var channel = pusher.subscribe('event_not');
         channel.bind('my-event', function(data) {
-            //toastr.success('O projeto ' + JSON.stringify(data).projeto + ' de ' + JSON.stringify(data).state + ' mudou para o estado ' + JSON.stringify(data).state);.
-            toastr.info('O projeto ' + JSON.stringify(data.project) + ' de ' + JSON.stringify(data.name) + ' mudou para o estado ' + JSON.stringify(data.state));
-
+            const jsonString = '{"state":"Finalizado","user":"Rui Pedro Cardoso Moreira","project":"wqwq"}';
+            const jsonObject = JSON.parse(jsonString);
+            const state = jsonObject.state;
+            const user = jsonObject.user;
+            const project = jsonObject.project;
+            toaster.success('O projeto ' + project + ' de ' + user + ' mudou para o estado ' + state);
         });
     </script>
-
-    <!-- Icons -->
-    <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
     <script>
         feather.replace()
     </script>
