@@ -37,9 +37,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://kit.fontawesome.com/4e00e95080.js" crossorigin="anonymous"></script>
+    <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
     @livewireScripts
     <script>
         window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')
+    </script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('670741c4d1d0df69e644', {
+            cluster: 'eu'
+        });
+
+        var channel = pusher.subscribe('event_not');
+        channel.bind('my-event', function(data) {
+            //toastr.success('O projeto ' + JSON.stringify(data).projeto + ' de ' + JSON.stringify(data).state + ' mudou para o estado ' + JSON.stringify(data).state);.
+            toastr.info('O projeto ' + JSON.stringify(data.project) + ' de ' + JSON.stringify(data.name) + ' mudou para o estado ' + JSON.stringify(data.state));
+
+        });
     </script>
 
     <!-- Icons -->

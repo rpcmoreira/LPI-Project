@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StateChange;
 use App\Models\File;
 use App\Models\projeto;
 use App\Models\User;
@@ -167,8 +168,8 @@ class ProjectController extends Controller
 
     public function changeProjectState(Request $request)
     {
-        $projeto_id = $request->input('projeto_id');
-        $new_state = $request->input('projectState');
+        $projeto_id = $request->projeto_id;
+        $new_state = $request->projectState;
 
         // Assuming 'estado_id' is the column where the state id is stored in the 'projeto' table
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $new_state]);
@@ -176,8 +177,13 @@ class ProjectController extends Controller
         $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
         $secretariado = User::where('tipo_id', 5)->first();
 
+        $estado = DB::table('estado')->where('id', $new_state)->value('estado');
+        $projeto = DB::table('projetos')->where('id', $projeto_id)->value('nome');
+        $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'))->value('nome');
+
         $users = collect([$user, $secretariado]);
         Notification::send($users, new ProjetoState($projeto_id, $new_state));
+        event(new StateChange($nome, $projeto, $estado));
 
         // After the update, redirect back to the previous page with a success message
         return redirect()->route('projectlist')->with('success', 'Project state changed successfully!');
