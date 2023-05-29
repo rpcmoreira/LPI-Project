@@ -6,6 +6,7 @@ use App\Events\StateChange;
 use App\Models\File;
 use App\Models\projeto;
 use App\Models\User;
+use App\Models\Message;
 use App\Notifications\ProjetoState;
 use ConsoleTVs\Charts\Classes\Highcharts\Chart;
 use Illuminate\Http\Request;
@@ -23,6 +24,8 @@ use Termwind\Components\Dd;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Pusher\Pusher;
+
 class ProjectController extends Controller
 {
     use WithPagination;
@@ -175,15 +178,45 @@ class ProjectController extends Controller
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $new_state]);
 
         $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
-        $secretariado = User::where('tipo_id', 5)->first();
+        $secretariado = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
 
         $estado = DB::table('estado')->where('id', $new_state)->value('estado');
         $projeto = DB::table('projetos')->where('id', $projeto_id)->value('nome');
         $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'))->value('nome');
 
         $users = collect([$user, $secretariado]);
-        Notification::send($users, new ProjetoState($projeto_id, $new_state));
-        event(new StateChange($nome, $projeto, $estado));
+        //Notification::send($users, new ProjetoState($projeto_id, $new_state));
+
+        //event(new StateChange($nome, $projeto, $estado));
+
+        $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
+        
+        $message = new Message;
+        $message->user_id = $id;
+        $message->projeto_id = $projeto_id;
+        $message->estado_id = $new_state;
+        $message->save();
+
+        $message = new Message;
+        $message->projeto_id = $projeto_id;
+        $message->estado_id = $new_state;
+        $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+        $message->save();
+
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true,
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options,
+        );
+
+        $data = ['user' => $id, 'project' => $projeto_id, 'estado' => $new_state];
+        $pusher->trigger('event_not', 'my-event', $data);
 
         // After the update, redirect back to the previous page with a success message
         return redirect()->route('projectlist')->with('success', 'O projeto ' . $projeto . ' de ' . $nome . ' foi alterado para o estado ' . $estado);

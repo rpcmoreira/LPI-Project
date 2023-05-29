@@ -58,12 +58,7 @@
 
         var channel = pusher.subscribe('event_not');
         channel.bind('my-event', function(data) {
-            const jsonString = '{"state":"Finalizado","user":"Rui Pedro Cardoso Moreira","project":"wqwq"}';
-            const jsonObject = JSON.parse(jsonString);
-            const state = jsonObject.state;
-            const user = jsonObject.user;
-            const project = jsonObject.project;
-            toaster.success('O projeto ' + project + ' de ' + user + ' mudou para o estado ' + state);
+            //alert(JSON.stringify(data));
         });
     </script>
     <script>
