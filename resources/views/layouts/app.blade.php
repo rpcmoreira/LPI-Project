@@ -58,7 +58,10 @@
 
         var channel = pusher.subscribe('event_not');
         channel.bind('my-event', function(data) {
-            //alert(JSON.stringify(data));
+            let pending = parseInt($('#' + data.from).find('.pending').html());
+            if(pending){
+                $('#' + data.from).find('.pending').html(pending + 1);
+            }
         });
     </script>
     <script>

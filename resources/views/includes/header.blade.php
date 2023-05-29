@@ -17,13 +17,13 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span data-feather="file"></span>Formulários</a>
-          <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
-            <!--<a class="dropdown-item" href="{{ route('q250') }}">{{ __('Q250') }}</a>-->
-            <a class="dropdown-item" href="{{ route('q251') }}">{{ __('Q251 - Submissão Parecer') }}</a>
-            <a class="dropdown-item" href="{{ route('q252') }}">{{ __('Q252 - Consentimento Informado') }}</a>
-            <a class="dropdown-item" href="{{ route('q272') }}">{{ __('Q272 - Pedido Autorização') }}</a>
-            <a class="dropdown-item" href="{{ route('q381') }}">{{ __('Q381 - Síntese de Resultados') }}</a>
-          </div>
+        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+          <!--<a class="dropdown-item" href="{{ route('q250') }}">{{ __('Q250') }}</a>-->
+          <a class="dropdown-item" href="{{ route('q251') }}">{{ __('Q251 - Submissão Parecer') }}</a>
+          <a class="dropdown-item" href="{{ route('q252') }}">{{ __('Q252 - Consentimento Informado') }}</a>
+          <a class="dropdown-item" href="{{ route('q272') }}">{{ __('Q272 - Pedido Autorização') }}</a>
+          <a class="dropdown-item" href="{{ route('q381') }}">{{ __('Q381 - Síntese de Resultados') }}</a>
+        </div>
       </li>
     </ul>
     @elseif(Auth::user() != null && Auth::user()->tipo_id == 5)
@@ -46,6 +46,16 @@
       @endif
 
       <ul class="navbar-nav ml-auto">
+        @if(Auth()->user() && (Auth()->user()->tipo_id == 5 || Auth()->user()->tipo_id == 6))
+        @php $messages = DB::table('messages')->where('user_id', Auth()->user()->id)->where('is_read', 0)->count();@endphp
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-light ml-auto" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 0; left: auto;">
+            <i class="fa fa-bell text-white ml-auto">
+              <span class="badge badge-danger pending">{{$messages}}</span>
+            </i>
+          </a>
+        </li>
+        @endif
         @guest
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
