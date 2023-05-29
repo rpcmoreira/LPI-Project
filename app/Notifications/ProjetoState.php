@@ -19,7 +19,7 @@ class ProjetoState extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(int $projeto, int $estado)
+    public function __construct($projeto, $estado)
     {
         $this->projeto = $projeto;
         $this->estado = $estado;

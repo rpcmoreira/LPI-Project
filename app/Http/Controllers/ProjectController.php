@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\StateChange;
+use App\Events\MessageRead;
 use App\Models\File;
 use App\Models\projeto;
 use App\Models\User;
@@ -91,7 +92,7 @@ class ProjectController extends Controller
     {
         return view('projectlist');
     }
-    
+
 
     public function q250()
     {
@@ -169,7 +170,14 @@ class ProjectController extends Controller
         return view('projeto_info', ['projeto' => $data]);
     }
 
-    public function changeProjectState(Request $request)
+
+    public function markAsRead(Request $request, $id)
+    {
+        DB::table('messages')->where('id', $id)->update(['is_read' => 1]);
+        event(new MessageRead($id));
+        return response()->json(['success' => true]);
+    }
+    public function changeProjectState(Request $request)    
     {
         $projeto_id = $request->projeto_id;
         $new_state = $request->projectState;
@@ -178,7 +186,7 @@ class ProjectController extends Controller
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $new_state]);
 
         $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
-        $secretariado = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+        $secretariado = User::where('tipo_id', 5)->first();
 
         $estado = DB::table('estado')->where('id', $new_state)->value('estado');
         $projeto = DB::table('projetos')->where('id', $projeto_id)->value('nome');
@@ -190,7 +198,7 @@ class ProjectController extends Controller
         //event(new StateChange($nome, $projeto, $estado));
 
         $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
-        
+
         $message = new Message;
         $message->user_id = $id;
         $message->projeto_id = $projeto_id;

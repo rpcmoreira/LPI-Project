@@ -80,8 +80,7 @@ Route::post('/gerar-pdf-q252', 'App\Http\Controllers\PdfController@generateFille
 Route::get('/download-252', [DownloadController::class, 'download'])->name('download-252');
 
 Route::post('/changeProjectState', [ProjectController::class, 'changeProjectState'])->name('changeProjectState');
-
-
+Route::post('mark-as-read/{id}', [ProjectController::class, 'markAsRead'])->name('mark-as-read');
 //Admin Routes
 Route::get('/adminPage', [AdminController::class, 'adminPage'])->name('adminPage')->middleware('isAdmin');
 
