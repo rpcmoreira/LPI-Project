@@ -32,6 +32,25 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row md-3 mb-1">
+                            <label for="area" class="col-md-3 col-form-label text-center">{{ __('Area de estudo') }}</label>
+                            <div class="col-lg">
+                                <select id="area" name="area" class="form-select form-control @error('area') is-invalid @enderror" value="{{ old('area') }}" autofocus>
+                                    <option value="" selected disabled hidden>-------</option>
+                                    @foreach(DB::table('area')->get() as $area)
+                                    <option value="{{ $area->nome }}" {{ request()->input('area') == $area->nome ? 'selected' : '' }}>{{ $area->nome }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('area')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row md-3 mb-1">
                             <label for="estudos" class="col-md-3 col-form-label text-center">{{ __('Licenciatura/Mestrado/Doutoramento/Outro') }}</label>
                             <div class="col-lg">
