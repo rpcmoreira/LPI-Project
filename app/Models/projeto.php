@@ -20,6 +20,7 @@ class projeto extends Model
         'area_id',
         'curso_id',
         'estudo_id',
-        'estado_id'
+        'estado_id',
+        'aprovacao'
     ];
 }

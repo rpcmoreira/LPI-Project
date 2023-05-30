@@ -11,7 +11,8 @@ class Message extends Model
     protected $fillable = [
         'user_id',
         'projeto_id',
-        'estado_id'
+        'estado_id',
+        'type'
     ];
     public $timestamps = false;
 }

@@ -41,7 +41,7 @@ class SocialAuthController extends Controller
         $newUser = User::create([
            'nome' => $user->name,
            'email' => $user->email,
-           'tipo_id' => 6,
+           'tipo_id' => 7,
            'password' => bcrypt('password'),
            'client_id' => $user->id,
            'email_verified_at' => now(),

@@ -5,7 +5,7 @@
 <div class="container-fluid">
   <div class="row justify-content-center">
     <div class="col-lg">
-      @if(Auth::user()->tipo_id == 5)
+      @if(Auth::user()->tipo_id == 6)
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
         <h1 class="h2">Dashboard</h1>
       </div>
@@ -47,7 +47,7 @@
           @endforeach
         </table>
       </div>
-      @elseif(Auth::user()->tipo_id == 6 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') != null)
+      @elseif(Auth::user()->tipo_id == 7 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') != null)
       @php $projeto = DB::table('projetos')->where('proponente_id', Auth::user()->id)->first(); @endphp
       <div class="container-fluid">
         @if ($message = Session::get('warning'))
@@ -195,14 +195,14 @@
             </div>
           </div>
 
-          @elseif(Auth::user()->tipo_id == 6 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') == null)
+          @elseif(Auth::user()->tipo_id == 7 && DB::table('projetos')->where('proponente_id', Auth::user()->id)->value('id') == null)
           <div class="card-header">
-            <h2>Bem vindo {{ Auth::user()->nome }}!</h2>
+            <h2>Bem vindo {{ Auth::user()->nome }}!</h2>  
           </div>
           <div class="card-body">
             <h5>Não te esqueças de criar o teu pedido de projeto preenchendo o formulário Q251!</h5>
           </div>
-          @elseif(Auth::user()->tipo_id == 2 || Auth::user()->tipo_id == 3 || Auth::user()->tipo_id == 4)
+          @elseif(Auth::user()->tipo_id == 2 || Auth::user()->tipo_id == 3 || Auth::user()->tipo_id == 4 || Auth::user()->tipo_id == 8)
           <div class="card-header">
             <h2>Bem vindo {{ Auth::user()->nome }}!</h2>
           </div>

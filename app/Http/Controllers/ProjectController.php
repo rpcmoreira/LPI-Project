@@ -201,11 +201,13 @@ class ProjectController extends Controller
 
         $message = new Message;
         $message->user_id = $id;
-        $message->projeto_id = $projeto_id;
+        $message->projeto_id = 1;
+        $message->type = 1;
         $message->estado_id = $new_state;
         $message->save();
 
         $message = new Message;
+        $message->type = 1;
         $message->projeto_id = $projeto_id;
         $message->estado_id = $new_state;
         $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
@@ -320,5 +322,69 @@ class ProjectController extends Controller
             // File not found, handle the error
             abort(404);
         }
+    }
+
+    public function changeAprovacao(Request $request){
+        $projeto_id = $request->projeto_id;
+        $aprovacao = $request->projectAproved;
+        DB::table('projetos')->where('id', $projeto_id)->update(['aprovacao' => $aprovacao]);
+        $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
+        
+        if($aprovacao == 'Apr_Rec'){
+            $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+            $message = new Message;
+            $message->type = 2;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = $id;
+            $message->save();
+    
+            $message = new Message;
+            $message->type = 2;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+        }
+        else if($aprovacao == "Apr_NRec"){
+            $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+            $message = new Message;
+            $message->type = 3;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = $id;
+            $message->save();
+    
+            $message = new Message;
+            $message->type = 3;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+
+        }
+        else if($aprovacao == "NRec"){
+            $state = DB::table('estado')->where('estado', 'Cancelado')->value('id');
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id'=> $state]);
+            $message = new Message;
+            $message->user_id = $id;
+            $message->type = 4;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->save();
+    
+            $message = new Message;
+            $message->type = 4;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+
+        }
+        else abort(501);
+
+        return redirect()->route('projectlist');
     }
 }

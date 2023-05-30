@@ -18,10 +18,12 @@ class LivewireDatables extends Component
     public $perPage = 16;
     public $search = '';
     protected $paginationTheme = 'bootstrap';
+    
     public function updatingSearch()
     {
         $this->resetPage();
     }
+
     public function render()
     {
         $projects = projeto::query()->orderBy($this->sort, $this->direction);

@@ -133,7 +133,7 @@
                                 </div>
                             </div>
 
-
+                            @if(Auth()->user()->tipo_id == 6)
                             <form method="POST" action="{{ route('changeProjectState') }}">
                                 @csrf
                                 <input type="hidden" name="projeto_id" value="{{ $projeto->id }}">
@@ -148,6 +148,22 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Mudar Estado</button>
                             </form>
+                            @elseif(Auth()->user()->tipo_id == 8)
+                            <form method="POST" action="{{ route('changeAprovacao') }}">
+                                @csrf
+                                <input type="hidden" name="projeto_id" value="{{ $projeto->id }}">
+                                <div class="form-group">
+                                    <label for="projectAproved">Aprovação do Projeto</label>
+                                    <select class="form-control" id="projectState" name="projectAproved">
+                                        <option value="" selected disabled hidden>Selecione</option>
+                                        <option value="Apr_Rec">Aprovado com Recomendação</option>
+                                        <option value="Apr_NRec">Aprovado sem Recomendação</option>
+                                        <option value="NRec">Não Aprovado</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submeter Aprovação</button>
+                            </form>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -23,6 +23,7 @@ return new class extends Migration
             $table->unsignedBigInteger('area_id')->nullable();
             $table->unsignedBigInteger('estudo_id')->nullable();
             $table->unsignedBigInteger('estado_id')->default(5)->nullable();
+            $table->text('aprovacao')->nullable();
             $table->timestamps();
 
             $table->foreign('proponente_id')->references('id')->on('users');

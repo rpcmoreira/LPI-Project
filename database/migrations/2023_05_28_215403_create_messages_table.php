@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('type');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('estado_id');
             $table->unsignedBigInteger('projeto_id');
