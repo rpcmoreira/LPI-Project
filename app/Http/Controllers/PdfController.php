@@ -62,7 +62,7 @@ class PdfController extends Controller {
 
         $coordenador = DB::table('users')->where('nome', $request->coordenador)->value('id');
         $estudos = DB::table('estudos')->where('nome', $request->estudos)->value('id');
-        
+        $area = DB::table('area')->where('nome', $request->area)->value('id');
         projeto::create([
             'nome' => $request->nome,
             'proponente_id' => Auth::user()->id,
@@ -72,7 +72,7 @@ class PdfController extends Controller {
             'data_final_id' => $data_fim,
             'coordenador_id' => $coordenador,
             'estudo_id' => $estudos,
-            'area_id' => 1,
+            'area_id' => $area,
         ]);
                 
         // Get form data from the request

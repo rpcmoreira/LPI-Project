@@ -32,10 +32,29 @@
                                 @enderror
                             </div>
                         </div>
+
+                        <div class="row md-3 mb-1">
+                            <label for="area" class="col-md-3 col-form-label text-center">{{ __('Area de estudo') }}</label>
+                            <div class="col-lg">
+                                <select id="area" name="area" class="selectpicker form-control form-control @error('area') is-invalid @enderror" value="{{ old('area') }}" autofocus>
+                                    <option value="" selected disabled hidden>-------</option>
+                                    @foreach(DB::table('area')->get() as $area)
+                                    <option value="{{ $area->nome }}" {{ request()->input('area') == $area->nome ? 'selected' : '' }}>{{ $area->nome }}</option>
+                                    @endforeach
+                                </select>
+
+                                @error('area')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
                         <div class="row md-3 mb-1">
                             <label for="estudos" class="col-md-3 col-form-label text-center">{{ __('Licenciatura/Mestrado/Doutoramento/Outro') }}</label>
                             <div class="col-lg">
-                                <select id="estudos" name="estudos" class="form-select form-control @error('estudos') is-invalid @enderror" value="{{ old('estudos') }}" autofocus>
+                                <select id="estudos" name="estudos" class="selectpicker form-control form-control @error('estudos') is-invalid @enderror" value="{{ old('estudos') }}" autofocus>
                                     <option value="" selected disabled hidden>-------</option>
                                     @foreach(DB::table('estudos')->get() as $estudos)
                                     <option value="{{ $estudos->nome }}" {{ request()->input('estudos') == $estudos->nome ? 'selected' : '' }}>{{ $estudos->nome }}</option>
@@ -49,35 +68,81 @@
                                 @enderror
                             </div>
                         </div>
+
                         <div class="row md-3 mb-1">
                             <label for="coordenador" class="col-md-3 col-form-label text-center">{{ __('Coordenador') }}</label>
-                            <div class="col-lg">
-                                <select id="coordenador" name="coordenador" class="form-select form-control @error('coordenador') is-invalid @enderror" value="{{ old('coordenador') }}" autofocus>
-                                    <option value="" selected disabled hidden>-------</option>
-                                    @php $userIds = [2,3,4]; @endphp
-                                    @foreach(DB::table('users')->whereIn('users.tipo_id', $userIds)->get() as $coordenador)
-                                    <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
-                                    @endforeach
-                                </select>
-                                @error('coordenador')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row md-3 mb-1 mt-1">
-                            <label for="cv" class="col-md-3 col-form-label text-center font-italic">{{ __('Curriculum Vitae') }}</label>
-                            <div class="col-lg">
-                                <div class="form-group">
-                                    <input type="file" accept=".pdf," class="form-control-file" name="cv" placeholder="Choose your CV" id="cv">
-                                    @error('cv')
-                                    <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
+                            <div class="col-md-9">
+                                <div class="search_select_box">
+                                    <select data-live-search="true" id="coordenador" name="coordenador" class="selectpicker form-control" value="{{ old('coordenador') }}" autofocus>
+                                        <option value="" selected disabled hidden>-------</option>
+                                        @php $userIds = [4]; @endphp
+                                        @foreach(DB::table('users')->where('users.tipo_id', $userIds)->get() as $coordenador)
+                                        <option value="{{ $coordenador->nome }}" {{ request()->input('coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('coordenador')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
                                     @enderror
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row md-3 mb-1">
+                            <label for="co-coordenador" class="col-md-3 col-form-label text-center">{{ __('Co-Coordenador') }}</label>
+                            <div class="col-lg">
+                                <div class="form-group">
+                                    <br>
+                                    <div>
+                                        <label for="nao">Não <input type="radio" id="nao" name="co-coordenador-option" value="nao"></label>
+                                        <label for="sim">Sim <input type="radio" id="sim" name="co-coordenador-option" value="sim"></label>&nbsp;&nbsp;&nbsp;
+                                    </div>
+                                    <div id="motivoDiv" style="display:none;">
+                                        <div class="col-lg">
+                                            <div class="search_select_box">
+                                                <select data-live-search="true" id="co-coordenador" name="co-coordenador" class="selectpicker form-control" value="{{ old('co-coordenador') }}" autofocus>
+                                                    <option value="" selected disabled hidden>-------</option>
+                                                    @php $userIds = [4]; @endphp
+                                                    @foreach(DB::table('users')->where('users.tipo_id', $userIds)->get() as $coordenador)
+                                                    <option value="{{ $coordenador->nome }}" {{ request()->input('co-coordenador') == $coordenador->nome ? 'selected' : '' }}>{{ $coordenador->nome }}</option>
+                                                    @endforeach
+                                                </select>
+                                                @error('co-coordenador')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script>
+                            $(document).ready(function() {
+                                $("#motivoDiv").hide(); // Initially hide the motivoDiv
+
+                                $('#coordenador').change(function() {
+                                    var selectedValue = $(this).val();
+                                    $('#co-coordenador option').prop('disabled', false);
+                                    if (selectedValue !== '') {
+                                        $('#co-coordenador option[value="' + selectedValue + '"]').prop('disabled', true);
+                                    }
+                                    $('#co-coordenador').selectpicker('refresh');
+                                });
+
+                                $('input[name="co-coordenador-option"]').change(function() {
+                                    if ($(this).val() === 'sim') {
+                                        $("#motivoDiv").show();
+                                    } else {
+                                        $("#motivoDiv").hide();
+                                    }
+                                });
+                            });
+                        </script>
+
                         <div class="row md-3 mb-1">
                             <label for="filiacao" class="col-md-3 col-form-label text-center">{{ __('Filiação Institucional') }}</label>
                             <div class="col-lg">

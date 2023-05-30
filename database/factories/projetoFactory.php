@@ -28,7 +28,7 @@ class projetoFactory extends Factory
         $r_area = array_rand($area);
         $rand_area = $area[$r_area]; 
 
-        $coor = array(1,2,3,4,5,6,7);
+        $coor = array(3,4,5,6,7,8,9);
         $r_coor = array_rand($coor);
         $rand_coor = $coor[$r_coor]; 
 
@@ -39,7 +39,6 @@ class projetoFactory extends Factory
 
         return [
             'nome' => $rand_nome,
-            'proponente_id' => 2,
             'proponente_id' => $rand_coor,
             'objetivo' =>'lorem ipsum',
             'metodos' =>'lorem ipsum',

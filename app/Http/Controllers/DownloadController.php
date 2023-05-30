@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\ProjetoExport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DownloadController extends Controller {
 
@@ -23,5 +25,9 @@ class DownloadController extends Controller {
         }
 
         return back();
+    }
+
+    public function getCSV(){
+        return Excel::download(new ProjetoExport, 'projetos.xlsx');
     }
 }

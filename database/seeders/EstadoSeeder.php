@@ -17,7 +17,9 @@ class EstadoSeeder extends Seeder
         ['estado' => 'Em Curso'],
         ['estado' => 'Finalizado'],
         ['estado' => 'A Espera de Aprovação'],
-        ['estado' => 'Falta Informação']];
+        ['estado' => 'Falta Informação'],
+        ['estado' => 'Em Análise pela Direção Científica'],
+        ['estado' => 'Em Fase de Escolha do Relator']];
 
         foreach($estados as $estado){
             DB::table('estado')->insert($estado);

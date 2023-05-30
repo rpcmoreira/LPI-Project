@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\StateChange;
+use App\Events\MessageRead;
 use App\Models\File;
 use App\Models\projeto;
+use App\Models\User;
+use App\Models\Message;
+use App\Notifications\ProjetoState;
 use ConsoleTVs\Charts\Classes\Highcharts\Chart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Schema;
@@ -11,20 +16,30 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\DB;
 use ConsoleTVs\Charts\Facades\Charts;
 use GuzzleHttp\Handler\Proxy;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Arr;
 use Laravel\Ui\Presets\React;
 use Illuminate\Support\Facades\Auth;
+use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 use Termwind\Components\Dd;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
+use Livewire\Component;
+use Livewire\WithPagination;
+use Pusher\Pusher;
 
 class ProjectController extends Controller
 {
-     public function start() {
+    use WithPagination;
+    public $search = "";
+
+
+    public function start()
+    {
         return view('welcome');
     }
 
-    public function storeForm(Request $request) {
+    public function storeForm(Request $request)
+    {
         //$user = Auth::user()->id;
         $projeto = Projeto::where('id', $request->projeto);
         $file = new File;
@@ -42,12 +57,14 @@ class ProjectController extends Controller
         return redirect()->route('home')->with('status', 'File Has been uploaded!');
     }
 
-    public function get250() {
+    public function get250()
+    {
         $file = public_path() . "/forms/Q250-Formulário Elaboração Pareceres CES-HE-FFP.doc";
         return Response::download($file);
     }
 
-    public function dashboard() {
+    public function dashboard()
+    {
         $projetosPorEstado = DB::table('estado')
             ->leftJoin('projetos', 'projetos.estado_id', '=', 'estado.id')
             ->select('estado.estado', DB::raw('COUNT(projetos.id) as project_count'))
@@ -71,21 +88,28 @@ class ProjectController extends Controller
         return view('dashboard', ['chart' => $chart]);
     }
 
-    public function projectList() {
+    public function projectList()
+    {
         return view('projectlist');
     }
-    public function q250() {
+
+
+    public function q250()
+    {
         return view('forms/q250');
     }
-    public function q250_form(Request $request) {
+    public function q250_form(Request $request)
+    {
         dd($request);
     }
 
-    public function q251() {
+    public function q251()
+    {
         return view('forms/q251');
     }
 
-    public function q251_form(Request $request) {
+    public function q251_form(Request $request)
+    {
         $data = array('data' => $request->data_inicio);
         $data_f = array('data' => $request->data_fim);
         DB::table('data')->insert($data);
@@ -96,7 +120,7 @@ class ProjectController extends Controller
 
         $coordenador = DB::table('users')->where('nome', $request->coordenador)->value('id');
         $estudos = DB::table('estudos')->where('nome', $request->estudos)->value('id');
-
+        $area = DB::table('area')->where('nome', $request->area)->value('id');
         projeto::create([
             'nome' => $request->nome,
             'proponente_id' => Auth::user()->id,
@@ -106,7 +130,7 @@ class ProjectController extends Controller
             'data_final_id' => $data_fim,
             'coordenador_id' => $coordenador,
             'estudo_id' => $estudos,
-            'area_id' => 1,
+            'area_id' => $area,
         ]);
         return redirect('dashboard');
     }
@@ -119,50 +143,101 @@ class ProjectController extends Controller
     }
 
 
-    public function q381() {
+    public function q381()
+    {
         return view('forms/q381');
     }
 
 
-    public function q381_form(Request $request) {
+    public function q381_form(Request $request)
+    {
         dd($request);
     }
-    public function q252() {
+    public function q252()
+    {
         return view('forms/q252');
     }
 
-    public function q252_form(Request $request) {
+    public function q252_form(Request $request)
+    {
         dd($request);
     }
 
-    public function projetoInfo() {
+    public function projetoInfo()
+    {
         //dd($request);
         $data = session('project');
-        $projectStates = [
-            1 => 'Pendente',
-            2 => 'Em Curso',
-            3 => 'Finalizado',
-            4 => 'A Espera de Aprovação',
-            5 => 'Falta Informação',
-        ];
-        return view('projeto_info', ['projeto' => $data], compact('projectStates'));
+        return view('projeto_info', ['projeto' => $data]);
     }
 
-    public function changeProjectState(Request $request) {
-        $projeto_id = $request->input('projeto_id');
-        $new_state = $request->input('projectState');
+
+    public function markAsRead(Request $request, $id)
+    {
+        DB::table('messages')->where('id', $id)->update(['is_read' => 1]);
+        event(new MessageRead($id));
+        return response()->json(['success' => true]);
+    }
+    public function changeProjectState(Request $request)
+    {
+        $projeto_id = $request->projeto_id;
+        $new_state = $request->projectState;
 
         // Assuming 'estado_id' is the column where the state id is stored in the 'projeto' table
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $new_state]);
 
+        $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
+        $secretariado = User::where('tipo_id', 5)->first();
+
+        $estado = DB::table('estado')->where('id', $new_state)->value('estado');
+        $projeto = DB::table('projetos')->where('id', $projeto_id)->value('nome');
+        $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'))->value('nome');
+
+        $users = collect([$user, $secretariado]);
+        //Notification::send($users, new ProjetoState($projeto_id, $new_state));
+
+        //event(new StateChange($nome, $projeto, $estado));
+
+        $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
+
+        $message = new Message;
+        $message->user_id = $id;
+        $message->projeto_id = 1;
+        $message->type = 1;
+        $message->estado_id = $new_state;
+        $message->save();
+
+        $message = new Message;
+        $message->type = 1;
+        $message->projeto_id = $projeto_id;
+        $message->estado_id = $new_state;
+        $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+        $message->save();
+
+        $options = array(
+            'cluster' => 'eu',
+            'useTLS' => true,
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options,
+        );
+
+        $data = ['user' => $id, 'project' => $projeto_id, 'estado' => $new_state];
+        $pusher->trigger('event_not', 'my-event', $data);
+
         // After the update, redirect back to the previous page with a success message
-        return redirect()->route('project_info')->with('success', 'Project state changed successfully!');
+        return redirect()->route('projectlist')->with('success', 'O projeto ' . $projeto . ' de ' . $nome . ' foi alterado para o estado ' . $estado);
     }
 
-    public function logged() {
+    public function logged()
+    {
         return view('dashboard');
     }
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
         $input = $request->all();
 
         $this->validate($request, [
@@ -178,11 +253,13 @@ class ProjectController extends Controller
         }
     }
 
-    public function addForms() {
+    public function addForms()
+    {
         return view('addFiles');
     }
 
-    public function guardarFicheiros(Request $request) {
+    public function guardarFicheiros(Request $request)
+    {
         $request->validate([
             'Q251' => 'required',
             'Q252' => 'required',
@@ -230,12 +307,12 @@ class ProjectController extends Controller
     {
         //dd($filename);
         $filePath = storage_path('app/files/' . $filename);
-        $tipo = DB::table('files')->where('file', 'files/'.$filename)->value('tipo');
-        $projeto = DB::table('projetos')->where('id', DB::table('files')->where('file', 'files/'.$filename)->value('projeto_id'))->value('nome');
+        $tipo = DB::table('files')->where('file', 'files/' . $filename)->value('tipo');
+        $projeto = DB::table('projetos')->where('id', DB::table('files')->where('file', 'files/' . $filename)->value('projeto_id'))->value('nome');
         $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', DB::table('files')
-        ->where('file', 'files/'.$filename)->value('projeto_id'))->value('proponente_id'))->value('nome');
+            ->where('file', 'files/' . $filename)->value('projeto_id'))->value('proponente_id'))->value('nome');
 
-        $ficheiro = $projeto .'_'.$tipo.'_'.$nome.'.pdf';
+        $ficheiro = $projeto . '_' . $tipo . '_' . $nome . '.pdf';
         //dd($filename);  
         // Check if the file exists
         if (file_exists($filePath)) {
@@ -245,5 +322,90 @@ class ProjectController extends Controller
             // File not found, handle the error
             abort(404);
         }
+    }
+
+    public function changeAprovacao(Request $request)
+    {
+        $projeto_id = $request->projeto_id;
+        $aprovacao = $request->projectAproved;
+        DB::table('projetos')->where('id', $projeto_id)->update(['aprovacao' => $aprovacao]);
+        $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
+
+        if ($aprovacao == 'Apr_Rec') {
+            $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+            $message = new Message;
+            $message->type = 2;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = $id;
+            $message->save();
+
+            $message = new Message;
+            $message->type = 2;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+        } else if ($aprovacao == "Apr_NRec") {
+            $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+            $message = new Message;
+            $message->type = 3;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = $id;
+            $message->save();
+
+            $message = new Message;
+            $message->type = 3;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+        } else if ($aprovacao == "NRec") {
+            $state = DB::table('estado')->where('estado', 'Cancelado')->value('id');
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+            $message = new Message;
+            $message->user_id = $id;
+            $message->type = 4;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->save();
+
+            $message = new Message;
+            $message->type = 4;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+        } else abort(501);
+
+        return redirect()->route('projectlist');
+    }
+
+    public function changeRelator(Request $request)
+    {
+        $projeto_id = $request->projeto_id;
+        $relator = $request->relator;
+        DB::table('projetos')->where('id', $projeto_id)->update(['relator_id' => $relator]);
+        $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
+        $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+        DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+        $message = new Message;
+        $message->type = 5;
+        $message->projeto_id = $projeto_id;
+        $message->estado_id = $state;
+        $message->user_id = $id;
+        $message->save();
+
+        $message = new Message;
+        $message->type = 5;
+        $message->projeto_id = $projeto_id;
+        $message->estado_id = $state;
+        $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+        $message->save();
+
+        return redirect()->route('projectlist');
     }
 }

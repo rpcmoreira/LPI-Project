@@ -30,6 +30,10 @@ Route::get('/logged', [ProjectController::class, 'logged'])->middleware('auth');
 //Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
 
 //Route::get('/create', [HomeController::class, 'create'])->name('create');
+Route::get('/search', 'SearchController@search')->name('search');
+
+Route::get('select2-autocomplete', 'Select2AutocompleteController@layout');
+Route::get('select2-autocomplete-ajax', 'Select2AutocompleteController@dataAjax');
 
 Route::get('/login-google', [SocialAuthController::class, 'redirectProvider'])->name('google.login');
 Route::get('/callback', [SocialAuthController::class, 'handleCallback'])->name('google.login.callback');
@@ -37,6 +41,7 @@ Route::get('/logged', [ProjectController::class, 'logged']);
 
 Route::get('/', [ProjectController::class, 'start']);
 Route::get('/home', [ProjectController::class, 'dashboard'])->name('home')->middleware('auth');
+
 
 Route::get('/dashboard', [ProjectController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
@@ -74,9 +79,12 @@ Route::post('/gerar-pdf-q252', 'App\Http\Controllers\PdfController@generateFille
 
 Route::get('/download-252', [DownloadController::class, 'download'])->name('download-252');
 
+Route::get('/getCSV', [DownloadController::class, 'getCSV'])->name('getCSV')->middleware('isSecretariado');
+
 Route::post('/changeProjectState', [ProjectController::class, 'changeProjectState'])->name('changeProjectState');
-
-
+Route::post('/changeRelator', [ProjectController::class, 'changeRelator'])->name('changeRelator');
+Route::post('/changeAprovacao', [ProjectController::class, 'changeAprovacao'])->name('changeAprovacao');
+Route::post('mark-as-read/{id}', [ProjectController::class, 'markAsRead'])->name('mark-as-read');
 //Admin Routes
 Route::get('/adminPage', [AdminController::class, 'adminPage'])->name('adminPage')->middleware('isAdmin');
 

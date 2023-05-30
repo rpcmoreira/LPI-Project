@@ -20,6 +20,10 @@ class projeto extends Model
         'area_id',
         'curso_id',
         'estudo_id',
-        'estado_id'
+        'estado_id',
+        'aprovacao',
+        'relator_id'
     ];
+
+    public $timestamps = false;
 }
