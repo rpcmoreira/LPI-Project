@@ -2,9 +2,9 @@
 
 @section('content')
 
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-lg">
+        <div class="col-lg-12">
             @if ($message = Session::get('login'))
             <div class="alert alert-danger">
                 <p>{{ $message }}</p>
@@ -14,7 +14,7 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg">
             <div class="container">

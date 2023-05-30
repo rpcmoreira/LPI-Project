@@ -24,7 +24,7 @@
 
 <body>
     @include('includes.header')
-    <div class="content" style="margin-top: 5px; margin-bottom: 5px;">
+    <div class="container-fluid" style="margin-top: 5px; margin-bottom: 5px;">
         @yield('content')
     </div>
     @include('includes.footer')
