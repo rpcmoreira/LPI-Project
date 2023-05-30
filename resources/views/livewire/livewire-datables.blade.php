@@ -8,8 +8,12 @@
                 <option>24</option>
                 <option>30</option>
             </select>
-
+        </div>
+        <div class="col-6 form-inline">
             <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Pesquisar pelo nome" />
+        </div>
+        <div class="col form-inline">
+        <a class="btn btn-outline-secondary" href="{{ route('getCSV') }}" role="button">Download CSV</a>
         </div>
     </div>
 

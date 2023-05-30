@@ -172,37 +172,34 @@
 
 
       @guest
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-          <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
-            @if (Route::has('login'))
-            <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
-            @endif
-            @if (Route::has('register'))
-            <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
-            @endif
-          </div>
-        </li>
-      </ul>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+          @if (Route::has('login'))
+          <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+          @endif
+          @if (Route::has('register'))
+          <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+          @endif
+        </div>
+      </li>
       @else
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle text-light ml-auto" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ Auth::user()->nome }}
-          </a>
-          <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ Auth::user()->nome }}
+        </a>
+        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-              {{ __('Logout') }}
-            </a>
+            {{ __('Logout') }}
+          </a>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-              @csrf
-            </form>
-          </div>
-        </li>
-      </ul>
-      @endguest
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
+        </div>
+      </li>
+    </ul>
+    @endguest
   </div>
 </nav>

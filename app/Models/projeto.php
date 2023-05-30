@@ -23,4 +23,6 @@ class projeto extends Model
         'estado_id',
         'aprovacao'
     ];
+
+    public $timestamps = false;
 }

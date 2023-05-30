@@ -79,6 +79,8 @@ Route::post('/gerar-pdf-q252', 'App\Http\Controllers\PdfController@generateFille
 
 Route::get('/download-252', [DownloadController::class, 'download'])->name('download-252');
 
+Route::get('/getCSV', [DownloadController::class, 'getCSV'])->name('getCSV')->middleware('isSecretariado');
+
 Route::post('/changeProjectState', [ProjectController::class, 'changeProjectState'])->name('changeProjectState');
 Route::post('/changeAprovacao', [ProjectController::class, 'changeAprovacao'])->name('changeAprovacao');
 Route::post('mark-as-read/{id}', [ProjectController::class, 'markAsRead'])->name('mark-as-read');

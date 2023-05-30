@@ -50,6 +50,6 @@ class DatabaseSeeder extends Seeder
             TipoResultadoSeeder::class,
         ]);
 
-        //projeto::factory(100)->create();
+        projeto::factory(100)->create();
     }
 }
