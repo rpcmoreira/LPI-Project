@@ -36,7 +36,7 @@
                         <div class="row md-3 mb-1">
                             <label for="area" class="col-md-3 col-form-label text-center">{{ __('Area de estudo') }}</label>
                             <div class="col-lg">
-                                <select id="area" name="area" class="form-select form-control @error('area') is-invalid @enderror" value="{{ old('area') }}" autofocus>
+                                <select id="area" name="area" class="selectpicker form-control form-control @error('area') is-invalid @enderror" value="{{ old('area') }}" autofocus>
                                     <option value="" selected disabled hidden>-------</option>
                                     @foreach(DB::table('area')->get() as $area)
                                     <option value="{{ $area->nome }}" {{ request()->input('area') == $area->nome ? 'selected' : '' }}>{{ $area->nome }}</option>
@@ -54,7 +54,7 @@
                         <div class="row md-3 mb-1">
                             <label for="estudos" class="col-md-3 col-form-label text-center">{{ __('Licenciatura/Mestrado/Doutoramento/Outro') }}</label>
                             <div class="col-lg">
-                                <select id="estudos" name="estudos" class="form-select form-control @error('estudos') is-invalid @enderror" value="{{ old('estudos') }}" autofocus>
+                                <select id="estudos" name="estudos" class="selectpicker form-control form-control @error('estudos') is-invalid @enderror" value="{{ old('estudos') }}" autofocus>
                                     <option value="" selected disabled hidden>-------</option>
                                     @foreach(DB::table('estudos')->get() as $estudos)
                                     <option value="{{ $estudos->nome }}" {{ request()->input('estudos') == $estudos->nome ? 'selected' : '' }}>{{ $estudos->nome }}</option>

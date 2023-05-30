@@ -177,7 +177,7 @@ class ProjectController extends Controller
         event(new MessageRead($id));
         return response()->json(['success' => true]);
     }
-    public function changeProjectState(Request $request)    
+    public function changeProjectState(Request $request)
     {
         $projeto_id = $request->projeto_id;
         $new_state = $request->projectState;
@@ -324,13 +324,14 @@ class ProjectController extends Controller
         }
     }
 
-    public function changeAprovacao(Request $request){
+    public function changeAprovacao(Request $request)
+    {
         $projeto_id = $request->projeto_id;
         $aprovacao = $request->projectAproved;
         DB::table('projetos')->where('id', $projeto_id)->update(['aprovacao' => $aprovacao]);
         $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
-        
-        if($aprovacao == 'Apr_Rec'){
+
+        if ($aprovacao == 'Apr_Rec') {
             $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
             DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
             $message = new Message;
@@ -338,52 +339,72 @@ class ProjectController extends Controller
             $message->projeto_id = $projeto_id;
             $message->estado_id = $state;
             $message->user_id = $id;
-            $message->save();
-    
-            $message = new Message;
-            $message->type = 2;
-            $message->projeto_id = $projeto_id;
-            $message->estado_id = $state;
-            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
-            $message->save();
-        }
-        else if($aprovacao == "Apr_NRec"){
-            $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
-            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
-            $message = new Message;
-            $message->type = 3;
-            $message->projeto_id = $projeto_id;
-            $message->estado_id = $state;
-            $message->user_id = $id;
-            $message->save();
-    
-            $message = new Message;
-            $message->type = 3;
-            $message->projeto_id = $projeto_id;
-            $message->estado_id = $state;
-            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
             $message->save();
 
-        }
-        else if($aprovacao == "NRec"){
+            $message = new Message;
+            $message->type = 2;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+        } else if ($aprovacao == "Apr_NRec") {
+            $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+            $message = new Message;
+            $message->type = 3;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = $id;
+            $message->save();
+
+            $message = new Message;
+            $message->type = 3;
+            $message->projeto_id = $projeto_id;
+            $message->estado_id = $state;
+            $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+            $message->save();
+        } else if ($aprovacao == "NRec") {
             $state = DB::table('estado')->where('estado', 'Cancelado')->value('id');
-            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id'=> $state]);
+            DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
             $message = new Message;
             $message->user_id = $id;
             $message->type = 4;
             $message->projeto_id = $projeto_id;
             $message->estado_id = $state;
             $message->save();
-    
+
             $message = new Message;
             $message->type = 4;
             $message->projeto_id = $projeto_id;
             $message->estado_id = $state;
             $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
             $message->save();
+        } else abort(501);
 
-        }
-        else abort(501);
+        return redirect()->route('projectlist');
+    }
+
+    public function changeRelator(Request $request)
+    {
+        $projeto_id = $request->projeto_id;
+        $relator = $request->relator;
+        DB::table('projetos')->where('id', $projeto_id)->update(['relator_id' => $relator]);
+        $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
+        $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+        DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
+        $message = new Message;
+        $message->type = 5;
+        $message->projeto_id = $projeto_id;
+        $message->estado_id = $state;
+        $message->user_id = $id;
+        $message->save();
+
+        $message = new Message;
+        $message->type = 5;
+        $message->projeto_id = $projeto_id;
+        $message->estado_id = $state;
+        $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
+        $message->save();
 
         return redirect()->route('projectlist');
     }

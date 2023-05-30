@@ -207,7 +207,7 @@
             <h2>Bem vindo {{ Auth::user()->nome }}!</h2>
           </div>
           <div class="card-body">
-            <h5>Dashboard</h5>
+            <h5>Veja os Projetos pendentes na sua lista de projetos</h5>
           </div>
           @endif
         </div>

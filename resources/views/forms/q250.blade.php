@@ -22,7 +22,7 @@
             <div class="row md-3 mb-1">
               <label for="grau_academico" class="col-md-3 col-form-label text-center">{{ __('Licenciatura/Mestrado/Doutoramento') }}</label>
               <div class="col-lg">
-                <select id="grau_academico" name="grau_academico" class="form-select form-control @error('grau_academico') is-invalid @enderror" value="{{ old('grau_academico') }}" autofocus>
+                <select id="grau_academico" name="grau_academico" class="selectpicker form-control form-control @error('grau_academico') is-invalid @enderror" value="{{ old('grau_academico') }}" autofocus>
                   <option value="" selected disabled hidden>Selecione</option>
                   <option value="Licenciatura">Licenciatura</option>
                   <option value="Mestrado">Mestrado</option>

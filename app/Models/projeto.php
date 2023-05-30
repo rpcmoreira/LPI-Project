@@ -21,7 +21,8 @@ class projeto extends Model
         'curso_id',
         'estudo_id',
         'estado_id',
-        'aprovacao'
+        'aprovacao',
+        'relator_id'
     ];
 
     public $timestamps = false;

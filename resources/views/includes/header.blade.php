@@ -1,13 +1,20 @@
 <nav class="navbar navbar-expand-lg sticky-top navbar-light bg-dark">
-  <a href='/' class="navbar-brand mb-0 h1 text-light">
+  @if(Auth::user() != null )
+  <a href="{{ route('dashboard') }}" class="navbar-brand mb-0 h1 text-light">
     <img src="https://www.ufp.pt/app/uploads/2018/08/logoufp_174x70.png" class="d-inline-block" width="120" height="50" alt="Secretariado da Comissão de Ética">
     Secretariado da Comissão de Ética
   </a>
+  @else
+  <a href="{{ route('dashboard') }}" class="navbar-brand mb-0 h1 text-light">
+    <img src="https://www.ufp.pt/app/uploads/2018/08/logoufp_174x70.png" class="d-inline-block" width="120" height="50" alt="Secretariado da Comissão de Ética">
+    Secretariado da Comissão de Ética
+  </a>
+  @endif
   <button type="button" data-toggle="collapse" data-target="#navbarNav" class="navbar-toggler" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle Nav">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
-    @if(Auth::user() != null && Auth::user()->tipo_id == 7)
+    @if(Auth()->user() != null && Auth::user()->tipo_id == 7)
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link text-light" href="{{ route('dashboard') }}">
@@ -26,7 +33,7 @@
         </div>
       </li>
     </ul>
-    @elseif(Auth::user() != null && (Auth::user()->tipo_id == 6 || Auth::user()->tipo_id == 8))
+    @elseif(Auth::user() != null && (Auth::user()->tipo_id == 6 || Auth::user()->tipo_id == 8 || Auth::user()->tipo_id == 2))
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
         <a class="nav-link text-light" href="{{ route('dashboard') }}">
@@ -43,8 +50,23 @@
     </ul>
     @else
     @endif
-    @if(Auth()->user() && (Auth()->user()->tipo_id == 7 || Auth()->user()->tipo_id == 6))
+    @guest
     <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
+        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
+          @if (Route::has('login'))
+          <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
+          @endif
+          @if (Route::has('register'))
+          <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
+          @endif
+        </div>
+      </li>
+    </ul>
+    @else
+    <ul class="navbar-nav ml-auto">
+      @if(Auth()->user() && (Auth()->user()->tipo_id == 7 || Auth()->user()->tipo_id == 6))
       @php $messages = DB::table('messages')->where('user_id', Auth()->user()->id)->where('is_read', 0)->count();@endphp
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="right: 0; left: auto;">
@@ -101,6 +123,16 @@
           @elseif(Auth()->user()->tipo_id == 7)
           <a class="dropdown-item message-item" data-message-id="{{ $message->id }}">
             <p class="font-italic">{{ __('O projeto '.$projeto.' não foi aprovado, tendo sido cancelado') }}</p>
+          </a>
+          @endif
+          @elseif($message->type == 5)
+          @if(Auth()->user()->tipo_id == 6)
+          <a class="dropdown-item message-item" data-message-id="{{ $message->id }}">
+            <p class="font-italic">{{ __('Foi atribuido um novo relator ao projeto '.$projeto.' de '.$usuario.'. Estado Pendente') }}</p>
+          </a>
+          @elseif(Auth()->user()->tipo_id == 7)
+          <a class="dropdown-item message-item" data-message-id="{{ $message->id }}">
+            <p class="font-italic">{{ __('Foi atribuido um novo relator ao projeto e o estado foi colocado em Pendente') }}</p>
           </a>
           @endif
           @endif
@@ -170,20 +202,6 @@
       </script>
       @endif
 
-
-      @guest
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Account</a>
-        <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="navbarDropdownMenuLink">
-          @if (Route::has('login'))
-          <a class="dropdown-item" href="{{ route('login') }}">{{ __('Login') }}</a>
-          @endif
-          @if (Route::has('register'))
-          <a class="dropdown-item" href="{{ route('register') }}">{{ __('Register') }}</a>
-          @endif
-        </div>
-      </li>
-      @else
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{ Auth::user()->nome }}
