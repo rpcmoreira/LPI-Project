@@ -1,7 +1,7 @@
 @if(Auth::user()->tipo_id == 6)
 <div>
-    <div class="row mb-4">
-        <div class="col form-inline">
+<div class="row mb-3">
+        <div class="col-2 form-inline">
             Por Página: &nbsp;
             <select wire:model="perPage" class="form-control">
                 <option>16</option>
@@ -9,11 +9,13 @@
                 <option>30</option>
             </select>
         </div>
-        <div class="col-6 form-inline">
-            <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Pesquisar pelo nome" />
+        <div class="col-8">
+            <div class="container-fluid">
+                <input type="search" wire:model="search" class="form-control float-end" placeholder="Pesquisar pelo nome" />
+            </div>
         </div>
-        <div class="col form-inline">
-        <a class="btn btn-outline-secondary" href="{{ route('getCSV') }}" role="button">Download XLSX</a>
+        <div class="col-2 d-flex justify-content-end">
+            <a class="btn btn-outline-secondary" href="{{ route('getCSV') }}" role="button">Download XLSX</a>
         </div>
     </div>
 
@@ -54,17 +56,17 @@
 </div>
 @elseif(Auth::user()->tipo_id == 8)
 <div>
-    <div class="row mb-4">
-        <div class="col form-inline">
-            Por Página: &nbsp;
-            <select wire:model="perPage" class="form-control">
-                <option>16</option>
-                <option>24</option>
-                <option>30</option>
-            </select>
+    <div class="col-2 form-inline">
+        Por Página: &nbsp;
+        <select wire:model="perPage" class="form-control">
+            <option>16</option>
+            <option>24</option>
+            <option>30</option>
+        </select>
+    </div>
+    <div class="col-10">
+        <div class="container-fluid"> <input type="search" wire:model="search" class="form-control float-end" placeholder="Pesquisar pelo nome" /></div>
 
-            <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Pesquisar pelo nome" />
-        </div>
     </div>
 
     <div class="table-responsive">
