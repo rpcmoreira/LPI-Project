@@ -18,7 +18,7 @@ class LivewireDatables extends Component
     public $perPage = 16;
     public $search = '';
     protected $paginationTheme = 'bootstrap';
-    
+
     public function updatingSearch()
     {
         $this->resetPage();
@@ -27,16 +27,25 @@ class LivewireDatables extends Component
     public function render()
     {
         $projects = projeto::query()->orderBy($this->sort, $this->direction);
-        
-        if($this->search){
-            $projects = projeto::where('nome', 'like', '%'.$this->search.'%')->orderBy('nome', 'asc');
+
+        if ($this->search) {
+            $projects = projeto::where(function ($query) {
+                $query->where('projetos.nome', 'like', '%' . $this->search . '%')
+                    ->orWhere('users.nome', 'like', '%' . $this->search . '%')
+                    ->orWhere('area.nome', 'like', '%' . $this->search . '%')
+                    ->orWhere('estado.estado', 'like', '%' . $this->search . '%');
+            })
+                ->leftJoin('users', 'projetos.proponente_id', '=', 'users.id')
+                ->leftJoin('area', 'projetos.area_id', '=', 'area.id')
+                ->leftJoin('estado', 'projetos.estado_id', '=', 'estado.id')
+                ->orderBy('projetos.nome', 'asc');
         }
         $projects = $projects->paginate($this->perPage);
         return view('livewire.livewire-datables', [
             'projetos' => $projects
         ]);
     }
-    
+
     public function sortBy($field)
     {
         $this->direction = ($this->direction == 'asc') ? 'desc' : 'asc';
@@ -55,5 +64,4 @@ class LivewireDatables extends Component
         // Shorthand for $this->setSearchStatus(true)
         $this->setSearchEnabled();
     }
-    
 }
