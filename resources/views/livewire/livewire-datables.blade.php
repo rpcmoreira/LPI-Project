@@ -13,7 +13,7 @@
             <input type="search" wire:model="search" class="form-control float-end mx-2" placeholder="Pesquisar pelo nome" />
         </div>
         <div class="col form-inline">
-        <a class="btn btn-outline-secondary" href="{{ route('getCSV') }}" role="button">Download CSV</a>
+        <a class="btn btn-outline-secondary" href="{{ route('getCSV') }}" role="button">Download XLSX</a>
         </div>
     </div>
 

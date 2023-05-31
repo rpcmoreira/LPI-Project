@@ -19,7 +19,8 @@ class TipoSeeder extends Seeder
         ['nome' => 'Membro'],
         ['nome' => 'Secretariado'],
         ['nome' => 'User'],
-        ['nome' => 'Direcao Cientifica'],];
+        ['nome' => 'Direcao Cientifica'],
+        ['nome' => 'Não Definido'],];
 
         foreach($tipos as $tipo){
             DB::table('tipo')->insert($tipo);

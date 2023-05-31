@@ -186,14 +186,14 @@ class ProjectController extends Controller
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $new_state]);
 
         $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
-        $secretariado = User::where('tipo_id', 5)->first();
+        $secretariado = User::where('tipo_id', 6)->first();
 
         $estado = DB::table('estado')->where('id', $new_state)->value('estado');
         $projeto = DB::table('projetos')->where('id', $projeto_id)->value('nome');
         $nome = DB::table('users')->where('id', DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'))->value('nome');
 
         $users = collect([$user, $secretariado]);
-        //Notification::send($users, new ProjetoState($projeto_id, $new_state));
+        Notification::send($users, new ProjetoState($projeto_id, $new_state, 1));
 
         //event(new StateChange($nome, $projeto, $estado));
 
@@ -332,7 +332,11 @@ class ProjectController extends Controller
         $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
 
         if ($aprovacao == 'Apr_Rec') {
+            $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
+            $secretariado = User::where('tipo_id', 6)->first();
+            $users = collect([$user, $secretariado]);
             $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+            Notification::send($users, new ProjetoState($projeto_id, $state, 2));
             DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
             $message = new Message;
             $message->type = 2;
@@ -348,6 +352,11 @@ class ProjectController extends Controller
             $message->user_id = DB::table('users')->where('email', 'sec.ces.he@ufp.edu.pt')->value('id');
             $message->save();
         } else if ($aprovacao == "Apr_NRec") {
+            $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
+            $secretariado = User::where('tipo_id', 6)->first();
+            $users = collect([$user, $secretariado]);
+            $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+            Notification::send($users, new ProjetoState($projeto_id, $state, 3));
             $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
             DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
             $message = new Message;
@@ -365,6 +374,10 @@ class ProjectController extends Controller
             $message->save();
         } else if ($aprovacao == "NRec") {
             $state = DB::table('estado')->where('estado', 'Cancelado')->value('id');
+            $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
+            $secretariado = User::where('tipo_id', 6)->first();
+            $users = collect([$user, $secretariado]);
+            Notification::send($users, new ProjetoState($projeto_id, $state, 4));
             DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
             $message = new Message;
             $message->user_id = $id;
@@ -389,8 +402,15 @@ class ProjectController extends Controller
         $projeto_id = $request->projeto_id;
         $relator = $request->relator;
         DB::table('projetos')->where('id', $projeto_id)->update(['relator_id' => $relator]);
+
         $id = DB::table('projetos')->where('id', $projeto_id)->value('proponente_id');
         $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+        $user = User::find(DB::table('projetos')->where('id', $projeto_id)->value('proponente_id'));
+        $secretariado = User::where('tipo_id', 6)->first();
+        $users = collect([$user, $secretariado]);
+        $state = DB::table('estado')->where('estado', 'Pendente')->value('id');
+        Notification::send($users, new ProjetoState($projeto_id, $state, 5));
+
         DB::table('projetos')->where('id', $projeto_id)->update(['estado_id' => $state]);
         $message = new Message;
         $message->type = 5;

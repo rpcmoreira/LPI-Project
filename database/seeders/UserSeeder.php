@@ -24,6 +24,7 @@ class UserSeeder extends Seeder
         ['nome' => 'Marina Lencastre', 'tipo_id' => 3, 'email' => 'mlencast@ufp.edu.pt', 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'email_verified_at' => now()],
         ['nome' => 'Teresa Brandão', 'tipo_id' => 5, 'email' => 'teresa@ufp.edu.pt', 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'email_verified_at' => now()],
         ['nome' => 'Direcao Cientifica', 'tipo_id' => 8, 'email' => 'dir.cientifica@ufp.edu.pt', 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'email_verified_at' => now()],
+        ['nome' => 'Não Definido', 'tipo_id' => 9, 'email' => 'nao@definido.pt', 'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'email_verified_at' => now()],
     ];
 
         foreach($users as $user){

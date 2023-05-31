@@ -19,6 +19,7 @@ class ProjetoExport implements FromCollection
             ->join('area', 'projetos.area_id', '=', 'area.id')
             ->join('estudos', 'projetos.estudo_id', '=', 'estudos.id')
             ->join('estado', 'projetos.estado_id', '=', 'estado.id')
+            ->join('users as relator', 'projetos.relator_id', '=', 'relator.id')
             ->select(
                 'projetos.id',
                 'projetos.nome',
@@ -31,7 +32,8 @@ class ProjetoExport implements FromCollection
                 'area.nome as area_nome',
                 'estudos.nome as estudo_nome',
                 'estado.estado',
-                'projetos.aprovacao'
+                'projetos.aprovacao',
+                'relator.nome as relator_nome'
             )
             ->get();
     }

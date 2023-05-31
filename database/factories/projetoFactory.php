@@ -47,6 +47,7 @@ class projetoFactory extends Factory
             'area_id' =>$rand_area,
             'estudo_id' =>$rand_estudo,
             'estado_id' =>$rand_estado,
+            'aprovacao' => 'Aprovado',
         ];
     }
 }
