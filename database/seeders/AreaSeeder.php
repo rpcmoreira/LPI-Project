@@ -6,6 +6,10 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
+/* The `class AreaSeeder extends Seeder` is defining a seeder class in PHP for populating the `area`
+table in a database with predefined data. The `Seeder` class is a built-in class in Laravel
+framework that provides a convenient way to seed the database with test data. The `run()` method is
+used to execute the seeder and insert the data into the `area` table using the `DB` facade. */
 class AreaSeeder extends Seeder
 {
     /**

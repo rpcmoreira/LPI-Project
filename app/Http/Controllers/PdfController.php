@@ -9,7 +9,19 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\projeto;
 
+/* The PdfController class extends the Controller class in PHP. */
 class PdfController extends Controller {
+
+    /**
+     * This function generates a filled PDF form from form data submitted via a request in PHP.
+     * 
+     * @param request  is an instance of the Illuminate\Http\Request class, which represents an
+     * HTTP request made to the application. It contains information about the request such as the HTTP
+     * method, headers, and any form data or query parameters. In this specific function, it is used to
+     * retrieve form data submitted by the user.
+     * 
+     * @return The filled PDF file is being returned as a download.
+     */
     public function generateFilled_q250_Pdf(Request $request) {
         // Get form data from the request
         $formData = $request->all();
@@ -50,6 +62,16 @@ class PdfController extends Controller {
         return response()->download($outputPath, 'q250_preenchido.pdf')->deleteFileAfterSend(true);
     }
 
+    /**
+     * This function generates a filled PDF form based on the data provided in the request and saves it
+     * as a downloadable file.
+     * 
+     * @param request  is an object that contains the data sent in the HTTP request. It can
+     * contain data from the URL parameters, form data, headers, cookies, and more. In this specific
+     * code, it is used to retrieve form data and generate a filled PDF file based on that data.
+     * 
+     * @return The filled PDF file is being returned as a download.
+     */
     public function generateFilled_q251_Pdf(Request $request) {
         
         $data = array('data' => $request->data_inicio);
@@ -104,6 +126,16 @@ class PdfController extends Controller {
         return response()->download($outputPath, 'q251_preenchido.pdf')->deleteFileAfterSend(true);
     }
 
+    /**
+     * This function generates a filled PDF form by filling in form data and saving it as a new PDF
+     * file.
+     * 
+     * @param request  is an instance of the Request class which contains the data sent to the
+     * server through an HTTP request. In this case, it is used to retrieve the form data submitted by
+     * the user.
+     * 
+     * @return a redirect to a route named 'download-252'.
+     */
     public function generateFilled_q252_Pdf(Request $request) {
         // Get form data from the request 
         $formData = $request->all();

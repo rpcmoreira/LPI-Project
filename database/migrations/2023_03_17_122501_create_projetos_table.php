@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nome');
             $table->unsignedBigInteger('proponente_id')->nullable();
-            $table->unsignedBigInteger('coordenador_id')->nullable();
+            $table->unsignedBigInteger('coordenador_id')->default(1)->nullable();
             $table->string('objetivo')->nullable();
             $table->string('metodos')->nullable();
             $table->unsignedBigInteger('data_id')->nullable();
@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('estudo_id')->nullable();
             $table->unsignedBigInteger('estado_id')->default(5)->nullable();
             $table->text('aprovacao')->nullable();
-            $table->unsignedBigInteger('relator_id')->nullable();
+            $table->unsignedBigInteger('relator_id')->default(11)->nullable();
 
             $table->foreign('proponente_id')->references('id')->on('users');
             $table->foreign('coordenador_id')->references('id')->on('users');

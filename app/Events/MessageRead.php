@@ -10,6 +10,10 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
+
+/* The `class MessageRead` is defining an event in a Laravel application that is triggered when a
+message is read. It includes the message ID as a property and broadcasts the event on the `messages`
+channel. */
 class MessageRead
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;

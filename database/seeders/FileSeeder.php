@@ -6,6 +6,11 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+/* The `class FileSeeder extends Seeder` is defining a seeder class in Laravel that will be used to
+populate the `files` table in the database with some initial data. The `Seeder` class is a base
+class provided by Laravel that defines the basic structure and methods for creating seeders. The
+`FileSeeder` class extends this base class and overrides the `run` method to define the logic for
+inserting the data into the `files` table. */
 class FileSeeder extends Seeder
 {
     /**
