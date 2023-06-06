@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Maatwebsite\Excel\Facades\Excel;
 
+/* The DownloadController class extends the Controller class. */
 class DownloadController extends Controller {
 
     public function download() {
@@ -27,6 +28,11 @@ class DownloadController extends Controller {
         return back();
     }
 
+    /**
+     * This function downloads a CSV file of project data using the Laravel Excel package.
+     * 
+     * @return an Excel file download of a project export in the format of an .xlsx file.
+     */
     public function getCSV(){
         return Excel::download(new ProjetoExport, 'projetos.xlsx');
     }

@@ -9,6 +9,12 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 
+/* The `class User` is extending the `Authenticatable` class and implementing the `MustVerifyEmail`
+interface. This means that the `User` class is a model that represents a user in the application and
+it inherits all the authentication and authorization functionalities provided by the
+`Authenticatable` class. Additionally, it implements the `MustVerifyEmail` interface which requires
+the user to verify their email address before being able to access certain features of the
+application. */
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;

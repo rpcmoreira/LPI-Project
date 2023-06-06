@@ -9,6 +9,11 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+/* The `class DatabaseSeeder extends Seeder` is defining a seeder class in Laravel that is responsible
+for seeding the application's database with initial data. It extends the `Seeder` class provided by
+Laravel and overrides the `run` method to define the data to be seeded. In this specific example, it
+is creating instances of various models and calling other seeder classes to populate the database
+with data. */
 class DatabaseSeeder extends Seeder
 {
     /**

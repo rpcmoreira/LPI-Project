@@ -27,17 +27,36 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Pusher\Pusher;
 
+/* The above code is defining a PHP class called "ProjectController" that extends a parent class called
+"Controller". It is likely that this class is used to handle requests and responses related to a
+specific project in a web application. However, without seeing the implementation of the class
+methods, it is difficult to determine its exact purpose. */
 class ProjectController extends Controller
 {
     use WithPagination;
     public $search = "";
 
 
+    /**
+     * The "start" function returns a view called "welcome" in PHP.
+     * 
+     * @return A view called "welcome" is being returned.
+     */
     public function start()
     {
         return view('welcome');
     }
 
+    /**
+     * This function stores a file uploaded through a form and associates it with a project.
+     * 
+     * @param request  is an instance of the Illuminate\Http\Request class which represents an
+     * HTTP request. It contains information about the request such as the HTTP method, headers, and
+     * input data. In this case, it is used to retrieve the uploaded file and the project ID from the
+     * form data. It is also used to
+     * 
+     * @return a redirect to the 'home' route with a success message in the session data.
+     */
     public function storeForm(Request $request)
     {
         //$user = Auth::user()->id;
@@ -57,12 +76,24 @@ class ProjectController extends Controller
         return redirect()->route('home')->with('status', 'File Has been uploaded!');
     }
 
+    /**
+     * This PHP function downloads a specific file from a public path.
+     * 
+     * @return a file download response for the file located at the specified path. The file being
+     * downloaded is a Word document titled "Q250-Formulário Elaboração Pareceres CES-HE-FFP.doc".
+     */
     public function get250()
     {
         $file = public_path() . "/forms/Q250-Formulário Elaboração Pareceres CES-HE-FFP.doc";
         return Response::download($file);
     }
 
+    /**
+     * This function generates a chart showing the number of projects per state using Laravel Charts.
+     * 
+     * @return a view called 'dashboard' with a chart object as a parameter. The chart object is
+     * generated using Laravel Charts and contains data on the number of projects per state.
+     */
     public function dashboard()
     {
         $projetosPorEstado = DB::table('estado')
@@ -88,26 +119,46 @@ class ProjectController extends Controller
         return view('dashboard', ['chart' => $chart]);
     }
 
+    /**
+     * This function returns a view for a project list.
+     * 
+     * @return A view called "projectlist" is being returned.
+     */
     public function projectList()
     {
         return view('projectlist');
     }
 
 
+    /**
+     * The function q250 returns a view for a form.
+     * 
+     * @return a view called 'forms/q250'.
+     */
     public function q250()
     {
         return view('forms/q250');
     }
-    public function q250_form(Request $request)
-    {
-        dd($request);
-    }
 
+    /**
+     * The function returns a view for a form with the name "q251".
+     * 
+     * @return a view named 'forms/q251'.
+     */
     public function q251()
     {
         return view('forms/q251');
     }
 
+    /**
+     * This function creates a new project in the database based on the input data from a form.
+     * 
+     * @param request  is an object that contains the data sent through an HTTP request. It can
+     * contain data from the URL parameters, form data, headers, cookies, and more. In this specific
+     * code, it is used to retrieve data from a form submitted by the user.
+     * 
+     * @return a redirect to the 'dashboard' page.
+     */
     public function q251_form(Request $request)
     {
         $data = array('data' => $request->data_inicio);
@@ -136,6 +187,12 @@ class ProjectController extends Controller
     }
 
 
+    /**
+     * The function downloads a Word document for a request for authorization to conduct an
+     * investigation.
+     * 
+     * @return a file download response for a Word document located at the specified file path.
+     */
     public function q272()
     {
         $file = public_path() . "/forms/Q272-Pedido-de-Autorização-Realização-de-investigação.docx";
@@ -143,26 +200,33 @@ class ProjectController extends Controller
     }
 
 
+    /**
+     * The function returns a view for a form with the name "q381".
+     * 
+     * @return a view named 'q381' located in the 'forms' directory.
+     */
     public function q381()
     {
         return view('forms/q381');
     }
 
 
-    public function q381_form(Request $request)
-    {
-        dd($request);
-    }
+    /**
+     * The function returns a view for the q252 form in PHP.
+     * 
+     * @return a view called 'forms/q252'.
+     */
     public function q252()
     {
         return view('forms/q252');
     }
 
-    public function q252_form(Request $request)
-    {
-        dd($request);
-    }
-
+    /**
+     * This PHP function returns a view with project information stored in the session.
+     * 
+     * @return The function `projetoInfo()` is returning a view called `projeto_info` with a variable
+     * `` that contains the data stored in the `project` session.
+     */
     public function projetoInfo()
     {
         //dd($request);
@@ -171,12 +235,37 @@ class ProjectController extends Controller
     }
 
 
+    /**
+     * The function updates the "is_read" field of a message with the given ID to 1 and triggers a
+     * "MessageRead" event.
+     * 
+     * @param request  is an instance of the Request class which contains the HTTP request
+     * information such as headers, parameters, and cookies. It is used to retrieve data from the
+     * request and pass it to the function.
+     * @param id  is a parameter that represents the ID of the message that needs to be marked as
+     * read. This function updates the 'is_read' column of the 'messages' table to 1 for the message
+     * with the given ID.
+     * 
+     * @return A JSON response with a key-value pair of 'success' => true.
+     */
     public function markAsRead(Request $request, $id)
     {
         DB::table('messages')->where('id', $id)->update(['is_read' => 1]);
         event(new MessageRead($id));
         return response()->json(['success' => true]);
     }
+
+    /**
+     * This function changes the state of a project and sends notifications to relevant users.
+     * 
+     * @param request  is an instance of the Illuminate\Http\Request class, which represents an
+     * HTTP request. It contains information about the request such as the HTTP method, headers, and
+     * parameters. In this specific function, it is used to retrieve the values of the 'projeto_id' and
+     * 'projectState' parameters sent
+     * 
+     * @return a redirect to the 'projectlist' route with a success message. The success message
+     * includes the name of the project, the name of the proponent, and the new state of the project.
+     */
     public function changeProjectState(Request $request)
     {
         $projeto_id = $request->projeto_id;
@@ -232,10 +321,29 @@ class ProjectController extends Controller
         return redirect()->route('projectlist')->with('success', 'O projeto ' . $projeto . ' de ' . $nome . ' foi alterado para o estado ' . $estado);
     }
 
+    /**
+     * The "logged" function returns a view for the dashboard in PHP.
+     * 
+     * @return A view named "dashboard" is being returned.
+     */
     public function logged()
     {
         return view('dashboard');
     }
+
+    /**
+     * This is a PHP function that validates user input for email and password, attempts to
+     * authenticate the user, and redirects them to the home page if successful or back to the login
+     * page with an error message if unsuccessful.
+     * 
+     * @param request  is an instance of the Illuminate\Http\Request class which represents an
+     * incoming HTTP request. It contains information about the request such as the HTTP method,
+     * headers, and any data that was sent with the request.
+     * 
+     * @return If the user's email and password match with the database, the function will redirect the
+     * user to the home page. If the email and password are incorrect, the function will redirect the
+     * user back to the login page with a message "Email/Password are wrong, please try again".
+     */
     public function login(Request $request)
     {
         $input = $request->all();
@@ -253,11 +361,28 @@ class ProjectController extends Controller
         }
     }
 
+    /**
+     * This PHP function returns a view for adding files.
+     * 
+     * @return The function `addForms()` is returning a view called `addFiles`.
+     */
     public function addForms()
     {
         return view('addFiles');
     }
 
+    /**
+     * This function saves files uploaded by a user and updates the state of a project if the files
+     * have not been previously submitted.
+     * 
+     * @param request  is an instance of the Illuminate\Http\Request class, which represents an
+     * HTTP request. It contains information about the request such as the HTTP method, headers, and
+     * input data. In this specific code, it is used to validate the input data and retrieve files
+     * uploaded by the user.
+     * 
+     * @return a redirect response to the dashboard route with a status or warning message depending on
+     * whether the forms were successfully submitted or not.
+     */
     public function guardarFicheiros(Request $request)
     {
         $request->validate([
@@ -303,6 +428,15 @@ class ProjectController extends Controller
         } else return redirect()->route('dashboard')->with('warning', 'Formulários ja tinham sido submetidos');
     }
 
+    /**
+     * This PHP function downloads a file from a specified file path and renames it based on
+     * information retrieved from a database.
+     * 
+     * @param filename The name of the file that needs to be downloaded.
+     * 
+     * @return a file download response. If the file exists, it will download the file with the given
+     * filename. If the file does not exist, it will return a 404 error.
+     */
     public function download($filename)
     {
         //dd($filename);
@@ -324,6 +458,17 @@ class ProjectController extends Controller
         }
     }
 
+    /**
+     * This function updates the approval status of a project and sends notifications to relevant users
+     * based on the new status.
+     * 
+     * @param request  is an instance of the Illuminate\Http\Request class, which represents an
+     * HTTP request. It contains information about the request such as the HTTP method, headers, and
+     * input data. In this specific function, it is used to retrieve the values of the 'projeto_id' and
+     * 'projectAproved'
+     * 
+     * @return a redirect to the 'projectlist' route.
+     */
     public function changeAprovacao(Request $request)
     {
         $projeto_id = $request->projeto_id;
@@ -397,6 +542,17 @@ class ProjectController extends Controller
         return redirect()->route('projectlist');
     }
 
+    /**
+     * This function changes the relator of a project and sends a notification to the proponent and the
+     * secretariat.
+     * 
+     * @param request  is an instance of the Illuminate\Http\Request class, which represents an
+     * HTTP request. It contains information about the request such as the HTTP method, headers, and
+     * any data sent in the request body. In this specific function, it is used to retrieve the values
+     * of the 'projeto_id' and
+     * 
+     * @return a redirect to the 'projectlist' route.
+     */
     public function changeRelator(Request $request)
     {
         $projeto_id = $request->projeto_id;

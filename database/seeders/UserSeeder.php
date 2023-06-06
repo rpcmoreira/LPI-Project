@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
+/* `class UserSeeder extends Seeder` is defining a class called `UserSeeder` that extends the `Seeder`
+class. This class is used to seed the database with data for the `users` table. */
 class UserSeeder extends Seeder
 {
     /**
